@@ -774,6 +774,41 @@
       }
     }
   </script>
+  <script>
+function saveGame() {
+  const saveData = {
+    players,
+    missions,
+    scores,
+    failed,
+    round
+  }
+
+  localStorage.setItem("geheimeMissionenSave", JSON.stringify(saveData))
+  alert("Spielstand gespeichert ✅")
+}
+
+function loadGame() {
+  const saveData = localStorage.getItem("geheimeMissionenSave")
+
+  if (!saveData) {
+    alert("Kein Spielstand gefunden ❌")
+    return
+  }
+
+  const data = JSON.parse(saveData)
+
+  players = data.players
+  missions = data.missions
+  scores = data.scores
+  failed = data.failed
+  round = data.round
+
+  updateUI()
+
+  alert("Spielstand geladen ✅")
+}
+  </script>
 <script>
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("./service-worker.js");
