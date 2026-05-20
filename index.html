@@ -28,6 +28,7 @@
       width: 100%;
       max-width: 800px;
       box-shadow: 0 0 30px rgba(255,140,0,0.3);
+      overflow: hidden;
     }
 
     .slogan {
@@ -125,6 +126,7 @@
       text-align: center;
       border: 2px solid rgba(255,140,0,0.3);
       box-shadow: 0 0 25px rgba(255,140,0,0.25);
+      overflow: hidden;
     }
 
     .playerBox h3 {
@@ -216,22 +218,68 @@
       min-height: 24px;
     }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
+    .rankingList {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .rankCard {
+      background: rgba(0,0,0,0.35);
+      border: 1px solid rgba(255,140,0,0.35);
+      border-radius: 18px;
+      padding: 14px;
+      text-align: left;
+      box-shadow: 0 0 12px rgba(255,140,0,0.15);
+    }
+
+    .rankTop {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .rankName {
       color: white;
-      font-size: 16px;
+      overflow-wrap: anywhere;
+    }
+
+    .rankTotal {
+      color: orange;
+      font-size: 24px;
+      white-space: nowrap;
+    }
+
+    .rankDifficulty {
+      margin-top: 6px;
+      color: rgba(255,255,255,0.75);
+      font-size: 15px;
+    }
+
+    .rankStats {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+      margin-top: 12px;
+      font-size: 14px;
       text-align: center;
     }
 
-    th {
-      padding: 10px;
-      border-bottom: 2px solid orange;
+    .rankStat {
+      background: rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 8px 6px;
     }
 
-    td {
-      padding: 10px;
-      border-bottom: 1px solid #444;
+    .rankStat strong {
+      display: block;
+      margin-top: 4px;
+      color: white;
+      font-size: 18px;
     }
 
     @media (max-width: 700px) {
@@ -272,8 +320,12 @@
         grid-template-columns: 1fr;
       }
 
-      table {
-        font-size: 13px;
+      .rankTop {
+        font-size: 20px;
+      }
+
+      .rankTotal {
+        font-size: 22px;
       }
     }
   </style>
@@ -600,22 +652,7 @@
 
       tableBox.innerHTML = `
         <h3>🏆 Rangliste</h3>
-
-        <table>
-          <thead>
-            <tr>
-              <th>Rang</th>
-              <th>Name</th>
-              <th>Stufe</th>
-              <th>Anschuldigung</th>
-              <th>Mission erfüllt</th>
-              <th>Gescheitert</th>
-              <th>Gesamt</th>
-            </tr>
-          </thead>
-
-          <tbody id="scoreTableBody"></tbody>
-        </table>
+        <div id="scoreTableBody" class="rankingList"></div>
       `;
 
       qrList.appendChild(tableBox);
@@ -623,13 +660,13 @@
     }
 
     function updateScoreTable() {
-      const tableBody = document.getElementById("scoreTableBody");
+      const list = document.getElementById("scoreTableBody");
 
-      if (!tableBody) {
+      if (!list) {
         return;
       }
 
-      tableBody.innerHTML = "";
+      list.innerHTML = "";
 
       const sortedPlayers = [...players].sort((a, b) => b.total - a.total);
 
@@ -646,18 +683,32 @@
         else if (displayRank === 2) medal = "🥈";
         else if (displayRank === 3) medal = "🥉";
 
-        tableBody.innerHTML += `
-          <tr>
-            <td>${medal} ${displayRank}</td>
-            <td>${player.name}</td>
-            <td>${player.difficulty}</td>
-            <td>${player.accusation}</td>
-            <td>${player.done}</td>
-            <td>${player.caught}</td>
-            <td style="color:orange; font-weight:bold;">
-              ${player.total}
-            </td>
-          </tr>
+        list.innerHTML += `
+          <div class="rankCard">
+            <div class="rankTop">
+              <div class="rankName">${medal} ${displayRank}. ${player.name}</div>
+              <div class="rankTotal">${player.total} Pkt.</div>
+            </div>
+
+            <div class="rankDifficulty">${player.difficulty}</div>
+
+            <div class="rankStats">
+              <div class="rankStat">
+                🎯 Anschuldigung
+                <strong>${player.accusation}</strong>
+              </div>
+
+              <div class="rankStat">
+                ✅ Erfüllt
+                <strong>${player.done}</strong>
+              </div>
+
+              <div class="rankStat">
+                ❌ Gescheitert
+                <strong>${player.caught}</strong>
+              </div>
+            </div>
+          </div>
         `;
       });
     }
