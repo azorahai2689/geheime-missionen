@@ -106,17 +106,9 @@
       box-shadow: 0 0 20px rgba(255,140,0,0.4);
     }
 
-    .saveButton {
-      background: linear-gradient(90deg, #00c853, #64dd17);
-    }
-
-    .loadButton {
-      background: linear-gradient(90deg, #2962ff, #00b0ff);
-    }
-
-    .deleteButton {
-      background: linear-gradient(90deg, #424242, #9e9e9e);
-    }
+    .saveButton { background: linear-gradient(90deg, #00c853, #64dd17); }
+    .loadButton { background: linear-gradient(90deg, #2962ff, #00b0ff); }
+    .deleteButton { background: linear-gradient(90deg, #424242, #9e9e9e); }
 
     .playerBox {
       background: linear-gradient(180deg, #2b2b2b, #1a1a1a);
@@ -229,104 +221,73 @@
       background: rgba(0,0,0,0.35);
       border: 1px solid rgba(255,140,0,0.35);
       border-radius: 18px;
-      padding: 14px;
+      padding: 12px;
       text-align: left;
       box-shadow: 0 0 12px rgba(255,140,0,0.15);
+      overflow: hidden;
     }
 
     .rankTop {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 10px;
-      font-size: 22px;
+      gap: 8px;
+      font-size: 20px;
       font-weight: bold;
     }
 
     .rankName {
       color: white;
       overflow-wrap: anywhere;
+      min-width: 0;
     }
 
     .rankTotal {
       color: orange;
-      font-size: 24px;
+      font-size: 21px;
       white-space: nowrap;
     }
 
     .rankDifficulty {
-      margin-top: 6px;
+      margin-top: 5px;
       color: rgba(255,255,255,0.75);
-      font-size: 15px;
-    }
-
-    .rankStats {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 8px;
-      margin-top: 12px;
       font-size: 14px;
-      text-align: center;
     }
 
-    .rankStat {
-      background: rgba(255,255,255,0.08);
+    .rankStatsCompact {
+      display: flex;
+      justify-content: space-between;
+      gap: 6px;
+      margin-top: 12px;
+      font-size: 16px;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    .rankMiniStat {
+      flex: 1;
+      background: rgba(255,255,255,0.07);
       border-radius: 12px;
-      padding: 8px 6px;
-    }
-
-    .rankStat strong {
-      display: block;
-      margin-top: 4px;
-      color: white;
-      font-size: 18px;
+      padding: 8px 4px;
+      text-align: center;
+      min-width: 0;
     }
 
     @media (max-width: 700px) {
-      body {
-        padding: 16px;
-      }
-
-      .box {
-        padding: 20px;
-      }
-
-      h1 {
-        font-size: 28px;
-      }
-
-      h2 {
-        font-size: 28px;
-      }
-
-      .slogan {
-        font-size: 20px;
-      }
-
-      .gameInfo {
-        font-size: 17px;
-      }
-
-      .playerBox h3 {
-        font-size: 26px;
-      }
-
-      .missionCard {
-        width: 200px;
-        height: 200px;
-      }
-
-      .buttonGrid {
-        grid-template-columns: 1fr;
-      }
-
-      .rankTop {
-        font-size: 20px;
-      }
-
-      .rankTotal {
-        font-size: 22px;
-      }
+      body { padding: 16px; }
+      .box { padding: 20px; }
+      h1 { font-size: 28px; }
+      h2 { font-size: 28px; }
+      .slogan { font-size: 20px; }
+      .gameInfo { font-size: 17px; }
+      .playerBox { padding: 18px; }
+      .playerBox h3 { font-size: 26px; }
+      .missionCard { width: 200px; height: 200px; }
+      .buttonGrid { grid-template-columns: 1fr; }
+      .rankTop { font-size: 18px; }
+      .rankTotal { font-size: 19px; }
+      .rankStatsCompact { font-size: 14px; gap: 5px; }
+      .rankMiniStat { padding: 7px 3px; }
     }
   </style>
 </head>
@@ -334,63 +295,33 @@
 <body>
 
   <div class="box">
-
-    <p class="slogan">
-      Macht euren Spieleabend verdächtig gut 🎭
-    </p>
-
+    <p class="slogan">Macht euren Spieleabend verdächtig gut 🎭</p>
     <h1>🎭🎉 Geheime Missionen 🎉🎭</h1>
 
     <p class="gameInfo">
       Jeder Spieler erhält eine geheime Mission 🥷<br>
       Erfülle deine Mission möglichst unauffällig,
       ohne dass sie scheitert 🎭<br><br>
-
       🎯 Richtige Anschuldigung = +5 Punkte<br>
       ❌ Falsche Anschuldigung = -1 Punkt<br><br>
-
       Wer am Ende die meisten Punkte hat, gewinnt 🏆
     </p>
 
-    <h2>
-      🟢 Leicht
-      <span class="pointsInfo">+10 erfüllt / -5 gescheitert</span>
-    </h2>
-
+    <h2>🟢 Leicht<span class="pointsInfo">+10 erfüllt / -5 gescheitert</span></h2>
     <textarea id="easyNames" placeholder="Namen für leichte Missionen"></textarea>
 
-    <h2>
-      🟠 Normal
-      <span class="pointsInfo">+20 erfüllt / -10 gescheitert</span>
-    </h2>
-
+    <h2>🟠 Normal<span class="pointsInfo">+20 erfüllt / -10 gescheitert</span></h2>
     <textarea id="normalNames" placeholder="Namen für normale Missionen"></textarea>
 
-    <h2>
-      🔴 Experte
-      <span class="pointsInfo">+30 erfüllt / -15 gescheitert</span>
-    </h2>
-
+    <h2>🔴 Experte<span class="pointsInfo">+30 erfüllt / -15 gescheitert</span></h2>
     <textarea id="hardNames" placeholder="Namen für schwere Missionen"></textarea>
 
-    <button class="mainButton" onclick="createGame()">
-      🎮 Spiel starten
-    </button>
-
-    <button class="mainButton saveButton" onclick="saveGame()">
-      💾 Spielstand speichern
-    </button>
-
-    <button class="mainButton loadButton" onclick="loadGame()">
-      📂 Spielstand laden
-    </button>
-
-    <button class="mainButton deleteButton" onclick="deleteGameSave()">
-      🗑️ Spielstand löschen
-    </button>
+    <button class="mainButton" onclick="createGame()">🎮 Spiel starten</button>
+    <button class="mainButton saveButton" onclick="saveGame()">💾 Spielstand speichern</button>
+    <button class="mainButton loadButton" onclick="loadGame()">📂 Spielstand laden</button>
+    <button class="mainButton deleteButton" onclick="deleteGameSave()">🗑️ Spielstand löschen</button>
 
     <div id="qrList"></div>
-
   </div>
 
   <script>
@@ -502,10 +433,7 @@
       addPlayers(getNames("normalNames"), "Normal", normalMissions);
       addPlayers(getNames("hardNames"), "Experte", hardMissions);
 
-      players.forEach((player, index) => {
-        createPlayerBox(player, index);
-      });
-
+      players.forEach((player, index) => createPlayerBox(player, index));
       createScoreTable();
     }
 
@@ -514,9 +442,9 @@
 
       names.forEach((name, index) => {
         players.push({
-          name: name,
-          difficulty: difficulty,
-          missionList: missionList,
+          name,
+          difficulty,
+          missionList,
           mission: shuffledMissions[index % shuffledMissions.length],
           accusation: 0,
           done: 0,
@@ -528,80 +456,37 @@
 
     function createPlayerBox(player, index) {
       const qrList = document.getElementById("qrList");
-
       const playerBox = document.createElement("div");
+
       playerBox.className = "playerBox";
       playerBox.id = `playerBox${index}`;
 
       playerBox.innerHTML = `
         <h3>${player.name}</h3>
-
-        <div class="difficulty">
-          Schwierigkeit: ${player.difficulty}
-        </div>
+        <div class="difficulty">Schwierigkeit: ${player.difficulty}</div>
 
         <div class="missionCard" onclick="this.classList.toggle('flipped')">
           <div class="missionInner">
-
             <div class="missionFront">
               <div>GEHEIME</div>
-
-              <div style="font-size:55px; margin:10px 0;">
-                🥷
-              </div>
-
+              <div style="font-size:55px; margin:10px 0;">🥷</div>
               <div>MISSION</div>
-
-              <small style="margin-top:15px; opacity:0.7; font-size:14px;">
-                Antippen
-              </small>
+              <small style="margin-top:15px; opacity:0.7; font-size:14px;">Antippen</small>
             </div>
 
-            <div class="missionBack">
-              ${player.mission}
-            </div>
-
+            <div class="missionBack">${player.mission}</div>
           </div>
         </div>
 
-        <button
-          class="changeButton"
-          onclick="changeMission(${index})"
-          style="background:linear-gradient(90deg,#8e24aa,#d500f9); margin-top:15px;"
-        >
+        <button class="changeButton" onclick="changeMission(${index})" style="background:linear-gradient(90deg,#8e24aa,#d500f9); margin-top:15px;">
           🔄 Mission ändern
         </button>
 
         <div class="buttonGrid">
-
-          <button
-            onclick="addMissionScore(${index}, this)"
-            style="background:linear-gradient(90deg,#00c853,#64dd17);"
-          >
-            ✅ Mission erfüllt
-          </button>
-
-          <button
-            onclick="addCaughtScore(${index}, this)"
-            style="background:linear-gradient(90deg,#ff1744,#ff9100);"
-          >
-            ❌ Mission gescheitert
-          </button>
-
-          <button
-            onclick="addScore(${index}, 'accusation', 5, this)"
-            style="background:linear-gradient(90deg,#2962ff,#00b0ff);"
-          >
-            🎯 Anschuldigung korrekt
-          </button>
-
-          <button
-            onclick="addScore(${index}, 'accusation', -1, this)"
-            style="background:linear-gradient(90deg,#616161,#9e9e9e);"
-          >
-            ❌ Anschuldigung falsch
-          </button>
-
+          <button onclick="addMissionScore(${index}, this)" style="background:linear-gradient(90deg,#00c853,#64dd17);">✅ Mission erfüllt</button>
+          <button onclick="addCaughtScore(${index}, this)" style="background:linear-gradient(90deg,#ff1744,#ff9100);">❌ Mission gescheitert</button>
+          <button onclick="addScore(${index}, 'accusation', 5, this)" style="background:linear-gradient(90deg,#2962ff,#00b0ff);">🎯 Anschuldigung korrekt</button>
+          <button onclick="addScore(${index}, 'accusation', -1, this)" style="background:linear-gradient(90deg,#616161,#9e9e9e);">❌ Anschuldigung falsch</button>
         </div>
 
         <div class="statusText"></div>
@@ -622,31 +507,25 @@
       );
 
       if (availableMissions.length === 0) {
-        availableMissions = player.missionList.filter(
-          mission => mission !== player.mission
-        );
+        availableMissions = player.missionList.filter(mission => mission !== player.mission);
       }
 
       const newMission = availableMissions[Math.floor(Math.random() * availableMissions.length)];
-
       player.mission = newMission;
 
       const playerBox = document.getElementById(`playerBox${index}`);
-      const missionBack = playerBox.querySelector(".missionBack");
-      const missionCard = playerBox.querySelector(".missionCard");
+      playerBox.querySelector(".missionBack").innerHTML = newMission;
+      playerBox.querySelector(".missionCard").classList.remove("flipped");
+
       const status = playerBox.querySelector(".statusText");
-
-      missionBack.innerHTML = newMission;
-      missionCard.classList.remove("flipped");
-
       status.innerHTML = "🔄 Neue Mission erstellt!";
       status.style.color = "orange";
     }
 
     function createScoreTable() {
       const qrList = document.getElementById("qrList");
-
       const tableBox = document.createElement("div");
+
       tableBox.className = "playerBox";
       tableBox.id = "scoreTableBox";
 
@@ -662,14 +541,11 @@
     function updateScoreTable() {
       const list = document.getElementById("scoreTableBody");
 
-      if (!list) {
-        return;
-      }
+      if (!list) return;
 
       list.innerHTML = "";
 
       const sortedPlayers = [...players].sort((a, b) => b.total - a.total);
-
       let displayRank = 1;
 
       sortedPlayers.forEach((player, rank) => {
@@ -678,7 +554,6 @@
         }
 
         let medal = "";
-
         if (displayRank === 1) medal = "🥇";
         else if (displayRank === 2) medal = "🥈";
         else if (displayRank === 3) medal = "🥉";
@@ -692,21 +567,10 @@
 
             <div class="rankDifficulty">${player.difficulty}</div>
 
-            <div class="rankStats">
-              <div class="rankStat">
-                🎯 Anschuldigung
-                <strong>${player.accusation}</strong>
-              </div>
-
-              <div class="rankStat">
-                ✅ Erfüllt
-                <strong>${player.done}</strong>
-              </div>
-
-              <div class="rankStat">
-                ❌ Gescheitert
-                <strong>${player.caught}</strong>
-              </div>
+            <div class="rankStatsCompact">
+              <div class="rankMiniStat">🎯 ${player.accusation}</div>
+              <div class="rankMiniStat">✅ ${player.done}</div>
+              <div class="rankMiniStat">❌ ${player.caught}</div>
             </div>
           </div>
         `;
@@ -715,32 +579,20 @@
 
     function addMissionScore(index, button) {
       const player = players[index];
-
       let points = 20;
 
-      if (player.difficulty === "Leicht") {
-        points = 10;
-      }
-
-      else if (player.difficulty === "Experte") {
-        points = 30;
-      }
+      if (player.difficulty === "Leicht") points = 10;
+      else if (player.difficulty === "Experte") points = 30;
 
       addScore(index, "done", points, button);
     }
 
     function addCaughtScore(index, button) {
       const player = players[index];
-
       let points = -10;
 
-      if (player.difficulty === "Leicht") {
-        points = -5;
-      }
-
-      else if (player.difficulty === "Experte") {
-        points = -15;
-      }
+      if (player.difficulty === "Leicht") points = -5;
+      else if (player.difficulty === "Experte") points = -15;
 
       addScore(index, "caught", points, button);
     }
@@ -752,14 +604,11 @@
         if (player.done !== 0) {
           player.done = 0;
           button.style.opacity = "1";
-        }
-
-        else {
+        } else {
           player.done = points;
           player.caught = 0;
 
           const buttons = button.parentElement.querySelectorAll("button");
-
           buttons[0].style.opacity = "1";
           buttons[1].style.opacity = "0.5";
         }
@@ -769,14 +618,11 @@
         if (player.caught !== 0) {
           player.caught = 0;
           button.style.opacity = "1";
-        }
-
-        else {
+        } else {
           player.caught = points;
           player.done = 0;
 
           const buttons = button.parentElement.querySelectorAll("button");
-
           buttons[0].style.opacity = "0.5";
           buttons[1].style.opacity = "1";
         }
@@ -787,7 +633,6 @@
       }
 
       player.total = player.accusation + player.done + player.caught;
-
       updateScoreTable();
 
       const status = button.parentElement.nextElementSibling;
@@ -796,29 +641,16 @@
         if (player.done === 0 && player.caught === 0) {
           status.innerHTML = "Auswahl zurückgesetzt";
           status.style.color = "orange";
-        }
-
-        else if (player.done !== 0) {
+        } else if (player.done !== 0) {
           status.innerHTML = `Mission erfüllt: +${player.done} Punkte`;
           status.style.color = "#64ff64";
-        }
-
-        else if (player.caught !== 0) {
+        } else if (player.caught !== 0) {
           status.innerHTML = `Mission gescheitert: ${player.caught} Punkte`;
           status.style.color = "#ff5252";
         }
-      }
-
-      else {
-        if (points > 0) {
-          status.innerHTML = `+${points} Punkte`;
-          status.style.color = "#64ff64";
-        }
-
-        else {
-          status.innerHTML = `${points} Punkte`;
-          status.style.color = "#ff5252";
-        }
+      } else {
+        status.innerHTML = points > 0 ? `+${points} Punkte` : `${points} Punkte`;
+        status.style.color = points > 0 ? "#64ff64" : "#ff5252";
       }
     }
 
@@ -833,9 +665,7 @@
     function saveGame() {
       const saveName = prompt("Name für den Spielstand:");
 
-      if (!saveName) {
-        return;
-      }
+      if (!saveName) return;
 
       const saves = getAllSaves();
 
@@ -844,11 +674,10 @@
         easyNames: document.getElementById("easyNames").value,
         normalNames: document.getElementById("normalNames").value,
         hardNames: document.getElementById("hardNames").value,
-        players: players
+        players
       };
 
       saveAllSaves(saves);
-
       alert("Spielstand gespeichert: " + saveName);
     }
 
@@ -866,9 +695,7 @@
         saveNames.map((name, index) => `${index + 1}. ${name} (${saves[name].date})`).join("\n")
       );
 
-      if (!input) {
-        return;
-      }
+      if (!input) return;
 
       const selectedName = resolveSaveName(input, saveNames, saves);
 
@@ -878,7 +705,6 @@
       }
 
       restoreGame(saves[selectedName]);
-
       alert("Spielstand geladen: " + selectedName);
     }
 
@@ -896,9 +722,7 @@
         saveNames.map((name, index) => `${index + 1}. ${name} (${saves[name].date})`).join("\n")
       );
 
-      if (!input) {
-        return;
-      }
+      if (!input) return;
 
       const selectedName = resolveSaveName(input, saveNames, saves);
 
@@ -915,9 +739,7 @@
     }
 
     function resolveSaveName(input, saveNames, saves) {
-      if (saves[input]) {
-        return input;
-      }
+      if (saves[input]) return input;
 
       const number = parseInt(input, 10);
 
@@ -938,10 +760,7 @@
       const qrList = document.getElementById("qrList");
       qrList.innerHTML = "";
 
-      players.forEach((player, index) => {
-        createPlayerBox(player, index);
-      });
-
+      players.forEach((player, index) => createPlayerBox(player, index));
       createScoreTable();
     }
 
@@ -949,6 +768,5 @@
       navigator.serviceWorker.register("./service-worker.js");
     }
   </script>
-
 </body>
 </html>

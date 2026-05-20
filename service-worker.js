@@ -1,4 +1,4 @@
-const CACHE_NAME = "geheime-missionen-v8";
+const CACHE_NAME = "geheime-missionen-v9";
 
 const FILES_TO_CACHE = [
   "./",
@@ -9,7 +9,6 @@ const FILES_TO_CACHE = [
 
 self.addEventListener("install", event => {
   self.skipWaiting();
-
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
       return cache.addAll(FILES_TO_CACHE);
@@ -33,7 +32,6 @@ self.addEventListener("activate", event => {
 
 self.addEventListener("fetch", event => {
   event.respondWith(
-    fetch(event.request)
-      .catch(() => caches.match(event.request))
+    fetch(event.request).catch(() => caches.match(event.request))
   );
 });
