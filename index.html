@@ -4,12 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Geheime Missionen</title>
-  
+
   <link rel="manifest" href="manifest.json">
-
-<meta name="theme-color" content="#ff8800">
-
-<link rel="apple-touch-icon" href="icon.png">
+  <meta name="theme-color" content="#ff8800">
+  <link rel="apple-touch-icon" href="icon.png">
 
   <style>
     body {
@@ -92,7 +90,7 @@
       cursor: pointer;
     }
 
-    .box > button {
+    .mainButton {
       width: 100%;
       padding: 18px;
       background: linear-gradient(90deg, orange, #ff5500);
@@ -101,8 +99,16 @@
       color: white;
       font-size: 24px;
       font-weight: bold;
-      margin-top: 20px;
+      margin-top: 15px;
       box-shadow: 0 0 20px rgba(255,140,0,0.4);
+    }
+
+    .saveButton {
+      background: linear-gradient(90deg, #00c853, #64dd17);
+    }
+
+    .loadButton {
+      background: linear-gradient(90deg, #2962ff, #00b0ff);
     }
 
     .playerBox {
@@ -281,42 +287,37 @@
 
     <h2>
       🟢 Leicht
-      <span class="pointsInfo">
-        +10 erfüllt / -5 gescheitert
-      </span>
+      <span class="pointsInfo">+10 erfüllt / -5 gescheitert</span>
     </h2>
 
     <textarea id="easyNames" placeholder="Namen für leichte Missionen"></textarea>
 
     <h2>
       🟠 Normal
-      <span class="pointsInfo">
-        +20 erfüllt / -10 gescheitert
-      </span>
+      <span class="pointsInfo">+20 erfüllt / -10 gescheitert</span>
     </h2>
 
     <textarea id="normalNames" placeholder="Namen für normale Missionen"></textarea>
 
     <h2>
       🔴 Experte
-      <span class="pointsInfo">
-        +30 erfüllt / -15 gescheitert
-      </span>
+      <span class="pointsInfo">+30 erfüllt / -15 gescheitert</span>
     </h2>
 
     <textarea id="hardNames" placeholder="Namen für schwere Missionen"></textarea>
 
-    <button onclick="createGame()">
+    <button class="mainButton" onclick="createGame()">
       🎮 Spiel starten
     </button>
-    
-<button onclick="saveGame()">
-💾 Spiel speichern
-</button>
 
-<button onclick="loadGame()">
-📂 Spiel laden
-</button>
+    <button class="mainButton saveButton" onclick="saveGame()">
+      💾 Spiel speichern
+    </button>
+
+    <button class="mainButton loadButton" onclick="loadGame()">
+      📂 Spiel laden
+    </button>
+
     <div id="qrList"></div>
 
   </div>
@@ -590,6 +591,7 @@
 
       const tableBox = document.createElement("div");
       tableBox.className = "playerBox";
+      tableBox.id = "scoreTableBox";
 
       tableBox.innerHTML = `
         <h3>🏆 Rangliste</h3>
@@ -618,6 +620,10 @@
 
     function updateScoreTable() {
       const tableBody = document.getElementById("scoreTableBody");
+
+      if (!tableBody) {
+        return;
+      }
 
       tableBody.innerHTML = "";
 
@@ -780,46 +786,65 @@
         }
       }
     }
+
+    function saveGame() {
+      const gameData = {
+        easyNames: document.getElementById("easyNames").value,
+        normalNames: document.getElementById("normalNames").value,
+        hardNames: document.getElementById("hardNames").value,
+        players: players
+      };
+
+      localStorage.setItem(
+        "geheimeMissionenSave",
+        JSON.stringify(gameData)
+      );
+
+      alert("Spiel gespeichert 💾");
+    }
+
+    function loadGame() {
+      const saved =
+        localStorage.getItem("geheimeMissionenSave");
+
+      if (!saved) {
+        alert("Kein Spielstand gefunden");
+        return;
+      }
+
+      const gameData =
+        JSON.parse(saved);
+
+      document.getElementById("easyNames").value =
+        gameData.easyNames || "";
+
+      document.getElementById("normalNames").value =
+        gameData.normalNames || "";
+
+      document.getElementById("hardNames").value =
+        gameData.hardNames || "";
+
+      players =
+        gameData.players || [];
+
+      const qrList =
+        document.getElementById("qrList");
+
+      qrList.innerHTML = "";
+
+      players.forEach((player, index) => {
+        createPlayerBox(player, index);
+      });
+
+      createScoreTable();
+
+      alert("Spiel geladen 📂");
+    }
+
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("./service-worker.js");
+    }
   </script>
-  <script>
-function saveGame() {
-  const saveData = {
-    players,
-    missions,
-    scores,
-    failed,
-    round
-  }
 
-  localStorage.setItem("geheimeMissionenSave", JSON.stringify(saveData))
-  alert("Spielstand gespeichert ✅")
-}
-
-function loadGame() {
-  const saveData = localStorage.getItem("geheimeMissionenSave")
-
-  if (!saveData) {
-    alert("Kein Spielstand gefunden ❌")
-    return
-  }
-
-  const data = JSON.parse(saveData)
-
-  players = data.players
-  missions = data.missions
-  scores = data.scores
-  failed = data.failed
-  round = data.round
-
-  updateUI()
-
-  alert("Spielstand geladen ✅")
-}
-  </script>
-<script>
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("./service-worker.js");
-  }
-</script>
 </body>
 </html>
