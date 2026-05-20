@@ -18,6 +18,7 @@
       justify-content: center;
       padding: 30px;
       min-height: 100vh;
+      margin: 0;
     }
 
     .box {
@@ -88,6 +89,7 @@
 
     button {
       cursor: pointer;
+      touch-action: manipulation;
     }
 
     .mainButton {
@@ -207,6 +209,7 @@
       margin-top: 15px;
       font-size: 20px;
       font-weight: bold;
+      min-height: 24px;
     }
 
     table {
@@ -228,6 +231,14 @@
     }
 
     @media (max-width: 700px) {
+      body {
+        padding: 16px;
+      }
+
+      .box {
+        padding: 20px;
+      }
+
       h1 {
         font-size: 28px;
       }
@@ -614,7 +625,6 @@
       `;
 
       qrList.appendChild(tableBox);
-
       updateScoreTable();
     }
 
