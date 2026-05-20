@@ -797,30 +797,128 @@
       }
     }
 
-    function saveGame() {
-      const gameData = {
-        easyNames: document.getElementById("easyNames").value,
-        normalNames: document.getElementById("normalNames").value,
-        hardNames: document.getElementById("hardNames").value,
-        players: players
-      };
+    function getAllSaves() {
+  return JSON.parse(localStorage.getItem("geheimeMissionenSaves")) || {};
+}
 
-      localStorage.setItem(
-        "geheimeMissionenSave",
-        JSON.stringify(gameData)
-      );
+function saveAllSaves(saves) {
+  localStorage.setItem("geheimeMissionenSaves", JSON.stringify(saves));
+}
 
-      alert("Spiel gespeichert 💾");
+function saveGame() {
+  const saveName = prompt("Name für den Spielstand:");
+
+  if (!saveName) {
+    return;
+  }
+
+  const saves = getAllSaves();
+
+  saves[saveName] = {
+    date: new Date().toLocaleString(),
+    easyNames: document.getElementById("easyNames").value,
+    normalNames: document.getElementById("normalNames").value,
+    hardNames: document.getElementById("hardNames").value,
+    players: players
+  };
+
+  saveAllSaves(saves);
+
+  alert("Spielstand gespeichert: " + saveName);
+}
+
+function loadGame() {
+  const saves = getAllSaves();
+  const saveNames = Object.keys(saves);
+
+  if (saveNames.length === 0) {
+    alert("Keine Spielstände gefunden");
+    return;
+  }
+
+  const saveName = prompt(
+    "Welchen Spielstand laden?\n\n" +
+    saveNames.map((name, index) => `${index + 1}. ${name}`).join("\n")
+  );
+
+  if (!saveName) {
+    return;
+  }
+
+  let selectedName = saveName;
+
+  if (!saves[selectedName]) {
+    const number = parseInt(saveName, 10);
+
+    if (!isNaN(number) && saveNames[number - 1]) {
+      selectedName = saveNames[number - 1];
     }
+  }
 
-    function loadGame() {
-      const saved =
-        localStorage.getItem("geheimeMissionenSave");
+  if (!saves[selectedName]) {
+    alert("Spielstand nicht gefunden");
+    return;
+  }
 
-      if (!saved) {
-        alert("Kein Spielstand gefunden");
-        return;
-      }
+  const gameData = saves[selectedName];
+
+  document.getElementById("easyNames").value = gameData.easyNames || "";
+  document.getElementById("normalNames").value = gameData.normalNames || "";
+  document.getElementById("hardNames").value = gameData.hardNames || "";
+
+  players = gameData.players || [];
+
+  const qrList = document.getElementById("qrList");
+  qrList.innerHTML = "";
+
+  players.forEach((player, index) => {
+    createPlayerBox(player, index);
+  });
+
+  createScoreTable();
+
+  alert("Spielstand geladen: " + selectedName);
+}
+
+function deleteGameSave() {
+  const saves = getAllSaves();
+  const saveNames = Object.keys(saves);
+
+  if (saveNames.length === 0) {
+    alert("Keine Spielstände vorhanden");
+    return;
+  }
+
+  const saveName = prompt(
+    "Welchen Spielstand löschen?\n\n" +
+    saveNames.map((name, index) => `${index + 1}. ${name}`).join("\n")
+  );
+
+  if (!saveName) {
+    return;
+  }
+
+  let selectedName = saveName;
+
+  if (!saves[selectedName]) {
+    const number = parseInt(saveName, 10);
+
+    if (!isNaN(number) && saveNames[number - 1]) {
+      selectedName = saveNames[number - 1];
+    }
+  }
+
+  if (!saves[selectedName]) {
+    alert("Spielstand nicht gefunden");
+    return;
+  }
+
+  if (confirm("Spielstand wirklich löschen?\n\n" + selectedName)) {
+    delete saves[selectedName];
+    saveAllSaves(saves);
+    alert("Spielstand gelöscht");
+  }
+}
 
       const gameData =
         JSON.parse(saved);
