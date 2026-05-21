@@ -114,10 +114,10 @@ font-weight:bold;
       Wer am Ende die meisten Punkte hat, gewinnt 🏆
     </p>
 
-    <button class="mainButton profileButton" onclick="createProfile()">👤 Profil erstellen</button>
-    <button class="mainButton profileButton" onclick="showProfiles()">📊 Profile anzeigen</button>
-    <button class="mainButton profileButton" onclick="changeProfileAvatar()">🖼️ Profilbild ändern</button>
-    <button class="mainButton deleteButton" onclick="deleteProfile()">🗑️ Profil löschen</button>
+    <button type="button" class="mainButton profileButton" onclick="createProfile()">👤 Profil erstellen</button>
+    <button type="button" class="mainButton profileButton" onclick="showProfiles()">📊 Profile anzeigen</button>
+    <button type="button" class="mainButton profileButton" onclick="changeProfileAvatar()">🖼️ Profilbild ändern</button>
+    <button type="button" class="mainButton deleteButton" onclick="deleteProfile()">🗑️ Profil löschen</button>
     <button class="mainButton saveButton" onclick="exportProfiles()">📤 Profile sichern</button>
     <button class="mainButton loadButton" onclick="importProfiles()">📥 Profile wiederherstellen</button>
     <button class="mainButton loadButton" onclick="continueRound()">🔄 Runde fortsetzen</button>
@@ -499,7 +499,14 @@ font-weight:bold;
 
     function restoreGame(gameData) {
       selectedProfiles = gameData.selectedProfiles || { Leicht: [], Normal: [], Experte: [] };
-      renderSelectedProfiles();
+  
+    // Sicherheits-Override: sorgt dafür, dass die Profilbuttons sicher funktionieren
+    window.onerror = function(message, source, lineno, colno, error) {
+      alert("Fehler im Spielcode: " + message + " (Zeile " + lineno + ")");
+      return false;
+    };
+
+    renderSelectedProfiles();
 
       players = gameData.players || [];
       const qrList = document.getElementById("qrList");
@@ -1191,46 +1198,6 @@ font-weight:bold;
       return profiles[name]?.avatar || avatarOptions[0].id;
     }
 
-    function openAvatarPicker(onPick) {
-      const root = document.getElementById("avatarModalRoot");
-      const groups = ["Kind", "Erwachsen", "Rentner"];
-
-      root.innerHTML = `
-        <div class="avatarModal">
-          <div class="avatarModalInner">
-            <h2>Profilbild auswählen</h2>
-            ${groups.map(group => `
-              <div class="avatarGroupTitle">${group}</div>
-              <div class="avatarGrid">
-                ${avatarOptions
-                  .filter(avatar => avatar.age === group)
-                  .map(avatar => `
-                    <button class="avatarOption" onclick="pickAvatar('${avatar.id}')">
-                      <img src="${avatar.id}" alt="">
-                    </button>
-                  `).join("")}
-              </div>
-            `).join("")}
-            <button class="avatarCancel" onclick="closeAvatarPicker()">Abbrechen</button>
-          </div>
-        </div>
-      `;
-
-      window.currentAvatarPickCallback = onPick;
-    }
-
-    function pickAvatar(src) {
-      if (typeof window.currentAvatarPickCallback === "function") {
-        window.currentAvatarPickCallback(src);
-      }
-      closeAvatarPicker();
-    }
-
-    function closeAvatarPicker() {
-      document.getElementById("avatarModalRoot").innerHTML = "";
-      window.currentAvatarPickCallback = null;
-    }
-
 
 
     const profileColors = [
@@ -1368,6 +1335,59 @@ font-weight:bold;
         `).join("");
       }
     }
+
+
+    function openAvatarOnlyPicker(onSave) {
+      const root = document.getElementById("avatarModalRoot");
+
+      root.innerHTML = `
+        <div class="profileCreateModal">
+          <div class="profileCreateInner">
+            <div class="profileCreateTop">
+              <button class="profileIconBtn" onclick="closeProfileCreateScreen()">←</button>
+              <div class="profileLogo">🎯 GEHEIME <span>MISSIONEN</span></div>
+              <button class="profileIconBtn" onclick="closeProfileCreateScreen()">⚙️</button>
+            </div>
+
+            <div class="profileCreatePanel">
+              <h2 class="profileCreateTitle">PROFILBILD ÄNDERN</h2>
+
+              <div class="stepRow"><span class="stepNo">1</span> AVATAR AUSWÄHLEN</div>
+              <div class="avatarPickArea" id="avatarPickArea">
+                ${renderAgeBlock("Kind")}
+                ${renderAgeBlock("Erwachsen")}
+                ${renderAgeBlock("Rentner")}
+              </div>
+
+              <div class="stepRow"><span class="stepNo">2</span> PROFILFARBE WÄHLEN</div>
+              <div class="colorRow" id="profileColorRow">
+                ${profileColors.map(color => `
+                  <button type="button" class="colorPick ${color === pendingProfileColor ? "selected" : ""}"
+                    style="background:${color}; color:${color};"
+                    onclick="selectPendingColor('${color}')"></button>
+                `).join("")}
+              </div>
+            </div>
+
+            <div class="profileCreateActions">
+              <button class="profileCancelBtn" onclick="closeProfileCreateScreen()">✕ ABBRECHEN</button>
+              <button class="profileSaveBtn" onclick="saveAvatarOnly()">✓ SPEICHERN</button>
+            </div>
+          </div>
+        </div>
+      `;
+
+      window.currentAvatarOnlySave = onSave;
+    }
+
+    function saveAvatarOnly() {
+      if (typeof window.currentAvatarOnlySave === "function") {
+        window.currentAvatarOnlySave(pendingProfileAvatar || avatarOptions[0].id, pendingProfileColor || profileColors[0]);
+      }
+      window.currentAvatarOnlySave = null;
+      closeProfileCreateScreen();
+    }
+
 
     function saveCreatedProfile() {
       const input = document.getElementById("newProfileNameInput");
@@ -1551,12 +1571,17 @@ function selectProfiles(difficulty) {
         return;
       }
 
-      openAvatarPicker(function(avatar) {
+      pendingProfileAvatar = profiles[selectedName].avatar || avatarOptions[0].id;
+      pendingProfileColor = profiles[selectedName].color || profileColors[0];
+
+      openAvatarOnlyPicker(function(avatar, color) {
         profiles[selectedName].avatar = avatar;
+        profiles[selectedName].color = color;
         saveProfiles(profiles);
         renderProfileButtons();
         renderSelectedProfiles();
         showProfiles();
+        alert("Profilbild geändert");
       });
     }
 
