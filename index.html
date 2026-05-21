@@ -4,87 +4,180 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Geheime Missionen</title>
+
 <style>
 body{
+    margin:0;
+    padding:20px;
     background:#000;
     color:white;
     font-family:Arial,sans-serif;
-    padding:20px;
 }
-button{
+
+.container{
+    max-width:700px;
+    margin:auto;
+}
+
+h1{
+    text-align:center;
+    font-size:48px;
+    margin-bottom:30px;
+}
+
+.top-btn{
     width:100%;
-    padding:20px;
-    margin:10px 0;
+    padding:22px;
     border:none;
-    border-radius:20px;
-    font-size:24px;
+    border-radius:25px;
+    font-size:20px;
     font-weight:bold;
     color:white;
+    margin-bottom:15px;
 }
-.red{background:#8b0000;}
-.green{background:#006400;}
-.blue{background:#003399;}
-.purple{background:#5a007a;}
+
+.purple{background:#6d008f;}
+.red{background:#9c0000;}
+.green{background:#007500;}
+.blue{background:#0037a3;}
+
 .card{
-    border:1px solid #ff6600;
-    border-radius:25px;
-    padding:20px;
-    margin:20px 0;
+    border:2px solid #ff5e00;
+    border-radius:30px;
+    padding:25px;
+    margin-bottom:25px;
+    background:#050505;
 }
+
+.card h2{
+    font-size:42px;
+    margin:0 0 10px 0;
+}
+
+.info{
+    color:#bbbbbb;
+    font-size:24px;
+    margin-bottom:20px;
+}
+
+.selectBtn{
+    width:100%;
+    padding:25px;
+    border:none;
+    border-radius:25px;
+    font-size:26px;
+    font-weight:bold;
+    color:white;
+    background:#0037a3;
+}
+
+.mainBtn{
+    width:100%;
+    padding:28px;
+    border:none;
+    border-radius:25px;
+    font-size:26px;
+    font-weight:bold;
+    color:white;
+    margin-top:15px;
+}
+
+.selected{
+    margin-top:15px;
+    color:#ffb347;
+    font-size:20px;
+}
+
+.profileCard{
+    background:#111;
+    border-radius:20px;
+    padding:15px;
+    margin-top:10px;
+}
+
 </style>
 </head>
 <body>
 
+<div class="container">
+
 <h1>🎯 Geheime Missionen</h1>
 
-<button class="purple" onclick="createProfile()">👤 Profil erstellen</button>
-<button class="purple" onclick="showProfiles()">📊 Profile anzeigen</button>
-<button class="red" onclick="deleteProfile()">🗑️ Profil löschen</button>
+<button class="top-btn purple" onclick="createProfile()">👤 Profil erstellen</button>
+<button class="top-btn purple" onclick="showProfiles()">📊 Profile anzeigen</button>
+<button class="top-btn red" onclick="deleteProfile()">🗑️ Profil löschen</button>
 
 <div class="card">
-<h2>🟢 Leicht</h2>
-<button class="blue" onclick="selectProfiles('leicht')">👥 Profile auswählen</button>
+    <h2>🟢 Leicht</h2>
+    <div class="info">+10 erfüllt / -5 gescheitert</div>
+
+    <button class="selectBtn" onclick="selectProfiles('leicht')">
+        👥 Profile auswählen
+    </button>
+
+    <div id="leichtSelected" class="selected"></div>
 </div>
 
 <div class="card">
-<h2>🟠 Normal</h2>
-<button class="blue" onclick="selectProfiles('normal')">👥 Profile auswählen</button>
+    <h2>🟠 Normal</h2>
+    <div class="info">+20 erfüllt / -10 gescheitert</div>
+
+    <button class="selectBtn" onclick="selectProfiles('normal')">
+        👥 Profile auswählen
+    </button>
+
+    <div id="normalSelected" class="selected"></div>
 </div>
 
 <div class="card">
-<h2>🔴 Experte</h2>
-<button class="blue" onclick="selectProfiles('experte')">👥 Profile auswählen</button>
+    <h2>🔴 Experte</h2>
+    <div class="info">+30 erfüllt / -15 gescheitert</div>
+
+    <button class="selectBtn" onclick="selectProfiles('experte')">
+        👥 Profile auswählen
+    </button>
+
+    <div id="experteSelected" class="selected"></div>
 </div>
 
-<button class="red">🎮 Spiel starten</button>
-<button class="green">💾 Spielstand speichern</button>
-<button class="blue">📂 Spielstand laden</button>
+<button class="mainBtn red">🎮 Spiel starten</button>
+<button class="mainBtn green">💾 Spielstand speichern</button>
+<button class="mainBtn blue">📂 Spielstand laden</button>
+
+</div>
 
 <script>
+
 function getProfiles(){
-    return JSON.parse(localStorage.getItem("profiles") || "[]");
+    return JSON.parse(localStorage.getItem("missionProfiles") || "[]");
 }
 
-function saveProfiles(p){
-    localStorage.setItem("profiles", JSON.stringify(p));
+function saveProfiles(profiles){
+    localStorage.setItem("missionProfiles", JSON.stringify(profiles));
 }
 
 function createProfile(){
-    const name = prompt("Profilname:");
+
+    const name = prompt("Profilname eingeben");
+
     if(!name) return;
 
     let profiles = getProfiles();
 
     profiles.push({
         name:name,
-        points:0
+        points:0,
+        missions:0,
+        failed:0
     });
 
     saveProfiles(profiles);
+
     alert("Profil erstellt!");
 }
 
 function showProfiles(){
+
     let profiles = getProfiles();
 
     if(profiles.length === 0){
@@ -92,14 +185,15 @@ function showProfiles(){
         return;
     }
 
-    alert(
-        profiles.map((p,i)=>
-            (i+1)+". "+p.name+" ("+p.points+" Punkte)"
-        ).join("\n")
-    );
+    let text = profiles.map((p,i)=>
+        (i+1)+". "+p.name+" | Punkte: "+p.points
+    ).join("\n");
+
+    alert(text);
 }
 
 function deleteProfile(){
+
     let profiles = getProfiles();
 
     if(profiles.length === 0){
@@ -111,20 +205,34 @@ function deleteProfile(){
         (i+1)+". "+p.name
     ).join("\n");
 
-    let choice = prompt("Welches Profil löschen?\n\n"+text);
+    let choice = prompt(
+        "Welches Profil löschen?\n\n"+text
+    );
 
     if(!choice) return;
 
     let index = parseInt(choice)-1;
 
     if(index >=0 && index < profiles.length){
+
+        let deleted = profiles[index].name;
+
         profiles.splice(index,1);
+
         saveProfiles(profiles);
-        alert("Profil gelöscht");
+
+        alert(deleted+" gelöscht");
     }
 }
 
+let selectedPlayers = {
+    leicht:[],
+    normal:[],
+    experte:[]
+};
+
 function selectProfiles(level){
+
     let profiles = getProfiles();
 
     if(profiles.length === 0){
@@ -136,8 +244,34 @@ function selectProfiles(level){
         (i+1)+". "+p.name
     ).join("\n");
 
-    alert("Ausgewählt für "+level+":\n\n"+text);
+    let input = prompt(
+        "Profile auswählen für "+level+"\n\n"+
+        "Mehrere Zahlen mit Komma trennen\n\n"+
+        text
+    );
+
+    if(!input) return;
+
+    let numbers = input.split(",");
+
+    let chosen = [];
+
+    numbers.forEach(n=>{
+
+        let index = parseInt(n.trim())-1;
+
+        if(index >=0 && index < profiles.length){
+            chosen.push(profiles[index].name);
+        }
+
+    });
+
+    selectedPlayers[level] = chosen;
+
+    document.getElementById(level+"Selected").innerHTML =
+        "Ausgewählt: "+chosen.join(", ");
 }
+
 </script>
 
 </body>
