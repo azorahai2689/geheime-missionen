@@ -1,4 +1,4 @@
-const CACHE_NAME = "geheime-missionen-v60";
+const CACHE_NAME = "geheime-missionen-v80";
 
 const FILES_TO_CACHE = [
   "./",
