@@ -10,269 +10,42 @@
   <link rel="apple-touch-icon" href="icon.png">
 
   <style>
-    body {
-      background: linear-gradient(180deg, #111, #000);
-      color: white;
-      font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      padding: 30px;
-      min-height: 100vh;
-      margin: 0;
-    }
-
-    .box {
-      background: rgba(30,30,30,0.95);
-      padding: 30px;
-      border-radius: 25px;
-      width: 100%;
-      max-width: 800px;
-      box-shadow: 0 0 30px rgba(255,140,0,0.3);
-      overflow: hidden;
-    }
-
-    .slogan {
-      text-align: center;
-      font-size: 24px;
-      margin-top: 0;
-      margin-bottom: 15px;
-      color: orange;
-      text-shadow: 0 0 10px rgba(255,140,0,0.5);
-    }
-
-    h1 {
-      text-align: center;
-      font-size: 40px;
-      margin-bottom: 25px;
-      text-shadow: 0 0 10px orange, 0 0 20px orange;
-    }
-
-    .gameInfo {
-      text-align: center;
-      font-size: 20px;
-      line-height: 1.6;
-      margin-bottom: 35px;
-      color: rgba(255,255,255,0.85);
-    }
-
-    h2 {
-      color: orange;
-      margin-top: 25px;
-      font-size: 34px;
-      text-shadow: 0 0 10px rgba(255,140,0,0.6);
-    }
-
-    .pointsInfo {
-      display: block;
-      font-size: 15px;
-      color: white;
-      opacity: 0.75;
-      margin-top: 5px;
-      font-weight: normal;
-    }
-
-    textarea {
-      width: 100%;
-      height: 110px;
-      padding: 15px;
-      border-radius: 18px;
-      border: none;
-      background: #2c2c2c;
-      color: white;
-      font-size: 18px;
-      margin-bottom: 15px;
-      box-sizing: border-box;
-    }
-
-    textarea::placeholder {
-      color: rgba(255,255,255,0.5);
-    }
-
-    button {
-      cursor: pointer;
-      touch-action: manipulation;
-    }
-
-    .mainButton {
-      width: 100%;
-      padding: 18px;
-      background: linear-gradient(90deg, orange, #ff5500);
-      border: none;
-      border-radius: 18px;
-      color: white;
-      font-size: 24px;
-      font-weight: bold;
-      margin-top: 15px;
-      box-shadow: 0 0 20px rgba(255,140,0,0.4);
-    }
-
+    body { background: linear-gradient(180deg, #111, #000); color: white; font-family: Arial, sans-serif; display: flex; justify-content: center; padding: 30px; min-height: 100vh; margin: 0; }
+    .box { background: rgba(30,30,30,0.95); padding: 30px; border-radius: 25px; width: 100%; max-width: 800px; box-shadow: 0 0 30px rgba(255,140,0,0.3); overflow: hidden; }
+    .slogan { text-align: center; font-size: 24px; margin-top: 0; margin-bottom: 15px; color: orange; text-shadow: 0 0 10px rgba(255,140,0,0.5); }
+    h1 { text-align: center; font-size: 40px; margin-bottom: 25px; text-shadow: 0 0 10px orange, 0 0 20px orange; }
+    .gameInfo { text-align: center; font-size: 20px; line-height: 1.6; margin-bottom: 35px; color: rgba(255,255,255,0.85); }
+    h2 { color: orange; margin-top: 25px; font-size: 34px; text-shadow: 0 0 10px rgba(255,140,0,0.6); }
+    .pointsInfo { display: block; font-size: 15px; color: white; opacity: 0.75; margin-top: 5px; font-weight: normal; }
+    textarea { width: 100%; height: 110px; padding: 15px; border-radius: 18px; border: none; background: #2c2c2c; color: white; font-size: 18px; margin-bottom: 15px; box-sizing: border-box; }
+    textarea::placeholder { color: rgba(255,255,255,0.5); }
+    button { cursor: pointer; touch-action: manipulation; }
+    .mainButton { width: 100%; padding: 18px; background: linear-gradient(90deg, orange, #ff5500); border: none; border-radius: 18px; color: white; font-size: 24px; font-weight: bold; margin-top: 15px; box-shadow: 0 0 20px rgba(255,140,0,0.4); }
     .saveButton { background: linear-gradient(90deg, #00c853, #64dd17); }
     .loadButton { background: linear-gradient(90deg, #2962ff, #00b0ff); }
     .deleteButton { background: linear-gradient(90deg, #424242, #9e9e9e); }
-
-    .playerBox {
-      background: linear-gradient(180deg, #2b2b2b, #1a1a1a);
-      border-radius: 25px;
-      padding: 25px;
-      margin-top: 30px;
-      text-align: center;
-      border: 2px solid rgba(255,140,0,0.3);
-      box-shadow: 0 0 25px rgba(255,140,0,0.25);
-      overflow: hidden;
-    }
-
-    .playerBox h3 {
-      font-size: 32px;
-      margin-bottom: 10px;
-      color: orange;
-      text-shadow: 0 0 10px orange;
-    }
-
-    .difficulty {
-      margin-bottom: 15px;
-      opacity: 0.8;
-      font-size: 18px;
-    }
-
-    .missionCard {
-      width: 220px;
-      height: 220px;
-      margin: 20px auto;
-      perspective: 1000px;
-      cursor: pointer;
-    }
-
-    .missionInner {
-      width: 100%;
-      height: 100%;
-      position: relative;
-      transition: transform 0.8s;
-      transform-style: preserve-3d;
-    }
-
-    .missionCard.flipped .missionInner {
-      transform: rotateY(180deg);
-    }
-
-    .missionFront,
-    .missionBack {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: 20px;
-      backface-visibility: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      text-align: center;
-      padding: 20px;
-      box-sizing: border-box;
-      box-shadow: 0 0 25px rgba(255,140,0,0.6);
-    }
-
-    .missionFront {
-      background: linear-gradient(180deg, #1a1a1a, #000);
-      color: orange;
-      font-size: 32px;
-      font-weight: bold;
-    }
-
-    .missionBack {
-      background: radial-gradient(circle, #2b003d, #000);
-      color: white;
-      font-size: 20px;
-      line-height: 1.3;
-      transform: rotateY(180deg);
-    }
-
-    .buttonGrid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 20px;
-    }
-
-    .buttonGrid button,
-    .changeButton {
-      padding: 10px;
-      border: none;
-      border-radius: 12px;
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
-    }
-
-    .statusText {
-      margin-top: 15px;
-      font-size: 20px;
-      font-weight: bold;
-      min-height: 24px;
-    }
-
-    .rankingList {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-top: 18px;
-    }
-
-    .rankCard {
-      background: rgba(0,0,0,0.35);
-      border: 1px solid rgba(255,140,0,0.35);
-      border-radius: 18px;
-      padding: 12px;
-      text-align: left;
-      box-shadow: 0 0 12px rgba(255,140,0,0.15);
-      overflow: hidden;
-    }
-
-    .rankTop {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 8px;
-      font-size: 20px;
-      font-weight: bold;
-    }
-
-    .rankName {
-      color: white;
-      overflow-wrap: anywhere;
-      min-width: 0;
-    }
-
-    .rankTotal {
-      color: orange;
-      font-size: 21px;
-      white-space: nowrap;
-    }
-
-    .rankDifficulty {
-      margin-top: 5px;
-      color: rgba(255,255,255,0.75);
-      font-size: 14px;
-    }
-
-    .rankStatsCompact {
-      display: flex;
-      justify-content: space-between;
-      gap: 6px;
-      margin-top: 12px;
-      font-size: 16px;
-      font-weight: bold;
-      white-space: nowrap;
-    }
-
-    .rankMiniStat {
-      flex: 1;
-      background: rgba(255,255,255,0.07);
-      border-radius: 12px;
-      padding: 8px 4px;
-      text-align: center;
-      min-width: 0;
-    }
-
+    .profileButton { background: linear-gradient(90deg, #8e24aa, #d500f9); }
+    .finishButton { background: linear-gradient(90deg, #ff6d00, #ffab00); }
+    .playerBox { background: linear-gradient(180deg, #2b2b2b, #1a1a1a); border-radius: 25px; padding: 25px; margin-top: 30px; text-align: center; border: 2px solid rgba(255,140,0,0.3); box-shadow: 0 0 25px rgba(255,140,0,0.25); overflow: hidden; }
+    .playerBox h3 { font-size: 32px; margin-bottom: 10px; color: orange; text-shadow: 0 0 10px orange; }
+    .difficulty { margin-bottom: 15px; opacity: 0.8; font-size: 18px; }
+    .missionCard { width: 220px; height: 220px; margin: 20px auto; perspective: 1000px; cursor: pointer; }
+    .missionInner { width: 100%; height: 100%; position: relative; transition: transform 0.8s; transform-style: preserve-3d; }
+    .missionCard.flipped .missionInner { transform: rotateY(180deg); }
+    .missionFront, .missionBack { position: absolute; width: 100%; height: 100%; border-radius: 20px; backface-visibility: hidden; display: flex; justify-content: center; align-items: center; flex-direction: column; text-align: center; padding: 20px; box-sizing: border-box; box-shadow: 0 0 25px rgba(255,140,0,0.6); }
+    .missionFront { background: linear-gradient(180deg, #1a1a1a, #000); color: orange; font-size: 32px; font-weight: bold; }
+    .missionBack { background: radial-gradient(circle, #2b003d, #000); color: white; font-size: 20px; line-height: 1.3; transform: rotateY(180deg); }
+    .buttonGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
+    .buttonGrid button, .changeButton { padding: 10px; border: none; border-radius: 12px; color: white; font-size: 16px; font-weight: bold; }
+    .statusText { margin-top: 15px; font-size: 20px; font-weight: bold; min-height: 24px; }
+    .rankingList, .profileList { display: flex; flex-direction: column; gap: 12px; margin-top: 18px; }
+    .rankCard, .profileCard { background: rgba(0,0,0,0.35); border: 1px solid rgba(255,140,0,0.35); border-radius: 18px; padding: 12px; text-align: left; box-shadow: 0 0 12px rgba(255,140,0,0.15); overflow: hidden; }
+    .rankTop, .profileTop { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 20px; font-weight: bold; }
+    .rankName, .profileName { color: white; overflow-wrap: anywhere; min-width: 0; }
+    .rankTotal, .profileTitle { color: orange; font-size: 21px; white-space: nowrap; }
+    .rankDifficulty, .profileSubtitle { margin-top: 5px; color: rgba(255,255,255,0.75); font-size: 14px; }
+    .rankStatsCompact, .profileStatsCompact { display: flex; justify-content: space-between; gap: 6px; margin-top: 12px; font-size: 16px; font-weight: bold; white-space: nowrap; }
+    .rankMiniStat, .profileMiniStat { flex: 1; background: rgba(255,255,255,0.07); border-radius: 12px; padding: 8px 4px; text-align: center; min-width: 0; }
     @media (max-width: 700px) {
       body { padding: 16px; }
       .box { padding: 20px; }
@@ -284,28 +57,27 @@
       .playerBox h3 { font-size: 26px; }
       .missionCard { width: 200px; height: 200px; }
       .buttonGrid { grid-template-columns: 1fr; }
-      .rankTop { font-size: 18px; }
-      .rankTotal { font-size: 19px; }
-      .rankStatsCompact { font-size: 14px; gap: 5px; }
-      .rankMiniStat { padding: 7px 3px; }
+      .rankTop, .profileTop { font-size: 18px; }
+      .rankTotal, .profileTitle { font-size: 19px; }
+      .rankStatsCompact, .profileStatsCompact { font-size: 14px; gap: 5px; }
+      .rankMiniStat, .profileMiniStat { padding: 7px 3px; }
     }
   </style>
 </head>
-
 <body>
-
   <div class="box">
     <p class="slogan">Macht euren Spieleabend verdächtig gut 🎭</p>
     <h1>🎭🎉 Geheime Missionen 🎉🎭</h1>
-
     <p class="gameInfo">
       Jeder Spieler erhält eine geheime Mission 🥷<br>
-      Erfülle deine Mission möglichst unauffällig,
-      ohne dass sie scheitert 🎭<br><br>
+      Erfülle deine Mission möglichst unauffällig, ohne dass sie scheitert 🎭<br><br>
       🎯 Richtige Anschuldigung = +5 Punkte<br>
       ❌ Falsche Anschuldigung = -1 Punkt<br><br>
       Wer am Ende die meisten Punkte hat, gewinnt 🏆
     </p>
+
+    <button class="mainButton profileButton" onclick="createProfile()">👤 Profil erstellen</button>
+    <button class="mainButton profileButton" onclick="showProfiles()">📊 Profile anzeigen</button>
 
     <h2>🟢 Leicht<span class="pointsInfo">+10 erfüllt / -5 gescheitert</span></h2>
     <textarea id="easyNames" placeholder="Namen für leichte Missionen"></textarea>
@@ -320,104 +92,60 @@
     <button class="mainButton saveButton" onclick="saveGame()">💾 Spielstand speichern</button>
     <button class="mainButton loadButton" onclick="loadGame()">📂 Spielstand laden</button>
     <button class="mainButton deleteButton" onclick="deleteGameSave()">🗑️ Spielstand löschen</button>
+    <button class="mainButton finishButton" onclick="finishRound()">🏁 Runde beenden & Profile aktualisieren</button>
 
     <div id="qrList"></div>
+    <div id="profileArea"></div>
   </div>
 
   <script>
     const easyMissions = [
-      "Frag jeden einmal nach seinem Lieblingsessen.",
-      "Sag oft das Wort 'cool'.",
-      "Frag mindestens zwei Leute nach der Uhrzeit.",
-      "Schau immer wieder kurz auf dein Getränk.",
-      "Frag jemanden nach seiner Lieblingsfarbe.",
-      "Benutze häufig das Wort 'wirklich'.",
-      "Frag mehrere Leute, wie ihr Tag war.",
-      "Schau regelmäßig kurz aus dem Fenster.",
-      "Lächle oft ohne Grund.",
-      "Frag jemanden nach seinem Lieblingsfilm.",
-      "Sag häufiger 'interessant'.",
-      "Frag mehrere Leute, ob sie Hunger haben.",
-      "Schau kurz zur Tür, wenn jemand spricht.",
-      "Benutze oft das Wort 'genau'.",
-      "Frag jemanden, ob ihm warm oder kalt ist.",
-      "Sag häufiger 'das macht Sinn'.",
-      "Schau regelmäßig kurz auf dein Handy.",
-      "Frag jemanden nach Musikgeschmack.",
-      "Benutze oft das Wort 'eigentlich'.",
-      "Frag mindestens zwei Leute nach Snacks."
+      "Frag jeden einmal nach seinem Lieblingsessen.", "Sag oft das Wort 'cool'.", "Frag mindestens zwei Leute nach der Uhrzeit.",
+      "Schau immer wieder kurz auf dein Getränk.", "Frag jemanden nach seiner Lieblingsfarbe.", "Benutze häufig das Wort 'wirklich'.",
+      "Frag mehrere Leute, wie ihr Tag war.", "Schau regelmäßig kurz aus dem Fenster.", "Lächle oft ohne Grund.",
+      "Frag jemanden nach seinem Lieblingsfilm.", "Sag häufiger 'interessant'.", "Frag mehrere Leute, ob sie Hunger haben.",
+      "Schau kurz zur Tür, wenn jemand spricht.", "Benutze oft das Wort 'genau'.", "Frag jemanden, ob ihm warm oder kalt ist.",
+      "Sag häufiger 'das macht Sinn'.", "Schau regelmäßig kurz auf dein Handy.", "Frag jemanden nach Musikgeschmack.",
+      "Benutze oft das Wort 'eigentlich'.", "Frag mindestens zwei Leute nach Snacks."
     ];
 
     const normalMissions = [
-      "Frage jeden mindestens einmal nach der Uhrzeit.",
-      "Benutze in fast jedem Gespräch das Wort 'genau'.",
-      "Schau alle paar Minuten kurz auf dein Handy.",
-      "Sag mindestens fünfmal 'tatsächlich'.",
-      "Frage mehrere Leute, ob ihnen auch kalt oder warm ist.",
-      "Benutze auffällig oft englische Wörter wie 'safe', 'true' oder 'random'.",
-      "Nimm dein Getränk ständig in die Hand, auch ohne zu trinken.",
-      "Frag mindestens drei Personen nach WLAN oder Empfang.",
-      "Sag immer wieder 'interessant'.",
-      "Schau regelmäßig zur Tür.",
-      "Frag mehrere Leute, wie spät es ungefähr ist.",
-      "Benutze sehr oft das Wort 'eigentlich'.",
-      "Frag verschiedene Leute nach Snacks oder Essen.",
-      "Schau immer wieder aus dem Fenster.",
-      "Sag mindestens fünfmal 'im Endeffekt'.",
-      "Benutze häufig 'ehrlich gesagt'.",
-      "Frag mehrere Leute, ob sie müde sind.",
-      "Tu immer wieder so, als hättest du etwas vergessen.",
-      "Frage mindestens drei Personen, ob sie etwas gehört haben.",
-      "Benutze ständig 'alsoooo'.",
-      "Frag verschiedene Leute nach Musik oder Liedern.",
-      "Benutze mindestens fünfmal das Wort 'wirklich'.",
-      "Lächle immer wieder kurz ohne ersichtlichen Grund.",
-      "Sag auffällig oft 'kann man machen'.",
-      "Frag mehrere Leute nach einem Ladegerät.",
-      "Benutze ständig das Wort 'fair'.",
-      "Schau regelmäßig nachdenklich an die Decke.",
-      "Frage mehrere Personen nach dem Wochentag.",
-      "Sage bei vielen Aussagen 'das macht Sinn'.",
-      "Benutze ständig das Wort 'theoretisch'."
+      "Frage jeden mindestens einmal nach der Uhrzeit.", "Benutze in fast jedem Gespräch das Wort 'genau'.",
+      "Schau alle paar Minuten kurz auf dein Handy.", "Sag mindestens fünfmal 'tatsächlich'.",
+      "Frage mehrere Leute, ob ihnen auch kalt oder warm ist.", "Benutze auffällig oft englische Wörter wie 'safe', 'true' oder 'random'.",
+      "Nimm dein Getränk ständig in die Hand, auch ohne zu trinken.", "Frag mindestens drei Personen nach WLAN oder Empfang.",
+      "Sag immer wieder 'interessant'.", "Schau regelmäßig zur Tür.", "Frag mehrere Leute, wie spät es ungefähr ist.",
+      "Benutze sehr oft das Wort 'eigentlich'.", "Frag verschiedene Leute nach Snacks oder Essen.", "Schau immer wieder aus dem Fenster.",
+      "Sag mindestens fünfmal 'im Endeffekt'.", "Benutze häufig 'ehrlich gesagt'.", "Frag mehrere Leute, ob sie müde sind.",
+      "Tu immer wieder so, als hättest du etwas vergessen.", "Frage mindestens drei Personen, ob sie etwas gehört haben.",
+      "Benutze ständig 'alsoooo'.", "Frag verschiedene Leute nach Musik oder Liedern.", "Benutze mindestens fünfmal das Wort 'wirklich'.",
+      "Lächle immer wieder kurz ohne ersichtlichen Grund.", "Sag auffällig oft 'kann man machen'.", "Frag mehrere Leute nach einem Ladegerät.",
+      "Benutze ständig das Wort 'fair'.", "Schau regelmäßig nachdenklich an die Decke.", "Frage mehrere Personen nach dem Wochentag.",
+      "Sage bei vielen Aussagen 'das macht Sinn'.", "Benutze ständig das Wort 'theoretisch'."
     ];
 
     const hardMissions = [
-      "Bring jemanden dazu, dich zu korrigieren.",
-      "Sorge dafür, dass jemand sein Handy rausholt.",
-      "Lass jemanden nachfragen, was du meintest.",
-      "Bring zwei Personen gleichzeitig zum Lachen.",
-      "Lass jemanden dir freiwillig etwas anbieten.",
-      "Sorge dafür, dass jemand auf die Uhr schaut.",
-      "Bring jemanden dazu, dich beim Namen zu nennen.",
-      "Lass jemanden ein englisches Wort benutzen.",
-      "Bring jemanden dazu, dir eine Frage zu stellen.",
-      "Sorge dafür, dass jemand sein Getränk anhebt.",
-      "Lass jemanden sagen: 'wirklich?'.",
-      "Bring jemanden dazu, aus dem Fenster zu schauen.",
-      "Sorge dafür, dass jemand laut lacht.",
-      "Bring jemanden dazu, nach der Uhrzeit zu fragen.",
-      "Lass jemanden das Thema wechseln.",
-      "Sorge dafür, dass jemand 'genau' sagt.",
-      "Bring jemanden dazu, sein Handy zu entsperren.",
-      "Lass jemanden dich etwas wiederholen lassen.",
-      "Sorge dafür, dass jemand dich unterbricht.",
-      "Bring jemanden dazu, dir zuzustimmen.",
-      "Lass jemanden sagen: 'das ist wild'.",
-      "Bring jemanden dazu, dich anzuschauen, während jemand anderes redet.",
-      "Sorge dafür, dass jemand nach Snacks fragt.",
-      "Bring jemanden dazu, sich umzudrehen.",
-      "Lass jemanden seine Sitzposition ändern.",
-      "Bring jemanden dazu, zu fragen, ob alles okay ist.",
-      "Sorge dafür, dass jemand 'interessant' sagt.",
-      "Bring jemanden dazu, zu seufzen.",
-      "Lass jemanden fragen, worüber du redest.",
-      "Bring jemanden dazu, sein Getränk nachzufüllen."
+      "Bring jemanden dazu, dich zu korrigieren.", "Sorge dafür, dass jemand sein Handy rausholt.",
+      "Lass jemanden nachfragen, was du meintest.", "Bring zwei Personen gleichzeitig zum Lachen.",
+      "Lass jemanden dir freiwillig etwas anbieten.", "Sorge dafür, dass jemand auf die Uhr schaut.",
+      "Bring jemanden dazu, dich beim Namen zu nennen.", "Lass jemanden ein englisches Wort benutzen.",
+      "Bring jemanden dazu, dir eine Frage zu stellen.", "Sorge dafür, dass jemand sein Getränk anhebt.",
+      "Lass jemanden sagen: 'wirklich?'.", "Bring jemanden dazu, aus dem Fenster zu schauen.",
+      "Sorge dafür, dass jemand laut lacht.", "Bring jemanden dazu, nach der Uhrzeit zu fragen.",
+      "Lass jemanden das Thema wechseln.", "Sorge dafür, dass jemand 'genau' sagt.",
+      "Bring jemanden dazu, sein Handy zu entsperren.", "Lass jemanden dich etwas wiederholen lassen.",
+      "Sorge dafür, dass jemand dich unterbricht.", "Bring jemanden dazu, dir zuzustimmen.",
+      "Lass jemanden sagen: 'das ist wild'.", "Bring jemanden dazu, dich anzuschauen, während jemand anderes redet.",
+      "Sorge dafür, dass jemand nach Snacks fragt.", "Bring jemanden dazu, sich umzudrehen.",
+      "Lass jemanden seine Sitzposition ändern.", "Bring jemanden dazu, zu fragen, ob alles okay ist.",
+      "Sorge dafür, dass jemand 'interessant' sagt.", "Bring jemanden dazu, zu seufzen.",
+      "Lass jemanden fragen, worüber du redest.", "Bring jemanden dazu, sein Getränk nachzufüllen."
     ];
 
     let players = [];
 
     function getNames(id) {
-      return document.getElementById(id).value.split("\n").map(name => name.trim()).filter(name => name !== "");
+      return document.getElementById(id).value.split("\\n").map(name => name.trim()).filter(name => name !== "");
     }
 
     function shuffle(list) {
@@ -426,6 +154,7 @@
 
     function createGame() {
       const qrList = document.getElementById("qrList");
+      document.getElementById("profileArea").innerHTML = "";
       qrList.innerHTML = "";
       players = [];
 
@@ -439,17 +168,12 @@
 
     function addPlayers(names, difficulty, missionList) {
       const shuffledMissions = shuffle(missionList);
-
       names.forEach((name, index) => {
+        ensureProfile(name);
         players.push({
-          name,
-          difficulty,
-          missionList,
+          name, difficulty, missionList,
           mission: shuffledMissions[index % shuffledMissions.length],
-          accusation: 0,
-          done: 0,
-          caught: 0,
-          total: 0
+          accusation: 0, done: 0, caught: 0, total: 0
         });
       });
     }
@@ -457,7 +181,6 @@
     function createPlayerBox(player, index) {
       const qrList = document.getElementById("qrList");
       const playerBox = document.createElement("div");
-
       playerBox.className = "playerBox";
       playerBox.id = `playerBox${index}`;
 
@@ -473,7 +196,6 @@
               <div>MISSION</div>
               <small style="margin-top:15px; opacity:0.7; font-size:14px;">Antippen</small>
             </div>
-
             <div class="missionBack">${player.mission}</div>
           </div>
         </div>
@@ -488,23 +210,15 @@
           <button onclick="addScore(${index}, 'accusation', 5, this)" style="background:linear-gradient(90deg,#2962ff,#00b0ff);">🎯 Anschuldigung korrekt</button>
           <button onclick="addScore(${index}, 'accusation', -1, this)" style="background:linear-gradient(90deg,#616161,#9e9e9e);">❌ Anschuldigung falsch</button>
         </div>
-
         <div class="statusText"></div>
       `;
-
       qrList.appendChild(playerBox);
     }
 
     function changeMission(index) {
       const player = players[index];
-
-      const usedMissions = players
-        .filter((p, i) => i !== index && p.difficulty === player.difficulty)
-        .map(p => p.mission);
-
-      let availableMissions = player.missionList.filter(
-        mission => !usedMissions.includes(mission) && mission !== player.mission
-      );
+      const usedMissions = players.filter((p, i) => i !== index && p.difficulty === player.difficulty).map(p => p.mission);
+      let availableMissions = player.missionList.filter(mission => !usedMissions.includes(mission) && mission !== player.mission);
 
       if (availableMissions.length === 0) {
         availableMissions = player.missionList.filter(mission => mission !== player.mission);
@@ -525,33 +239,23 @@
     function createScoreTable() {
       const qrList = document.getElementById("qrList");
       const tableBox = document.createElement("div");
-
       tableBox.className = "playerBox";
       tableBox.id = "scoreTableBox";
-
-      tableBox.innerHTML = `
-        <h3>🏆 Rangliste</h3>
-        <div id="scoreTableBody" class="rankingList"></div>
-      `;
-
+      tableBox.innerHTML = `<h3>🏆 Rangliste</h3><div id="scoreTableBody" class="rankingList"></div>`;
       qrList.appendChild(tableBox);
       updateScoreTable();
     }
 
     function updateScoreTable() {
       const list = document.getElementById("scoreTableBody");
-
       if (!list) return;
 
       list.innerHTML = "";
-
       const sortedPlayers = [...players].sort((a, b) => b.total - a.total);
       let displayRank = 1;
 
       sortedPlayers.forEach((player, rank) => {
-        if (rank > 0 && player.total < sortedPlayers[rank - 1].total) {
-          displayRank = rank + 1;
-        }
+        if (rank > 0 && player.total < sortedPlayers[rank - 1].total) displayRank = rank + 1;
 
         let medal = "";
         if (displayRank === 1) medal = "🥇";
@@ -564,9 +268,7 @@
               <div class="rankName">${medal} ${displayRank}. ${player.name}</div>
               <div class="rankTotal">${player.total} Pkt.</div>
             </div>
-
             <div class="rankDifficulty">${player.difficulty}</div>
-
             <div class="rankStatsCompact">
               <div class="rankMiniStat">🎯 ${player.accusation}</div>
               <div class="rankMiniStat">✅ ${player.done}</div>
@@ -580,20 +282,16 @@
     function addMissionScore(index, button) {
       const player = players[index];
       let points = 20;
-
       if (player.difficulty === "Leicht") points = 10;
       else if (player.difficulty === "Experte") points = 30;
-
       addScore(index, "done", points, button);
     }
 
     function addCaughtScore(index, button) {
       const player = players[index];
       let points = -10;
-
       if (player.difficulty === "Leicht") points = -5;
       else if (player.difficulty === "Experte") points = -15;
-
       addScore(index, "caught", points, button);
     }
 
@@ -607,28 +305,22 @@
         } else {
           player.done = points;
           player.caught = 0;
-
           const buttons = button.parentElement.querySelectorAll("button");
           buttons[0].style.opacity = "1";
           buttons[1].style.opacity = "0.5";
         }
-      }
-
-      else if (type === "caught") {
+      } else if (type === "caught") {
         if (player.caught !== 0) {
           player.caught = 0;
           button.style.opacity = "1";
         } else {
           player.caught = points;
           player.done = 0;
-
           const buttons = button.parentElement.querySelectorAll("button");
           buttons[0].style.opacity = "0.5";
           buttons[1].style.opacity = "1";
         }
-      }
-
-      else if (type === "accusation") {
+      } else if (type === "accusation") {
         player.accusation += points;
       }
 
@@ -636,7 +328,6 @@
       updateScoreTable();
 
       const status = button.parentElement.nextElementSibling;
-
       if (type === "done" || type === "caught") {
         if (player.done === 0 && player.caught === 0) {
           status.innerHTML = "Auswahl zurückgesetzt";
@@ -664,11 +355,9 @@
 
     function saveGame() {
       const saveName = prompt("Name für den Spielstand:");
-
       if (!saveName) return;
 
       const saves = getAllSaves();
-
       saves[saveName] = {
         date: new Date().toLocaleString(),
         easyNames: document.getElementById("easyNames").value,
@@ -691,14 +380,12 @@
       }
 
       const input = prompt(
-        "Welchen Spielstand laden?\n\n" +
-        saveNames.map((name, index) => `${index + 1}. ${name} (${saves[name].date})`).join("\n")
+        "Welchen Spielstand laden?\\n\\n" +
+        saveNames.map((name, index) => `${index + 1}. ${name} (${saves[name].date})`).join("\\n")
       );
-
       if (!input) return;
 
       const selectedName = resolveSaveName(input, saveNames, saves);
-
       if (!selectedName) {
         alert("Spielstand nicht gefunden");
         return;
@@ -718,20 +405,18 @@
       }
 
       const input = prompt(
-        "Welchen Spielstand löschen?\n\n" +
-        saveNames.map((name, index) => `${index + 1}. ${name} (${saves[name].date})`).join("\n")
+        "Welchen Spielstand löschen?\\n\\n" +
+        saveNames.map((name, index) => `${index + 1}. ${name} (${saves[name].date})`).join("\\n")
       );
-
       if (!input) return;
 
       const selectedName = resolveSaveName(input, saveNames, saves);
-
       if (!selectedName) {
         alert("Spielstand nicht gefunden");
         return;
       }
 
-      if (confirm("Spielstand wirklich löschen?\n\n" + selectedName)) {
+      if (confirm("Spielstand wirklich löschen?\\n\\n" + selectedName)) {
         delete saves[selectedName];
         saveAllSaves(saves);
         alert("Spielstand gelöscht");
@@ -740,13 +425,8 @@
 
     function resolveSaveName(input, saveNames, saves) {
       if (saves[input]) return input;
-
       const number = parseInt(input, 10);
-
-      if (!isNaN(number) && saveNames[number - 1]) {
-        return saveNames[number - 1];
-      }
-
+      if (!isNaN(number) && saveNames[number - 1]) return saveNames[number - 1];
       return null;
     }
 
@@ -754,14 +434,123 @@
       document.getElementById("easyNames").value = gameData.easyNames || "";
       document.getElementById("normalNames").value = gameData.normalNames || "";
       document.getElementById("hardNames").value = gameData.hardNames || "";
-
       players = gameData.players || [];
-
       const qrList = document.getElementById("qrList");
+      document.getElementById("profileArea").innerHTML = "";
       qrList.innerHTML = "";
-
       players.forEach((player, index) => createPlayerBox(player, index));
       createScoreTable();
+    }
+
+    function getProfiles() {
+      return JSON.parse(localStorage.getItem("geheimeMissionenProfiles")) || {};
+    }
+
+    function saveProfiles(profiles) {
+      localStorage.setItem("geheimeMissionenProfiles", JSON.stringify(profiles));
+    }
+
+    function getEmptyProfile(name) {
+      return { name, games: 0, wins: 0, totalPoints: 0, missionsDone: 0, missionsFailed: 0, accusationPoints: 0, bestRound: 0 };
+    }
+
+    function ensureProfile(name) {
+      if (!name) return;
+      const profiles = getProfiles();
+      if (!profiles[name]) {
+        profiles[name] = getEmptyProfile(name);
+        saveProfiles(profiles);
+      }
+    }
+
+    function createProfile() {
+      const name = prompt("Name für das neue Profil:");
+      if (!name) return;
+
+      const profiles = getProfiles();
+      if (profiles[name]) {
+        alert("Dieses Profil gibt es schon");
+        return;
+      }
+
+      profiles[name] = getEmptyProfile(name);
+      saveProfiles(profiles);
+      alert("Profil erstellt: " + name);
+      showProfiles();
+    }
+
+    function getProfileTitle(profile) {
+      if (profile.totalPoints >= 1000) return "💀 Schattenlegende";
+      if (profile.totalPoints >= 500) return "🥇 Meisterspion";
+      if (profile.totalPoints >= 200) return "🥈 Ermittler";
+      if (profile.totalPoints >= 50) return "🥉 Anfänger-Agent";
+      return "🕵️ Neuling";
+    }
+
+    function showProfiles() {
+      const profiles = getProfiles();
+      const names = Object.keys(profiles);
+      const area = document.getElementById("profileArea");
+      document.getElementById("qrList").innerHTML = "";
+
+      if (names.length === 0) {
+        area.innerHTML = `<div class="playerBox"><h3>👤 Profile</h3><p>Noch keine Profile vorhanden.</p></div>`;
+        return;
+      }
+
+      const sortedProfiles = names.map(name => profiles[name]).sort((a, b) => b.totalPoints - a.totalPoints);
+
+      area.innerHTML = `
+        <div class="playerBox">
+          <h3>👤 Spielerprofile</h3>
+          <div class="profileList">
+            ${sortedProfiles.map(profile => `
+              <div class="profileCard">
+                <div class="profileTop">
+                  <div class="profileName">${profile.name}</div>
+                  <div class="profileTitle">${getProfileTitle(profile)}</div>
+                </div>
+                <div class="profileSubtitle">Spiele: ${profile.games} | Siege: ${profile.wins} | Beste Runde: ${profile.bestRound}</div>
+                <div class="profileStatsCompact">
+                  <div class="profileMiniStat">⭐ ${profile.totalPoints}</div>
+                  <div class="profileMiniStat">✅ ${profile.missionsDone}</div>
+                  <div class="profileMiniStat">❌ ${profile.missionsFailed}</div>
+                  <div class="profileMiniStat">🎯 ${profile.accusationPoints}</div>
+                </div>
+              </div>
+            `).join("")}
+          </div>
+        </div>
+      `;
+    }
+
+    function finishRound() {
+      if (players.length === 0) {
+        alert("Es läuft noch keine Runde");
+        return;
+      }
+
+      if (!confirm("Runde wirklich beenden und Profile aktualisieren?")) return;
+
+      const profiles = getProfiles();
+      const maxPoints = Math.max(...players.map(player => player.total));
+
+      players.forEach(player => {
+        if (!profiles[player.name]) profiles[player.name] = getEmptyProfile(player.name);
+        const profile = profiles[player.name];
+
+        profile.games += 1;
+        profile.totalPoints += player.total;
+        profile.accusationPoints += player.accusation;
+        if (player.done > 0) profile.missionsDone += 1;
+        if (player.caught < 0) profile.missionsFailed += 1;
+        if (player.total === maxPoints) profile.wins += 1;
+        if (player.total > profile.bestRound) profile.bestRound = player.total;
+      });
+
+      saveProfiles(profiles);
+      alert("Profile wurden aktualisiert 🏆");
+      showProfiles();
     }
 
     if ("serviceWorker" in navigator) {
