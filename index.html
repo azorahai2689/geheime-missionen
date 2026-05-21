@@ -99,6 +99,250 @@ background:#ff8800;
 font-weight:bold;
 }
 
+
+/* === Avatar-Auswahl Größen-Fix === */
+.avatarRows{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-bottom:20px;
+}
+
+.avatarSelectBtn{
+  width:72px;
+  height:72px;
+  padding:0;
+  border:2px solid rgba(255,255,255,0.45);
+  border-radius:50%;
+  overflow:hidden;
+  background:#333;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 0 10px rgba(255,140,0,0.25);
+}
+
+.avatarSelectBtn img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  border-radius:50%;
+}
+
+.avatarSelectBtn.selected{
+  outline:4px solid orange;
+  box-shadow:0 0 18px orange;
+}
+
+.avatarSubGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+  margin-bottom:25px;
+}
+
+.avatarAgeTitle{
+  font-size:38px;
+  font-weight:bold;
+  text-align:center;
+  color:#ff8800;
+  margin:30px 0 15px;
+  text-shadow:0 0 12px rgba(255,140,0,0.7);
+}
+
+.avatarSubTitle{
+  font-size:24px;
+  font-weight:bold;
+  color:#27c4ff;
+  margin-bottom:10px;
+  text-align:center;
+}
+
+.avatarSubTitle.female{
+  color:#ff3d9d;
+}
+
+.profileCreateModal{
+  position:fixed;
+  inset:0;
+  background:#000;
+  overflow:auto;
+  z-index:9999;
+  padding:20px;
+  box-sizing:border-box;
+}
+
+.profileCreateInner{
+  max-width:1100px;
+  margin:auto;
+}
+
+.profileCreateTop{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+}
+
+.profileIconBtn{
+  width:52px;
+  height:52px;
+  border:1px solid #ff5500;
+  border-radius:14px;
+  background:#111;
+  color:white;
+  font-size:24px;
+  box-shadow:0 0 14px rgba(255,85,0,0.5);
+}
+
+.profileLogo{
+  font-size:32px;
+  font-weight:bold;
+  color:white;
+  text-align:center;
+  text-shadow:0 0 12px rgba(255,255,255,0.5);
+}
+
+.profileLogo span{
+  color:#ff8800;
+  display:block;
+  text-shadow:0 0 14px rgba(255,136,0,0.8);
+}
+
+.profileCreatePanel{
+  background:#070707;
+  padding:25px;
+  border-radius:30px;
+  border:2px solid #ff5500;
+  box-shadow:0 0 28px rgba(255,85,0,0.45);
+}
+
+.profileCreateTitle{
+  font-size:46px;
+  color:#ff8800;
+  margin:0 0 25px;
+  text-align:center;
+  text-shadow:0 0 12px rgba(255,136,0,0.7);
+}
+
+.stepRow{
+  font-size:26px;
+  font-weight:bold;
+  margin-top:20px;
+  margin-bottom:10px;
+}
+
+.profileNameInput{
+  width:100%;
+  padding:16px;
+  font-size:24px;
+  border-radius:14px;
+  border:2px solid rgba(255,255,255,0.3);
+  background:#222;
+  color:white;
+  box-sizing:border-box;
+}
+
+.colorRow{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-top:15px;
+  justify-content:center;
+}
+
+.colorPick{
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  border:2px solid rgba(255,255,255,0.5);
+}
+
+.colorPick.selected{
+  outline:4px solid white;
+  box-shadow:0 0 15px currentColor;
+}
+
+.profileCreateActions{
+  display:flex;
+  gap:20px;
+  margin-top:20px;
+}
+
+.profileCancelBtn,
+.profileSaveBtn{
+  flex:1;
+  padding:18px;
+  font-size:24px;
+  font-weight:bold;
+  border:none;
+  border-radius:18px;
+  color:white;
+}
+
+.profileCancelBtn{
+  background:#555;
+}
+
+.profileSaveBtn{
+  background:linear-gradient(90deg,#00a000,#00ff40);
+}
+
+.avatarSmall{
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  object-fit:cover;
+  vertical-align:middle;
+  margin-right:7px;
+  border:2px solid var(--profile-color,#ff8800);
+}
+
+@media (max-width:700px){
+  .avatarSubGrid{
+    grid-template-columns:1fr;
+  }
+
+  .avatarRows{
+    gap:7px;
+  }
+
+  .avatarSelectBtn{
+    width:54px;
+    height:54px;
+  }
+
+  .avatarAgeTitle{
+    font-size:28px;
+  }
+
+  .avatarSubTitle{
+    font-size:18px;
+  }
+
+  .profileCreateTitle{
+    font-size:34px;
+  }
+
+  .stepRow{
+    font-size:20px;
+  }
+
+  .profileNameInput{
+    font-size:20px;
+  }
+
+  .profileCreateActions{
+    flex-direction:column;
+  }
+
+  .profileCancelBtn,
+  .profileSaveBtn{
+    font-size:22px;
+  }
+}
+
 </style>
 </head>
 <body>
