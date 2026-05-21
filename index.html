@@ -116,6 +116,7 @@ font-weight:bold;
 
     <button class="mainButton profileButton" onclick="createProfile()">👤 Profil erstellen</button>
     <button class="mainButton profileButton" onclick="showProfiles()">📊 Profile anzeigen</button>
+    <button class="mainButton profileButton" onclick="changeProfileAvatar()">🖼️ Profilbild ändern</button>
     <button class="mainButton deleteButton" onclick="deleteProfile()">🗑️ Profil löschen</button>
     <button class="mainButton saveButton" onclick="exportProfiles()">📤 Profile sichern</button>
     <button class="mainButton loadButton" onclick="importProfiles()">📥 Profile wiederherstellen</button>
@@ -149,6 +150,7 @@ font-weight:bold;
     <button class="mainButton finishButton" onclick="finishRound()">🏁 Runde beenden & Profile aktualisieren</button>
 
     <input id="importFileInput" type="file" accept="application/json,.json" style="display:none" onchange="handleImportFile(event)">
+    <div id="avatarModalRoot"></div>
     <div id="qrList"></div>
     <div id="profileArea"></div>
   </div>
@@ -249,7 +251,7 @@ font-weight:bold;
       playerBox.id = `playerBox${index}`;
 
       playerBox.innerHTML = `
-        <h3>${player.name}</h3>
+        <h3>${avatarImg(getProfileAvatarSrc(player.name), "avatarSmall", getProfileColor(player.name))}${player.name}</h3>
         <div class="difficulty">Schwierigkeit: ${player.difficulty}</div>
 
         <div class="missionCard" onclick="this.classList.toggle('flipped')">
@@ -330,7 +332,7 @@ font-weight:bold;
         list.innerHTML += `
           <div class="rankCard">
             <div class="rankTop">
-              <div class="rankName">${medal} ${displayRank}. ${player.name}</div>
+              <div class="rankName">${medal} ${displayRank}. ${avatarImg(getProfileAvatarSrc(player.name), "avatarSmall", getProfileColor(player.name))}${player.name}</div>
               <div class="rankTotal">${player.total} Pkt.</div>
             </div>
             <div class="rankDifficulty">${player.difficulty}</div>
@@ -528,6 +530,873 @@ font-weight:bold;
       alert("Laufende Runde wurde fortgesetzt");
     }
 
+
+    const avatarOptions = [
+      {
+            "id": "avatars/avatar_01.png",
+            "label": "Kind Junge/Mann hell black kurz",
+            "age": "Kind",
+            "gender": "m",
+            "skin": "white",
+            "hairColor": "black",
+            "hairLength": "kurz"
+      },
+      {
+            "id": "avatars/avatar_02.png",
+            "label": "Kind Junge/Mann hell blonde kurz",
+            "age": "Kind",
+            "gender": "m",
+            "skin": "white",
+            "hairColor": "blonde",
+            "hairLength": "kurz"
+      },
+      {
+            "id": "avatars/avatar_03.png",
+            "label": "Kind Junge/Mann hell brown kurz",
+            "age": "Kind",
+            "gender": "m",
+            "skin": "white",
+            "hairColor": "brown",
+            "hairLength": "kurz"
+      },
+      {
+            "id": "avatars/avatar_04.png",
+            "label": "Kind Junge/Mann hell black lang",
+            "age": "Kind",
+            "gender": "m",
+            "skin": "white",
+            "hairColor": "black",
+            "hairLength": "lang"
+      },
+      {
+            "id": "avatars/avatar_05.png",
+            "label": "Kind Junge/Mann hell blonde lang",
+            "age": "Kind",
+            "gender": "m",
+            "skin": "white",
+            "hairColor": "blonde",
+            "hairLength": "lang"
+      },
+      {
+            "id": "avatars/avatar_06.png",
+            "label": "Kind Junge/Mann hell brown lang",
+            "age": "Kind",
+            "gender": "m",
+            "skin": "white",
+            "hairColor": "brown",
+            "hairLength": "lang"
+      },
+      {
+            "id": "avatars/avatar_07.png",
+            "label": "Kind Junge/Mann dunkel black kurz",
+            "age": "Kind",
+            "gender": "m",
+            "skin": "black",
+            "hairColor": "black",
+            "hairLength": "kurz"
+      },
+      {
+            "id": "avatars/avatar_08.png",
+            "label": "Kind Junge/Mann dunkel blonde kurz",
+            "age": "Kind",
+            "gender": "m",
+            "skin": "black",
+            "hairColor": "blonde",
+            "hairLength": "kurz"
+      },
+      {
+            "id": "avatars/avatar_09.png",
+            "label": "Kind Junge/Mann dunkel brown kurz",
+            "age": "Kind",
+            "gender": "m",
+            "skin": "black",
+            "hairColor": "brown",
+            "hairLength": "kurz"
+      },
+      {
+            "id": "avatars/avatar_10.png",
+            "label": "Kind Junge/Mann dunkel black lang",
+            "age": "Kind",
+            "gender": "m",
+            "skin": "black",
+            "hairColor": "black",
+            "hairLength": "lang"
+      },
+      {
+            "id": "avatars/avatar_11.png",
+            "label": "Kind Junge/Mann dunkel blonde lang",
+            "age": "Kind",
+            "gender": "m",
+            "skin": "black",
+            "hairColor": "blonde",
+            "hairLength": "lang"
+      },
+      {
+            "id": "avatars/avatar_12.png",
+            "label": "Kind Junge/Mann dunkel brown lang",
+            "age": "Kind",
+            "gender": "m",
+            "skin": "black",
+            "hairColor": "brown",
+            "hairLength": "lang"
+      },
+      {
+            "id": "avatars/avatar_13.png",
+            "label": "Kind Mädchen/Frau hell black kurz",
+            "age": "Kind",
+            "gender": "f",
+            "skin": "white",
+            "hairColor": "black",
+            "hairLength": "kurz"
+      },
+      {
+            "id": "avatars/avatar_14.png",
+            "label": "Kind Mädchen/Frau hell blonde kurz",
+            "age": "Kind",
+            "gender": "f",
+            "skin": "white",
+            "hairColor": "blonde",
+            "hairLength": "kurz"
+      },
+      {
+            "id": "avatars/avatar_15.png",
+            "label": "Kind Mädchen/Frau hell brown kurz",
+            "age": "Kind",
+            "gender": "f",
+            "skin": "white",
+            "hairColor": "brown",
+            "hairLength": "kurz"
+      },
+      {
+            "id": "avatars/avatar_16.png",
+            "label": "Kind Mädchen/Frau hell black lang",
+            "age": "Kind",
+            "gender": "f",
+            "skin": "white",
+            "hairColor": "black",
+            "hairLength": "lang"
+      },
+      {
+            "id": "avatars/avatar_17.png",
+            "label": "Kind Mädchen/Frau hell blonde lang",
+            "age": "Kind",
+            "gender": "f",
+            "skin": "white",
+            "hairColor": "blonde",
+            "hairLength": "lang"
+      },
+      {
+            "id": "avatars/avatar_18.png",
+            "label": "Kind Mädchen/Frau hell brown lang",
+            "age": "Kind",
+            "gender": "f",
+            "skin": "white",
+            "hairColor": "brown",
+            "hairLength": "lang"
+      },
+      {
+            "id": "avatars/avatar_19.png",
+            "label": "Kind Mädchen/Frau dunkel black kurz",
+            "age": "Kind",
+            "gender": "f",
+            "skin": "black",
+            "hairColor": "black",
+            "hairLength": "kurz"
+      },
+      {
+            "id": "avatars/avatar_20.png",
+            "label": "Kind Mädchen/Frau dunkel blonde kurz",
+            "age": "Kind",
+            "gender": "f",
+            "skin": "black",
+            "hairColor": "blonde",
+            "hairLength": "kurz"
+      },
+      {
+            "id": "avatars/avatar_21.png",
+            "label": "Kind Mädchen/Frau dunkel brown kurz",
+            "age": "Kind",
+            "gender": "f",
+            "skin": "black",
+            "hairColor": "brown",
+            "hairLength": "kurz"
+      },
+      {
+            "id": "avatars/avatar_22.png",
+            "label": "Kind Mädchen/Frau dunkel black lang",
+            "age": "Kind",
+            "gender": "f",
+            "skin": "black",
+            "hairColor": "black",
+            "hairLength": "lang"
+      },
+      {
+            "id": "avatars/avatar_23.png",
+            "label": "Kind Mädchen/Frau dunkel blonde lang",
+            "age": "Kind",
+            "gender": "f",
+            "skin": "black",
+            "hairColor": "blonde",
+            "hairLength": "lang"
+      },
+      {
+            "id": "avatars/avatar_24.png",
+            "label": "Kind Mädchen/Frau dunkel brown lang",
+            "age": "Kind",
+            "gender": "f",
+            "skin": "black",
+            "hairColor": "brown",
+            "hairLength": "lang"
+      },
+      {
+            "id": "avatars/avatar_25.png",
+            "label": "Erwachsen Junge/Mann hell black kurz",
+            "age": "Erwachsen",
+            "gender": "m",
+            "skin": "white",
+            "hairColor": "black",
+            "hairLength": "kurz"
+      },
+      {
+            "id": "avatars/avatar_26.png",
+            "label": "Erwachsen Junge/Mann hell blonde kurz",
+            "age": "Erwachsen",
+            "gender": "m",
+            "skin": "white",
+            "hairColor": "blonde",
+            "hairLength": "kurz"
+      },
+      {
+            "id": "avatars/avatar_27.png",
+            "label": "Erwachsen Junge/Mann hell brown kurz",
+            "age": "Erwachsen",
+            "gender": "m",
+            "skin": "white",
+            "hairColor": "brown",
+            "hairLength": "kurz"
+      },
+      {
+            "id": "avatars/avatar_28.png",
+            "label": "Erwachsen Junge/Mann hell black lang",
+            "age": "Erwachsen",
+            "gender": "m",
+            "skin": "white",
+            "hairColor": "black",
+            "hairLength": "lang"
+      },
+      {
+            "id": "avatars/avatar_29.png",
+            "label": "Erwachsen Junge/Mann hell blonde lang",
+            "age": "Erwachsen",
+            "gender": "m",
+            "skin": "white",
+            "hairColor": "blonde",
+            "hairLength": "lang"
+      },
+      {
+            "id": "avatars/avatar_30.png",
+            "label": "Erwachsen Junge/Mann hell brown lang",
+            "age": "Erwachsen",
+            "gender": "m",
+            "skin": "white",
+            "hairColor": "brown",
+            "hairLength": "lang"
+      },
+      {
+            "id": "avatars/avatar_31.png",
+            "label": "Erwachsen Junge/Mann dunkel black kurz",
+            "age": "Erwachsen",
+            "gender": "m",
+            "skin": "black",
+            "hairColor": "black",
+            "hairLength": "kurz"
+      },
+      {
+            "id": "avatars/avatar_32.png",
+            "label": "Erwachsen Junge/Mann dunkel blonde kurz",
+            "age": "Erwachsen",
+            "gender": "m",
+            "skin": "black",
+            "hairColor": "blonde",
+            "hairLength": "kurz"
+      },
+      {
+            "id": "avatars/avatar_33.png",
+            "label": "Erwachsen Junge/Mann dunkel brown kurz",
+            "age": "Erwachsen",
+            "gender": "m",
+            "skin": "black",
+            "hairColor": "brown",
+            "hairLength": "kurz"
+      },
+      {
+            "id": "avatars/avatar_34.png",
+            "label": "Erwachsen Junge/Mann dunkel black lang",
+            "age": "Erwachsen",
+            "gender": "m",
+            "skin": "black",
+            "hairColor": "black",
+            "hairLength": "lang"
+      },
+      {
+            "id": "avatars/avatar_35.png",
+            "label": "Erwachsen Junge/Mann dunkel blonde lang",
+            "age": "Erwachsen",
+            "gender": "m",
+            "skin": "black",
+            "hairColor": "blonde",
+            "hairLength": "lang"
+      },
+      {
+            "id": "avatars/avatar_36.png",
+            "label": "Erwachsen Junge/Mann dunkel brown lang",
+            "age": "Erwachsen",
+            "gender": "m",
+            "skin": "black",
+            "hairColor": "brown",
+            "hairLength": "lang"
+      },
+      {
+            "id": "avatars/avatar_37.png",
+            "label": "Erwachsen Mädchen/Frau hell black kurz",
+            "age": "Erwachsen",
+            "gender": "f",
+            "skin": "white",
+            "hairColor": "black",
+            "hairLength": "kurz"
+      },
+      {
+            "id": "avatars/avatar_38.png",
+            "label": "Erwachsen Mädchen/Frau hell blonde kurz",
+            "age": "Erwachsen",
+            "gender": "f",
+            "skin": "white",
+            "hairColor": "blonde",
+            "hairLength": "kurz"
+      },
+      {
+            "id": "avatars/avatar_39.png",
+            "label": "Erwachsen Mädchen/Frau hell brown kurz",
+            "age": "Erwachsen",
+            "gender": "f",
+            "skin": "white",
+            "hairColor": "brown",
+            "hairLength": "kurz"
+      },
+      {
+            "id": "avatars/avatar_40.png",
+            "label": "Erwachsen Mädchen/Frau hell black lang",
+            "age": "Erwachsen",
+            "gender": "f",
+            "skin": "white",
+            "hairColor": "black",
+            "hairLength": "lang"
+      },
+      {
+            "id": "avatars/avatar_41.png",
+            "label": "Erwachsen Mädchen/Frau hell blonde lang",
+            "age": "Erwachsen",
+            "gender": "f",
+            "skin": "white",
+            "hairColor": "blonde",
+            "hairLength": "lang"
+      },
+      {
+            "id": "avatars/avatar_42.png",
+            "label": "Erwachsen Mädchen/Frau hell brown lang",
+            "age": "Erwachsen",
+            "gender": "f",
+            "skin": "white",
+            "hairColor": "brown",
+            "hairLength": "lang"
+      },
+      {
+            "id": "avatars/avatar_43.png",
+            "label": "Erwachsen Mädchen/Frau dunkel black kurz",
+            "age": "Erwachsen",
+            "gender": "f",
+            "skin": "black",
+            "hairColor": "black",
+            "hairLength": "kurz"
+      },
+      {
+            "id": "avatars/avatar_44.png",
+            "label": "Erwachsen Mädchen/Frau dunkel blonde kurz",
+            "age": "Erwachsen",
+            "gender": "f",
+            "skin": "black",
+            "hairColor": "blonde",
+            "hairLength": "kurz"
+      },
+      {
+            "id": "avatars/avatar_45.png",
+            "label": "Erwachsen Mädchen/Frau dunkel brown kurz",
+            "age": "Erwachsen",
+            "gender": "f",
+            "skin": "black",
+            "hairColor": "brown",
+            "hairLength": "kurz"
+      },
+      {
+            "id": "avatars/avatar_46.png",
+            "label": "Erwachsen Mädchen/Frau dunkel black lang",
+            "age": "Erwachsen",
+            "gender": "f",
+            "skin": "black",
+            "hairColor": "black",
+            "hairLength": "lang"
+      },
+      {
+            "id": "avatars/avatar_47.png",
+            "label": "Erwachsen Mädchen/Frau dunkel blonde lang",
+            "age": "Erwachsen",
+            "gender": "f",
+            "skin": "black",
+            "hairColor": "blonde",
+            "hairLength": "lang"
+      },
+      {
+            "id": "avatars/avatar_48.png",
+            "label": "Erwachsen Mädchen/Frau dunkel brown lang",
+            "age": "Erwachsen",
+            "gender": "f",
+            "skin": "black",
+            "hairColor": "brown",
+            "hairLength": "lang"
+      },
+      {
+            "id": "avatars/avatar_49.png",
+            "label": "Rentner Junge/Mann hell black kurz",
+            "age": "Rentner",
+            "gender": "m",
+            "skin": "white",
+            "hairColor": "black",
+            "hairLength": "kurz"
+      },
+      {
+            "id": "avatars/avatar_50.png",
+            "label": "Rentner Junge/Mann hell blonde kurz",
+            "age": "Rentner",
+            "gender": "m",
+            "skin": "white",
+            "hairColor": "blonde",
+            "hairLength": "kurz"
+      },
+      {
+            "id": "avatars/avatar_51.png",
+            "label": "Rentner Junge/Mann hell brown kurz",
+            "age": "Rentner",
+            "gender": "m",
+            "skin": "white",
+            "hairColor": "brown",
+            "hairLength": "kurz"
+      },
+      {
+            "id": "avatars/avatar_52.png",
+            "label": "Rentner Junge/Mann hell black lang",
+            "age": "Rentner",
+            "gender": "m",
+            "skin": "white",
+            "hairColor": "black",
+            "hairLength": "lang"
+      },
+      {
+            "id": "avatars/avatar_53.png",
+            "label": "Rentner Junge/Mann hell blonde lang",
+            "age": "Rentner",
+            "gender": "m",
+            "skin": "white",
+            "hairColor": "blonde",
+            "hairLength": "lang"
+      },
+      {
+            "id": "avatars/avatar_54.png",
+            "label": "Rentner Junge/Mann hell brown lang",
+            "age": "Rentner",
+            "gender": "m",
+            "skin": "white",
+            "hairColor": "brown",
+            "hairLength": "lang"
+      },
+      {
+            "id": "avatars/avatar_55.png",
+            "label": "Rentner Junge/Mann dunkel black kurz",
+            "age": "Rentner",
+            "gender": "m",
+            "skin": "black",
+            "hairColor": "black",
+            "hairLength": "kurz"
+      },
+      {
+            "id": "avatars/avatar_56.png",
+            "label": "Rentner Junge/Mann dunkel blonde kurz",
+            "age": "Rentner",
+            "gender": "m",
+            "skin": "black",
+            "hairColor": "blonde",
+            "hairLength": "kurz"
+      },
+      {
+            "id": "avatars/avatar_57.png",
+            "label": "Rentner Junge/Mann dunkel brown kurz",
+            "age": "Rentner",
+            "gender": "m",
+            "skin": "black",
+            "hairColor": "brown",
+            "hairLength": "kurz"
+      },
+      {
+            "id": "avatars/avatar_58.png",
+            "label": "Rentner Junge/Mann dunkel black lang",
+            "age": "Rentner",
+            "gender": "m",
+            "skin": "black",
+            "hairColor": "black",
+            "hairLength": "lang"
+      },
+      {
+            "id": "avatars/avatar_59.png",
+            "label": "Rentner Junge/Mann dunkel blonde lang",
+            "age": "Rentner",
+            "gender": "m",
+            "skin": "black",
+            "hairColor": "blonde",
+            "hairLength": "lang"
+      },
+      {
+            "id": "avatars/avatar_60.png",
+            "label": "Rentner Junge/Mann dunkel brown lang",
+            "age": "Rentner",
+            "gender": "m",
+            "skin": "black",
+            "hairColor": "brown",
+            "hairLength": "lang"
+      },
+      {
+            "id": "avatars/avatar_61.png",
+            "label": "Rentner Mädchen/Frau hell black kurz",
+            "age": "Rentner",
+            "gender": "f",
+            "skin": "white",
+            "hairColor": "black",
+            "hairLength": "kurz"
+      },
+      {
+            "id": "avatars/avatar_62.png",
+            "label": "Rentner Mädchen/Frau hell blonde kurz",
+            "age": "Rentner",
+            "gender": "f",
+            "skin": "white",
+            "hairColor": "blonde",
+            "hairLength": "kurz"
+      },
+      {
+            "id": "avatars/avatar_63.png",
+            "label": "Rentner Mädchen/Frau hell brown kurz",
+            "age": "Rentner",
+            "gender": "f",
+            "skin": "white",
+            "hairColor": "brown",
+            "hairLength": "kurz"
+      },
+      {
+            "id": "avatars/avatar_64.png",
+            "label": "Rentner Mädchen/Frau hell black lang",
+            "age": "Rentner",
+            "gender": "f",
+            "skin": "white",
+            "hairColor": "black",
+            "hairLength": "lang"
+      },
+      {
+            "id": "avatars/avatar_65.png",
+            "label": "Rentner Mädchen/Frau hell blonde lang",
+            "age": "Rentner",
+            "gender": "f",
+            "skin": "white",
+            "hairColor": "blonde",
+            "hairLength": "lang"
+      },
+      {
+            "id": "avatars/avatar_66.png",
+            "label": "Rentner Mädchen/Frau hell brown lang",
+            "age": "Rentner",
+            "gender": "f",
+            "skin": "white",
+            "hairColor": "brown",
+            "hairLength": "lang"
+      },
+      {
+            "id": "avatars/avatar_67.png",
+            "label": "Rentner Mädchen/Frau dunkel black kurz",
+            "age": "Rentner",
+            "gender": "f",
+            "skin": "black",
+            "hairColor": "black",
+            "hairLength": "kurz"
+      },
+      {
+            "id": "avatars/avatar_68.png",
+            "label": "Rentner Mädchen/Frau dunkel blonde kurz",
+            "age": "Rentner",
+            "gender": "f",
+            "skin": "black",
+            "hairColor": "blonde",
+            "hairLength": "kurz"
+      },
+      {
+            "id": "avatars/avatar_69.png",
+            "label": "Rentner Mädchen/Frau dunkel brown kurz",
+            "age": "Rentner",
+            "gender": "f",
+            "skin": "black",
+            "hairColor": "brown",
+            "hairLength": "kurz"
+      },
+      {
+            "id": "avatars/avatar_70.png",
+            "label": "Rentner Mädchen/Frau dunkel black lang",
+            "age": "Rentner",
+            "gender": "f",
+            "skin": "black",
+            "hairColor": "black",
+            "hairLength": "lang"
+      },
+      {
+            "id": "avatars/avatar_71.png",
+            "label": "Rentner Mädchen/Frau dunkel blonde lang",
+            "age": "Rentner",
+            "gender": "f",
+            "skin": "black",
+            "hairColor": "blonde",
+            "hairLength": "lang"
+      },
+      {
+            "id": "avatars/avatar_72.png",
+            "label": "Rentner Mädchen/Frau dunkel brown lang",
+            "age": "Rentner",
+            "gender": "f",
+            "skin": "black",
+            "hairColor": "brown",
+            "hairLength": "lang"
+      }
+];
+
+    function avatarImg(src, cls = "avatarSmall") {
+      return `<img class="${cls}" src="${src}" alt="">`;
+    }
+
+    function getProfileAvatarSrc(name) {
+      const profiles = getProfiles();
+      return profiles[name]?.avatar || avatarOptions[0].id;
+    }
+
+    function openAvatarPicker(onPick) {
+      const root = document.getElementById("avatarModalRoot");
+      const groups = ["Kind", "Erwachsen", "Rentner"];
+
+      root.innerHTML = `
+        <div class="avatarModal">
+          <div class="avatarModalInner">
+            <h2>Profilbild auswählen</h2>
+            ${groups.map(group => `
+              <div class="avatarGroupTitle">${group}</div>
+              <div class="avatarGrid">
+                ${avatarOptions
+                  .filter(avatar => avatar.age === group)
+                  .map(avatar => `
+                    <button class="avatarOption" onclick="pickAvatar('${avatar.id}')">
+                      <img src="${avatar.id}" alt="">
+                    </button>
+                  `).join("")}
+              </div>
+            `).join("")}
+            <button class="avatarCancel" onclick="closeAvatarPicker()">Abbrechen</button>
+          </div>
+        </div>
+      `;
+
+      window.currentAvatarPickCallback = onPick;
+    }
+
+    function pickAvatar(src) {
+      if (typeof window.currentAvatarPickCallback === "function") {
+        window.currentAvatarPickCallback(src);
+      }
+      closeAvatarPicker();
+    }
+
+    function closeAvatarPicker() {
+      document.getElementById("avatarModalRoot").innerHTML = "";
+      window.currentAvatarPickCallback = null;
+    }
+
+
+
+    const profileColors = [
+      "#ff2b1a", "#ff8a00", "#ffd21f", "#20d94f",
+      "#27c4ff", "#1876ff", "#8b35e8", "#ff3d9d"
+    ];
+
+    let pendingProfileAvatar = null;
+    let pendingProfileColor = profileColors[0];
+
+    function getProfileAvatarSrc(name) {
+      const profiles = getProfiles();
+      return profiles[name]?.avatar || avatarOptions[0].id;
+    }
+
+    function getProfileColor(name) {
+      const profiles = getProfiles();
+      return profiles[name]?.color || "#ff8800";
+    }
+
+    function avatarImg(src, cls = "avatarSmall", color = "#ff8800") {
+      return `<img class="${cls} profileColorRing" src="${src}" alt="" style="--profile-color:${color}">`;
+    }
+
+    function groupAvatars(age, gender, skin) {
+      return avatarOptions.filter(a => a.age === age && a.gender === gender && a.skin === skin);
+    }
+
+    function renderAvatarButtons(age, gender, skin, title, female = false) {
+      const avatars = groupAvatars(age, gender, skin);
+
+      return `
+        <div>
+          <div class="avatarSubTitle ${female ? "female" : ""}">${title}</div>
+          <div class="avatarRows">
+            ${avatars.map(avatar => `
+              <button type="button" class="avatarSelectBtn ${pendingProfileAvatar === avatar.id ? "selected" : ""}" onclick="selectPendingAvatar('${avatar.id}')">
+                <img src="${avatar.id}" alt="">
+              </button>
+            `).join("")}
+          </div>
+        </div>
+      `;
+    }
+
+    function renderAgeBlock(age) {
+      const maleWhite = age === "Kind" ? "JUNGE (WEIß)" : "MÄNNER (WEIß)";
+      const maleBlack = age === "Kind" ? "JUNGE (SCHWARZ)" : "MÄNNER (SCHWARZ)";
+      const femaleWhite = age === "Kind" ? "MÄDCHEN (WEIß)" : "FRAUEN (WEIß)";
+      const femaleBlack = age === "Kind" ? "MÄDCHEN (SCHWARZ)" : "FRAUEN (SCHWARZ)";
+
+      return `
+        <div class="avatarAgeTitle">${age}</div>
+        <div class="avatarSubGrid">
+          ${renderAvatarButtons(age, "m", "white", maleWhite)}
+          ${renderAvatarButtons(age, "f", "white", femaleWhite, true)}
+          ${renderAvatarButtons(age, "m", "black", maleBlack)}
+          ${renderAvatarButtons(age, "f", "black", femaleBlack, true)}
+        </div>
+      `;
+    }
+
+    function openProfileCreateScreen() {
+      pendingProfileAvatar = avatarOptions[0].id;
+      pendingProfileColor = profileColors[0];
+
+      const root = document.getElementById("avatarModalRoot");
+
+      root.innerHTML = `
+        <div class="profileCreateModal">
+          <div class="profileCreateInner">
+            <div class="profileCreateTop">
+              <button class="profileIconBtn" onclick="closeProfileCreateScreen()">←</button>
+              <div class="profileLogo">🎯 GEHEIME <span>MISSIONEN</span></div>
+              <button class="profileIconBtn" onclick="showProfiles()">⚙️</button>
+            </div>
+
+            <div class="profileCreatePanel">
+              <h2 class="profileCreateTitle">PROFIL ERSTELLEN</h2>
+
+              <div class="stepRow"><span class="stepNo">1</span> PROFILNAME EINGEBEN</div>
+              <input id="newProfileNameInput" class="profileNameInput" placeholder="Dein Name..." maxlength="24">
+
+              <div class="stepRow"><span class="stepNo">2</span> AVATAR AUSWÄHLEN</div>
+              <div class="avatarPickArea" id="avatarPickArea">
+                ${renderAgeBlock("Kind")}
+                ${renderAgeBlock("Erwachsen")}
+                ${renderAgeBlock("Rentner")}
+              </div>
+
+              <div class="stepRow"><span class="stepNo">3</span> PROFILFARBE WÄHLEN</div>
+              <div class="colorRow" id="profileColorRow">
+                ${profileColors.map(color => `
+                  <button type="button" class="colorPick ${color === pendingProfileColor ? "selected" : ""}"
+                    style="background:${color}; color:${color};"
+                    onclick="selectPendingColor('${color}')"></button>
+                `).join("")}
+              </div>
+            </div>
+
+            <div class="profileCreateActions">
+              <button class="profileCancelBtn" onclick="closeProfileCreateScreen()">✕ ABBRECHEN</button>
+              <button class="profileSaveBtn" onclick="saveCreatedProfile()">✓ PROFIL ERSTELLEN</button>
+            </div>
+          </div>
+        </div>
+      `;
+
+      setTimeout(() => {
+        const input = document.getElementById("newProfileNameInput");
+        if (input) input.focus();
+      }, 100);
+    }
+
+    function closeProfileCreateScreen() {
+      document.getElementById("avatarModalRoot").innerHTML = "";
+    }
+
+    function selectPendingAvatar(src) {
+      pendingProfileAvatar = src;
+      const area = document.getElementById("avatarPickArea");
+      if (area) {
+        area.innerHTML = renderAgeBlock("Kind") + renderAgeBlock("Erwachsen") + renderAgeBlock("Rentner");
+      }
+    }
+
+    function selectPendingColor(color) {
+      pendingProfileColor = color;
+      const row = document.getElementById("profileColorRow");
+      if (row) {
+        row.innerHTML = profileColors.map(c => `
+          <button type="button" class="colorPick ${c === pendingProfileColor ? "selected" : ""}"
+            style="background:${c}; color:${c};"
+            onclick="selectPendingColor('${c}')"></button>
+        `).join("");
+      }
+    }
+
+    function saveCreatedProfile() {
+      const input = document.getElementById("newProfileNameInput");
+      const cleanName = input ? input.value.trim() : "";
+
+      if (!cleanName) {
+        alert("Bitte einen Namen eingeben");
+        return;
+      }
+
+      const profiles = getProfiles();
+
+      if (profiles[cleanName]) {
+        alert("Dieses Profil gibt es schon");
+        return;
+      }
+
+      profiles[cleanName] = getEmptyProfile(cleanName, pendingProfileAvatar || avatarOptions[0].id);
+      profiles[cleanName].color = pendingProfileColor;
+
+      saveProfiles(profiles);
+      closeProfileCreateScreen();
+      renderProfileButtons();
+      renderSelectedProfiles();
+
+      alert("Profil erstellt: " + cleanName);
+    }
+
+
     function getProfiles() {
       return JSON.parse(localStorage.getItem("geheimeMissionenProfiles")) || {};
     }
@@ -536,38 +1405,44 @@ font-weight:bold;
       localStorage.setItem("geheimeMissionenProfiles", JSON.stringify(profiles));
     }
 
-    function getEmptyProfile(name) {
-      return { name, games: 0, wins: 0, totalPoints: 0, missionsDone: 0, missionsFailed: 0, accusationPoints: 0, bestRound: 0 };
+    function getEmptyProfile(name, avatar = avatarOptions[0].id) {
+      return {
+        name,
+        avatar,
+        color: pendingProfileColor || "#ff8800",
+        games: 0,
+        wins: 0,
+        totalPoints: 0,
+        missionsDone: 0,
+        missionsFailed: 0,
+        accusationPoints: 0,
+        bestRound: 0
+      };
+    };
     }
 
     function ensureProfile(name) {
       if (!name) return;
       const profiles = getProfiles();
       if (!profiles[name]) {
-        profiles[name] = getEmptyProfile(name);
+        profiles[name] = getEmptyProfile(name, avatarOptions[0].id);
         saveProfiles(profiles);
       }
     }
 
     function createProfile() {
-      const name = prompt("Name für das neue Profil:");
-      if (!name || !name.trim()) return;
+      openProfileCreateScreen();
+    }
 
-      const cleanName = name.trim();
-      const profiles = getProfiles();
+      openAvatarPicker(function(avatar) {
+        profiles[cleanName] = getEmptyProfile(cleanName, avatar);
+        saveProfiles(profiles);
 
-      if (profiles[cleanName]) {
-        alert("Dieses Profil gibt es schon");
-        return;
-      }
+        renderProfileButtons();
+        renderSelectedProfiles();
 
-      profiles[cleanName] = getEmptyProfile(cleanName);
-      saveProfiles(profiles);
-
-      renderProfileButtons();
-      renderSelectedProfiles();
-
-      alert("Profil erstellt: " + cleanName);
+        alert("Profil erstellt: " + cleanName);
+      });
     }
 
     
@@ -605,7 +1480,7 @@ function selectProfiles(difficulty) {
             button.classList.add("active");
           }
 
-          button.textContent = name;
+          button.innerHTML = avatarImg(getProfileAvatarSrc(name), "", getProfileColor(name)) + name;
 
           button.onclick = () => {
             // Ein Profil darf immer nur in einer Schwierigkeit sein
@@ -638,10 +1513,52 @@ function selectProfiles(difficulty) {
           return;
         }
 
-        box.innerHTML = names.map(name => `<span class="chip">${name}</span>`).join("");
+        box.innerHTML = names.map(name => `<span class="chip">${avatarImg(getProfileAvatarSrc(name), "avatarSmall", getProfileColor(name))}${name}</span>`).join("");
       });
     }
 
+
+
+    function changeProfileAvatar() {
+      const profiles = getProfiles();
+      const names = Object.keys(profiles);
+
+      if (names.length === 0) {
+        alert("Keine Profile vorhanden");
+        return;
+      }
+
+      const input = prompt(
+        "Für welches Profil das Bild ändern?\n\n" +
+        names.map((name, index) => `${index + 1}. ${name}`).join("\n")
+      );
+
+      if (!input) return;
+
+      let selectedName = null;
+
+      if (profiles[input]) {
+        selectedName = input;
+      } else {
+        const number = parseInt(input, 10);
+        if (!isNaN(number) && names[number - 1]) {
+          selectedName = names[number - 1];
+        }
+      }
+
+      if (!selectedName) {
+        alert("Profil nicht gefunden");
+        return;
+      }
+
+      openAvatarPicker(function(avatar) {
+        profiles[selectedName].avatar = avatar;
+        saveProfiles(profiles);
+        renderProfileButtons();
+        renderSelectedProfiles();
+        showProfiles();
+      });
+    }
 
     function deleteProfile() {
       const profiles = getProfiles();
@@ -823,7 +1740,7 @@ renderProfileButtons();
             ${sortedProfiles.map(profile => `
               <div class="profileCard">
                 <div class="profileTop">
-                  <div class="profileName">${profile.name}</div>
+                  <div class="profileName">${avatarImg(profile.avatar || avatarOptions[0].id, "avatarSmall", profile.color || "#ff8800")}${profile.name}</div>
                   <div class="profileTitle">${getProfileTitle(profile)}</div>
                 </div>
                 <div class="profileSubtitle">Spiele: ${profile.games} | Siege: ${profile.wins} | Beste Runde: ${profile.bestRound}</div>
