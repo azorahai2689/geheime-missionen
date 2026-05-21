@@ -114,8 +114,9 @@ font-weight:bold;
       Wer am Ende die meisten Punkte hat, gewinnt 🏆
     </p>
 
-    <button class="mainButton profileButton" onclick="createProfile()">👤 Profil erstellen</button>
+    <button class="mainButton profileButton" onclick="window.createProfile()">👤 Profil erstellen</button>
     <button class="mainButton profileButton" onclick="showProfiles()">📊 Profile anzeigen</button>
+    <button class="mainButton profileButton" onclick="window.changeProfileAvatar()">🖼️ Profilbild ändern</button>
     <button class="mainButton deleteButton" onclick="deleteProfile()">🗑️ Profil löschen</button>
     <button class="mainButton saveButton" onclick="exportProfiles()">📤 Profile sichern</button>
     <button class="mainButton loadButton" onclick="importProfiles()">📥 Profile wiederherstellen</button>
@@ -250,7 +251,7 @@ font-weight:bold;
       playerBox.id = `playerBox${index}`;
 
       playerBox.innerHTML = `
-        <h3>${avatarImg(getProfileAvatarSrc(player.name), "avatarSmall", getProfileColor(player.name))}${player.name}</h3>
+        <h3>${player.name}</h3>
         <div class="difficulty">Schwierigkeit: ${player.difficulty}</div>
 
         <div class="missionCard" onclick="this.classList.toggle('flipped')">
@@ -331,7 +332,7 @@ font-weight:bold;
         list.innerHTML += `
           <div class="rankCard">
             <div class="rankTop">
-              <div class="rankName">${medal} ${displayRank}. ${avatarImg(getProfileAvatarSrc(player.name), "avatarSmall", getProfileColor(player.name))}${player.name}</div>
+              <div class="rankName">${medal} ${displayRank}. ${player.name}</div>
               <div class="rankTotal">${player.total} Pkt.</div>
             </div>
             <div class="rankDifficulty">${player.difficulty}</div>
@@ -606,7 +607,7 @@ function selectProfiles(difficulty) {
             button.classList.add("active");
           }
 
-          button.innerHTML = avatarImg(getProfileAvatarSrc(name), '', getProfileColor(name)) + name;
+          button.textContent = name;
 
           button.onclick = () => {
             // Ein Profil darf immer nur in einer Schwierigkeit sein
@@ -639,7 +640,7 @@ function selectProfiles(difficulty) {
           return;
         }
 
-        box.innerHTML = names.map(name => `<span class="chip">${avatarImg(getProfileAvatarSrc(name), "avatarSmall", getProfileColor(name))}${name}</span>`).join("");
+        box.innerHTML = names.map(name => `<span class="chip">${name}</span>`).join("");
       });
     }
 
@@ -824,7 +825,7 @@ renderProfileButtons();
             ${sortedProfiles.map(profile => `
               <div class="profileCard">
                 <div class="profileTop">
-                  <div class="profileName">${avatarImg(profile.avatar || avatarOptions[0].id, "avatarSmall", profile.color || "#ff8800")}${profile.name}</div>
+                  <div class="profileName">${profile.name}</div>
                   <div class="profileTitle">${getProfileTitle(profile)}</div>
                 </div>
                 <div class="profileSubtitle">Spiele: ${profile.games} | Siege: ${profile.wins} | Beste Runde: ${profile.bestRound}</div>
@@ -878,71 +879,61 @@ renderProfileButtons();
       navigator.serviceWorker.register("./service-worker.js");
     }
   
-    const avatarOptions = [{"id": "avatars/avatar_01.png", "age": "Kind", "gender": "m"}, {"id": "avatars/avatar_02.png", "age": "Kind", "gender": "m"}, {"id": "avatars/avatar_03.png", "age": "Kind", "gender": "m"}, {"id": "avatars/avatar_04.png", "age": "Kind", "gender": "m"}, {"id": "avatars/avatar_05.png", "age": "Kind", "gender": "m"}, {"id": "avatars/avatar_06.png", "age": "Kind", "gender": "m"}, {"id": "avatars/avatar_07.png", "age": "Kind", "gender": "f"}, {"id": "avatars/avatar_08.png", "age": "Kind", "gender": "f"}, {"id": "avatars/avatar_09.png", "age": "Kind", "gender": "f"}, {"id": "avatars/avatar_10.png", "age": "Kind", "gender": "f"}, {"id": "avatars/avatar_11.png", "age": "Kind", "gender": "f"}, {"id": "avatars/avatar_12.png", "age": "Kind", "gender": "f"}, {"id": "avatars/avatar_13.png", "age": "Kind", "gender": "m"}, {"id": "avatars/avatar_14.png", "age": "Kind", "gender": "m"}, {"id": "avatars/avatar_15.png", "age": "Kind", "gender": "m"}, {"id": "avatars/avatar_16.png", "age": "Kind", "gender": "m"}, {"id": "avatars/avatar_17.png", "age": "Kind", "gender": "m"}, {"id": "avatars/avatar_18.png", "age": "Kind", "gender": "m"}, {"id": "avatars/avatar_19.png", "age": "Kind", "gender": "f"}, {"id": "avatars/avatar_20.png", "age": "Kind", "gender": "f"}, {"id": "avatars/avatar_21.png", "age": "Kind", "gender": "f"}, {"id": "avatars/avatar_22.png", "age": "Kind", "gender": "f"}, {"id": "avatars/avatar_23.png", "age": "Kind", "gender": "f"}, {"id": "avatars/avatar_24.png", "age": "Kind", "gender": "f"}, {"id": "avatars/avatar_25.png", "age": "Erwachsen", "gender": "m"}, {"id": "avatars/avatar_26.png", "age": "Erwachsen", "gender": "m"}, {"id": "avatars/avatar_27.png", "age": "Erwachsen", "gender": "m"}, {"id": "avatars/avatar_28.png", "age": "Erwachsen", "gender": "m"}, {"id": "avatars/avatar_29.png", "age": "Erwachsen", "gender": "m"}, {"id": "avatars/avatar_30.png", "age": "Erwachsen", "gender": "m"}, {"id": "avatars/avatar_31.png", "age": "Erwachsen", "gender": "f"}, {"id": "avatars/avatar_32.png", "age": "Erwachsen", "gender": "f"}, {"id": "avatars/avatar_33.png", "age": "Erwachsen", "gender": "f"}, {"id": "avatars/avatar_34.png", "age": "Erwachsen", "gender": "f"}, {"id": "avatars/avatar_35.png", "age": "Erwachsen", "gender": "f"}, {"id": "avatars/avatar_36.png", "age": "Erwachsen", "gender": "f"}, {"id": "avatars/avatar_37.png", "age": "Erwachsen", "gender": "m"}, {"id": "avatars/avatar_38.png", "age": "Erwachsen", "gender": "m"}, {"id": "avatars/avatar_39.png", "age": "Erwachsen", "gender": "m"}, {"id": "avatars/avatar_40.png", "age": "Erwachsen", "gender": "m"}, {"id": "avatars/avatar_41.png", "age": "Erwachsen", "gender": "m"}, {"id": "avatars/avatar_42.png", "age": "Erwachsen", "gender": "m"}, {"id": "avatars/avatar_43.png", "age": "Erwachsen", "gender": "f"}, {"id": "avatars/avatar_44.png", "age": "Erwachsen", "gender": "f"}, {"id": "avatars/avatar_45.png", "age": "Erwachsen", "gender": "f"}, {"id": "avatars/avatar_46.png", "age": "Erwachsen", "gender": "f"}, {"id": "avatars/avatar_47.png", "age": "Erwachsen", "gender": "f"}, {"id": "avatars/avatar_48.png", "age": "Erwachsen", "gender": "f"}, {"id": "avatars/avatar_49.png", "age": "Rentner", "gender": "m"}, {"id": "avatars/avatar_50.png", "age": "Rentner", "gender": "m"}, {"id": "avatars/avatar_51.png", "age": "Rentner", "gender": "m"}, {"id": "avatars/avatar_52.png", "age": "Rentner", "gender": "m"}, {"id": "avatars/avatar_53.png", "age": "Rentner", "gender": "m"}, {"id": "avatars/avatar_54.png", "age": "Rentner", "gender": "m"}, {"id": "avatars/avatar_55.png", "age": "Rentner", "gender": "f"}, {"id": "avatars/avatar_56.png", "age": "Rentner", "gender": "f"}, {"id": "avatars/avatar_57.png", "age": "Rentner", "gender": "f"}, {"id": "avatars/avatar_58.png", "age": "Rentner", "gender": "f"}, {"id": "avatars/avatar_59.png", "age": "Rentner", "gender": "f"}, {"id": "avatars/avatar_60.png", "age": "Rentner", "gender": "f"}, {"id": "avatars/avatar_61.png", "age": "Rentner", "gender": "m"}, {"id": "avatars/avatar_62.png", "age": "Rentner", "gender": "m"}, {"id": "avatars/avatar_63.png", "age": "Rentner", "gender": "m"}, {"id": "avatars/avatar_64.png", "age": "Rentner", "gender": "m"}, {"id": "avatars/avatar_65.png", "age": "Rentner", "gender": "m"}, {"id": "avatars/avatar_66.png", "age": "Rentner", "gender": "m"}, {"id": "avatars/avatar_67.png", "age": "Rentner", "gender": "f"}, {"id": "avatars/avatar_68.png", "age": "Rentner", "gender": "f"}, {"id": "avatars/avatar_69.png", "age": "Rentner", "gender": "f"}, {"id": "avatars/avatar_70.png", "age": "Rentner", "gender": "f"}, {"id": "avatars/avatar_71.png", "age": "Rentner", "gender": "f"}, {"id": "avatars/avatar_72.png", "age": "Rentner", "gender": "f"}];
-    const profileColors = ["#ff2b1a", "#ff8a00", "#ffd21f", "#20d94f", "#27c4ff", "#1876ff", "#8b35e8", "#ff3d9d"];
+    // === ROBUSTE PROFIL-ERSTELLUNG MIT AVATAREN ===
+    window.avatarOptions = [{"id": "avatars/avatar_01.png", "age": "Kind", "gender": "m"}, {"id": "avatars/avatar_02.png", "age": "Kind", "gender": "m"}, {"id": "avatars/avatar_03.png", "age": "Kind", "gender": "m"}, {"id": "avatars/avatar_04.png", "age": "Kind", "gender": "m"}, {"id": "avatars/avatar_05.png", "age": "Kind", "gender": "m"}, {"id": "avatars/avatar_06.png", "age": "Kind", "gender": "m"}, {"id": "avatars/avatar_07.png", "age": "Kind", "gender": "f"}, {"id": "avatars/avatar_08.png", "age": "Kind", "gender": "f"}, {"id": "avatars/avatar_09.png", "age": "Kind", "gender": "f"}, {"id": "avatars/avatar_10.png", "age": "Kind", "gender": "f"}, {"id": "avatars/avatar_11.png", "age": "Kind", "gender": "f"}, {"id": "avatars/avatar_12.png", "age": "Kind", "gender": "f"}, {"id": "avatars/avatar_13.png", "age": "Kind", "gender": "m"}, {"id": "avatars/avatar_14.png", "age": "Kind", "gender": "m"}, {"id": "avatars/avatar_15.png", "age": "Kind", "gender": "m"}, {"id": "avatars/avatar_16.png", "age": "Kind", "gender": "m"}, {"id": "avatars/avatar_17.png", "age": "Kind", "gender": "m"}, {"id": "avatars/avatar_18.png", "age": "Kind", "gender": "m"}, {"id": "avatars/avatar_19.png", "age": "Kind", "gender": "f"}, {"id": "avatars/avatar_20.png", "age": "Kind", "gender": "f"}, {"id": "avatars/avatar_21.png", "age": "Kind", "gender": "f"}, {"id": "avatars/avatar_22.png", "age": "Kind", "gender": "f"}, {"id": "avatars/avatar_23.png", "age": "Kind", "gender": "f"}, {"id": "avatars/avatar_24.png", "age": "Kind", "gender": "f"}, {"id": "avatars/avatar_25.png", "age": "Erwachsen", "gender": "m"}, {"id": "avatars/avatar_26.png", "age": "Erwachsen", "gender": "m"}, {"id": "avatars/avatar_27.png", "age": "Erwachsen", "gender": "m"}, {"id": "avatars/avatar_28.png", "age": "Erwachsen", "gender": "m"}, {"id": "avatars/avatar_29.png", "age": "Erwachsen", "gender": "m"}, {"id": "avatars/avatar_30.png", "age": "Erwachsen", "gender": "m"}, {"id": "avatars/avatar_31.png", "age": "Erwachsen", "gender": "f"}, {"id": "avatars/avatar_32.png", "age": "Erwachsen", "gender": "f"}, {"id": "avatars/avatar_33.png", "age": "Erwachsen", "gender": "f"}, {"id": "avatars/avatar_34.png", "age": "Erwachsen", "gender": "f"}, {"id": "avatars/avatar_35.png", "age": "Erwachsen", "gender": "f"}, {"id": "avatars/avatar_36.png", "age": "Erwachsen", "gender": "f"}, {"id": "avatars/avatar_37.png", "age": "Erwachsen", "gender": "m"}, {"id": "avatars/avatar_38.png", "age": "Erwachsen", "gender": "m"}, {"id": "avatars/avatar_39.png", "age": "Erwachsen", "gender": "m"}, {"id": "avatars/avatar_40.png", "age": "Erwachsen", "gender": "m"}, {"id": "avatars/avatar_41.png", "age": "Erwachsen", "gender": "m"}, {"id": "avatars/avatar_42.png", "age": "Erwachsen", "gender": "m"}, {"id": "avatars/avatar_43.png", "age": "Erwachsen", "gender": "f"}, {"id": "avatars/avatar_44.png", "age": "Erwachsen", "gender": "f"}, {"id": "avatars/avatar_45.png", "age": "Erwachsen", "gender": "f"}, {"id": "avatars/avatar_46.png", "age": "Erwachsen", "gender": "f"}, {"id": "avatars/avatar_47.png", "age": "Erwachsen", "gender": "f"}, {"id": "avatars/avatar_48.png", "age": "Erwachsen", "gender": "f"}, {"id": "avatars/avatar_49.png", "age": "Rentner", "gender": "m"}, {"id": "avatars/avatar_50.png", "age": "Rentner", "gender": "m"}, {"id": "avatars/avatar_51.png", "age": "Rentner", "gender": "m"}, {"id": "avatars/avatar_52.png", "age": "Rentner", "gender": "m"}, {"id": "avatars/avatar_53.png", "age": "Rentner", "gender": "m"}, {"id": "avatars/avatar_54.png", "age": "Rentner", "gender": "m"}, {"id": "avatars/avatar_55.png", "age": "Rentner", "gender": "f"}, {"id": "avatars/avatar_56.png", "age": "Rentner", "gender": "f"}, {"id": "avatars/avatar_57.png", "age": "Rentner", "gender": "f"}, {"id": "avatars/avatar_58.png", "age": "Rentner", "gender": "f"}, {"id": "avatars/avatar_59.png", "age": "Rentner", "gender": "f"}, {"id": "avatars/avatar_60.png", "age": "Rentner", "gender": "f"}, {"id": "avatars/avatar_61.png", "age": "Rentner", "gender": "m"}, {"id": "avatars/avatar_62.png", "age": "Rentner", "gender": "m"}, {"id": "avatars/avatar_63.png", "age": "Rentner", "gender": "m"}, {"id": "avatars/avatar_64.png", "age": "Rentner", "gender": "m"}, {"id": "avatars/avatar_65.png", "age": "Rentner", "gender": "m"}, {"id": "avatars/avatar_66.png", "age": "Rentner", "gender": "m"}, {"id": "avatars/avatar_67.png", "age": "Rentner", "gender": "f"}, {"id": "avatars/avatar_68.png", "age": "Rentner", "gender": "f"}, {"id": "avatars/avatar_69.png", "age": "Rentner", "gender": "f"}, {"id": "avatars/avatar_70.png", "age": "Rentner", "gender": "f"}, {"id": "avatars/avatar_71.png", "age": "Rentner", "gender": "f"}, {"id": "avatars/avatar_72.png", "age": "Rentner", "gender": "f"}];
+    window.profileColors = ["#ff2b1a", "#ff8a00", "#ffd21f", "#20d94f", "#27c4ff", "#1876ff", "#8b35e8", "#ff3d9d"];
+    window.pendingProfileAvatar = window.avatarOptions[0].id;
+    window.pendingProfileColor = window.profileColors[0];
 
-    let pendingProfileAvatar = avatarOptions[0].id;
-    let pendingProfileColor = profileColors[0];
-
-    function avatarImg(src, cls = "avatarSmall", color = "#ff8800") {
+    window.avatarImg = function(src, cls = "avatarSmall", color = "#ff8800") {
       return `<img class="${cls}" src="${src}" alt="" style="--profile-color:${color}">`;
-    }
+    };
 
-    function getProfileAvatarSrc(name) {
+    window.getProfileAvatarSrc = function(name) {
       const profiles = getProfiles();
-      return profiles[name]?.avatar || avatarOptions[0].id;
-    }
+      return (profiles[name] && profiles[name].avatar) ? profiles[name].avatar : window.avatarOptions[0].id;
+    };
 
-    function getProfileColor(name) {
+    window.getProfileColor = function(name) {
       const profiles = getProfiles();
-      return profiles[name]?.color || "#ff8800";
-    }
+      return (profiles[name] && profiles[name].color) ? profiles[name].color : "#ff8800";
+    };
 
-    function renderAvatarButtons(age, gender, title, female = false) {
-      const avatars = avatarOptions.filter(a => a.age === age && a.gender === gender);
-
+    window.renderAvatarButtons = function(age, gender, title, female = false) {
+      const avatars = window.avatarOptions.filter(a => a.age === age && a.gender === gender);
       return `
         <div>
           <div class="avatarSubTitle ${female ? "female" : ""}">${title}</div>
           <div class="avatarRows">
             ${avatars.map(avatar => `
-              <button type="button" class="avatarSelectBtn ${pendingProfileAvatar === avatar.id ? "selected" : ""}" onclick="selectPendingAvatar('${avatar.id}')">
+              <button type="button" class="avatarSelectBtn ${window.pendingProfileAvatar === avatar.id ? "selected" : ""}" onclick="selectPendingAvatar('${avatar.id}')">
                 <img src="${avatar.id}" alt="">
               </button>
             `).join("")}
           </div>
-        </div>
-      `;
-    }
+        </div>`;
+    };
 
-    function renderAgeBlock(age) {
-      let maleTitle = "JUNGEN";
-      let femaleTitle = "MÄDCHEN";
-
-      if (age === "Erwachsen") {
-        maleTitle = "MÄNNER";
-        femaleTitle = "FRAUEN";
-      }
-
-      if (age === "Rentner") {
-        maleTitle = "MÄNNER";
-        femaleTitle = "FRAUEN";
-      }
-
+    window.renderAgeBlock = function(age) {
+      let maleTitle = age === "Kind" ? "JUNGEN" : "MÄNNER";
+      let femaleTitle = age === "Kind" ? "MÄDCHEN" : "FRAUEN";
       return `
         <div class="avatarAgeTitle">${age}</div>
         <div class="avatarSubGrid">
           ${renderAvatarButtons(age, "m", maleTitle)}
           ${renderAvatarButtons(age, "f", femaleTitle, true)}
-        </div>
-      `;
-    }
+        </div>`;
+    };
 
-    function openProfileCreateScreen() {
-      pendingProfileAvatar = avatarOptions[0].id;
-      pendingProfileColor = profileColors[0];
+    window.openProfileCreateScreen = function(editName = null) {
+      window.pendingProfileAvatar = editName ? getProfileAvatarSrc(editName) : window.avatarOptions[0].id;
+      window.pendingProfileColor = editName ? getProfileColor(editName) : window.profileColors[0];
 
       const root = document.getElementById("avatarModalRoot");
+      if (!root) {
+        alert("Fehler: avatarModalRoot fehlt");
+        return;
+      }
 
       root.innerHTML = `
         <div class="profileCreateModal">
@@ -950,14 +941,14 @@ renderProfileButtons();
             <div class="profileCreateTop">
               <button type="button" class="profileIconBtn" onclick="closeProfileCreateScreen()">←</button>
               <div class="profileLogo">🎯 GEHEIME <span>MISSIONEN</span></div>
-              <button type="button" class="profileIconBtn" onclick="showProfiles()">⚙️</button>
+              <button type="button" class="profileIconBtn" onclick="closeProfileCreateScreen()">⚙️</button>
             </div>
 
             <div class="profileCreatePanel">
-              <h2 class="profileCreateTitle">PROFIL ERSTELLEN</h2>
+              <h2 class="profileCreateTitle">${editName ? "PROFILBILD ÄNDERN" : "PROFIL ERSTELLEN"}</h2>
 
               <div class="stepRow"><span class="stepNo">1</span> PROFILNAME EINGEBEN</div>
-              <input id="newProfileNameInput" class="profileNameInput" placeholder="Dein Name..." maxlength="24">
+              <input id="newProfileNameInput" class="profileNameInput" placeholder="Dein Name..." maxlength="24" value="${editName || ""}" ${editName ? "disabled" : ""}>
 
               <div class="stepRow"><span class="stepNo">2</span> AVATAR AUSWÄHLEN</div>
               <div class="avatarPickArea" id="avatarPickArea">
@@ -968,8 +959,8 @@ renderProfileButtons();
 
               <div class="stepRow"><span class="stepNo">3</span> PROFILFARBE WÄHLEN</div>
               <div class="colorRow" id="profileColorRow">
-                ${profileColors.map(color => `
-                  <button type="button" class="colorPick ${color === pendingProfileColor ? "selected" : ""}"
+                ${window.profileColors.map(color => `
+                  <button type="button" class="colorPick ${color === window.pendingProfileColor ? "selected" : ""}"
                     style="background:${color}; color:${color};"
                     onclick="selectPendingColor('${color}')"></button>
                 `).join("")}
@@ -978,40 +969,38 @@ renderProfileButtons();
 
             <div class="profileCreateActions">
               <button type="button" class="profileCancelBtn" onclick="closeProfileCreateScreen()">✕ ABBRECHEN</button>
-              <button type="button" class="profileSaveBtn" onclick="saveCreatedProfile()">✓ PROFIL ERSTELLEN</button>
+              <button type="button" class="profileSaveBtn" onclick="saveCreatedProfile(${editName ? "'" + editName.replace(/'/g, "\\'") + "'" : "null"})">✓ ${editName ? "SPEICHERN" : "PROFIL ERSTELLEN"}</button>
             </div>
           </div>
-        </div>
-      `;
-    }
+        </div>`;
+    };
 
-    function closeProfileCreateScreen() {
-      document.getElementById("avatarModalRoot").innerHTML = "";
-    }
+    window.closeProfileCreateScreen = function() {
+      const root = document.getElementById("avatarModalRoot");
+      if (root) root.innerHTML = "";
+    };
 
-    function selectPendingAvatar(src) {
-      pendingProfileAvatar = src;
+    window.selectPendingAvatar = function(src) {
+      window.pendingProfileAvatar = src;
       const area = document.getElementById("avatarPickArea");
-      if (area) {
-        area.innerHTML = renderAgeBlock("Kind") + renderAgeBlock("Erwachsen") + renderAgeBlock("Rentner");
-      }
-    }
+      if (area) area.innerHTML = renderAgeBlock("Kind") + renderAgeBlock("Erwachsen") + renderAgeBlock("Rentner");
+    };
 
-    function selectPendingColor(color) {
-      pendingProfileColor = color;
+    window.selectPendingColor = function(color) {
+      window.pendingProfileColor = color;
       const row = document.getElementById("profileColorRow");
       if (row) {
-        row.innerHTML = profileColors.map(c => `
-          <button type="button" class="colorPick ${c === pendingProfileColor ? "selected" : ""}"
+        row.innerHTML = window.profileColors.map(c => `
+          <button type="button" class="colorPick ${c === window.pendingProfileColor ? "selected" : ""}"
             style="background:${c}; color:${c};"
             onclick="selectPendingColor('${c}')"></button>
         `).join("");
       }
-    }
+    };
 
-    function saveCreatedProfile() {
+    window.saveCreatedProfile = function(editName = null) {
       const input = document.getElementById("newProfileNameInput");
-      const cleanName = input ? input.value.trim() : "";
+      const cleanName = editName || (input ? input.value.trim() : "");
 
       if (!cleanName) {
         alert("Bitte einen Namen eingeben");
@@ -1020,62 +1009,54 @@ renderProfileButtons();
 
       const profiles = getProfiles();
 
-      if (profiles[cleanName]) {
+      if (!editName && profiles[cleanName]) {
         alert("Dieses Profil gibt es schon");
         return;
       }
 
-      profiles[cleanName] = {
-        name: cleanName,
-        avatar: pendingProfileAvatar,
-        color: pendingProfileColor,
-        games: 0,
-        wins: 0,
-        totalPoints: 0,
-        missionsDone: 0,
-        missionsFailed: 0,
-        accusationPoints: 0,
-        bestRound: 0
-      };
+      if (!profiles[cleanName]) {
+        profiles[cleanName] = {
+          name: cleanName,
+          games: 0,
+          wins: 0,
+          totalPoints: 0,
+          missionsDone: 0,
+          missionsFailed: 0,
+          accusationPoints: 0,
+          bestRound: 0
+        };
+      }
+
+      profiles[cleanName].avatar = window.pendingProfileAvatar;
+      profiles[cleanName].color = window.pendingProfileColor;
 
       saveProfiles(profiles);
       closeProfileCreateScreen();
-
       if (typeof renderProfileButtons === "function") renderProfileButtons();
       if (typeof renderSelectedProfiles === "function") renderSelectedProfiles();
+      alert(editName ? "Profilbild gespeichert" : "Profil erstellt: " + cleanName);
+    };
 
-      alert("Profil erstellt: " + cleanName);
-    }
+    window.createProfile = function() {
+      openProfileCreateScreen(null);
+    };
 
-    function createProfile() {
-      openProfileCreateScreen();
-    }
-
-    function changeProfileAvatar() {
+    window.changeProfileAvatar = function() {
       const profiles = getProfiles();
       const names = Object.keys(profiles);
-
       if (names.length === 0) {
         alert("Keine Profile vorhanden");
         return;
       }
 
-      const input = prompt(
-        "Für welches Profil das Bild ändern?\n\n" +
-        names.map((name, index) => `${index + 1}. ${name}`).join("\n")
-      );
-
+      const input = prompt("Für welches Profil das Bild ändern?\n\n" + names.map((name, index) => `${index + 1}. ${name}`).join("\n"));
       if (!input) return;
 
       let selectedName = null;
-
-      if (profiles[input]) {
-        selectedName = input;
-      } else {
+      if (profiles[input]) selectedName = input;
+      else {
         const number = parseInt(input, 10);
-        if (!isNaN(number) && names[number - 1]) {
-          selectedName = names[number - 1];
-        }
+        if (!isNaN(number) && names[number - 1]) selectedName = names[number - 1];
       }
 
       if (!selectedName) {
@@ -1083,24 +1064,8 @@ renderProfileButtons();
         return;
       }
 
-      pendingProfileAvatar = profiles[selectedName].avatar || avatarOptions[0].id;
-      pendingProfileColor = profiles[selectedName].color || profileColors[0];
-
-      openProfileCreateScreen();
-      document.querySelector(".profileCreateTitle").innerText = "PROFILBILD ÄNDERN";
-      document.getElementById("newProfileNameInput").value = selectedName;
-      document.getElementById("newProfileNameInput").disabled = true;
-
-      window.saveCreatedProfile = function() {
-        profiles[selectedName].avatar = pendingProfileAvatar;
-        profiles[selectedName].color = pendingProfileColor;
-        saveProfiles(profiles);
-        closeProfileCreateScreen();
-        if (typeof renderProfileButtons === "function") renderProfileButtons();
-        if (typeof renderSelectedProfiles === "function") renderSelectedProfiles();
-        if (typeof showProfiles === "function") showProfiles();
-      };
-    }
+      openProfileCreateScreen(selectedName);
+    };
 
 </script>
 </body>
