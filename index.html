@@ -17,8 +17,6 @@
     .gameInfo { text-align: center; font-size: 20px; line-height: 1.6; margin-bottom: 35px; color: rgba(255,255,255,0.85); }
     h2 { color: orange; margin-top: 25px; font-size: 34px; text-shadow: 0 0 10px rgba(255,140,0,0.6); }
     .pointsInfo { display: block; font-size: 15px; color: white; opacity: 0.75; margin-top: 5px; font-weight: normal; }
-    textarea { width: 100%; height: 110px; padding: 15px; border-radius: 18px; border: none; background: #2c2c2c; color: white; font-size: 18px; margin-bottom: 15px; box-sizing: border-box; }
-    textarea::placeholder { color: rgba(255,255,255,0.5); }
     button { cursor: pointer; touch-action: manipulation; }
     .mainButton { width: 100%; padding: 18px; background: linear-gradient(90deg, orange, #ff5500); border: none; border-radius: 18px; color: white; font-size: 24px; font-weight: bold; margin-top: 15px; box-shadow: 0 0 20px rgba(255,140,0,0.4); }
     .saveButton { background: linear-gradient(90deg, #00c853, #64dd17); }
@@ -26,6 +24,12 @@
     .deleteButton { background: linear-gradient(90deg, #424242, #9e9e9e); }
     .profileButton { background: linear-gradient(90deg, #8e24aa, #d500f9); }
     .finishButton { background: linear-gradient(90deg, #ff6d00, #ffab00); }
+
+    .difficultyBox { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,140,0,0.25); border-radius: 20px; padding: 16px; margin-top: 18px; }
+    .selectButton { width: 100%; padding: 14px; border: none; border-radius: 14px; color: white; font-size: 18px; font-weight: bold; background: linear-gradient(90deg,#2962ff,#00b0ff); margin-top: 10px; }
+    .selectedList { margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; min-height: 34px; }
+    .chip { background: rgba(255,140,0,0.18); border: 1px solid rgba(255,140,0,0.5); color: white; border-radius: 999px; padding: 8px 12px; font-weight: bold; }
+
     .playerBox { background: linear-gradient(180deg, #2b2b2b, #1a1a1a); border-radius: 25px; padding: 25px; margin-top: 30px; text-align: center; border: 2px solid rgba(255,140,0,0.3); box-shadow: 0 0 25px rgba(255,140,0,0.25); overflow: hidden; }
     .playerBox h3 { font-size: 32px; margin-bottom: 10px; color: orange; text-shadow: 0 0 10px orange; }
     .difficulty { margin-bottom: 15px; opacity: 0.8; font-size: 18px; }
@@ -38,6 +42,7 @@
     .buttonGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
     .buttonGrid button, .changeButton { padding: 10px; border: none; border-radius: 12px; color: white; font-size: 16px; font-weight: bold; }
     .statusText { margin-top: 15px; font-size: 20px; font-weight: bold; min-height: 24px; }
+
     .rankingList, .profileList { display: flex; flex-direction: column; gap: 12px; margin-top: 18px; }
     .rankCard, .profileCard { background: rgba(0,0,0,0.35); border: 1px solid rgba(255,140,0,0.35); border-radius: 18px; padding: 12px; text-align: left; box-shadow: 0 0 12px rgba(255,140,0,0.15); overflow: hidden; }
     .rankTop, .profileTop { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 20px; font-weight: bold; }
@@ -46,6 +51,7 @@
     .rankDifficulty, .profileSubtitle { margin-top: 5px; color: rgba(255,255,255,0.75); font-size: 14px; }
     .rankStatsCompact, .profileStatsCompact { display: flex; justify-content: space-between; gap: 6px; margin-top: 12px; font-size: 16px; font-weight: bold; white-space: nowrap; }
     .rankMiniStat, .profileMiniStat { flex: 1; background: rgba(255,255,255,0.07); border-radius: 12px; padding: 8px 4px; text-align: center; min-width: 0; }
+
     @media (max-width: 700px) {
       body { padding: 16px; }
       .box { padding: 20px; }
@@ -53,6 +59,7 @@
       h2 { font-size: 28px; }
       .slogan { font-size: 20px; }
       .gameInfo { font-size: 17px; }
+      .mainButton { font-size: 20px; }
       .playerBox { padding: 18px; }
       .playerBox h3 { font-size: 26px; }
       .missionCard { width: 200px; height: 200px; }
@@ -68,6 +75,7 @@
   <div class="box">
     <p class="slogan">Macht euren Spieleabend verdächtig gut 🎭</p>
     <h1>🎭🎉 Geheime Missionen 🎉🎭</h1>
+
     <p class="gameInfo">
       Jeder Spieler erhält eine geheime Mission 🥷<br>
       Erfülle deine Mission möglichst unauffällig, ohne dass sie scheitert 🎭<br><br>
@@ -78,15 +86,25 @@
 
     <button class="mainButton profileButton" onclick="createProfile()">👤 Profil erstellen</button>
     <button class="mainButton profileButton" onclick="showProfiles()">📊 Profile anzeigen</button>
+    <button class="mainButton loadButton" onclick="continueRound()">🔄 Runde fortsetzen</button>
 
-    <h2>🟢 Leicht<span class="pointsInfo">+10 erfüllt / -5 gescheitert</span></h2>
-    <textarea id="easyNames" placeholder="Namen für leichte Missionen"></textarea>
+    <div class="difficultyBox">
+      <h2>🟢 Leicht<span class="pointsInfo">+10 erfüllt / -5 gescheitert</span></h2>
+      <button class="selectButton" onclick="selectProfiles('Leicht')">👥 Profile auswählen</button>
+      <div id="selectedLeicht" class="selectedList"></div>
+    </div>
 
-    <h2>🟠 Normal<span class="pointsInfo">+20 erfüllt / -10 gescheitert</span></h2>
-    <textarea id="normalNames" placeholder="Namen für normale Missionen"></textarea>
+    <div class="difficultyBox">
+      <h2>🟠 Normal<span class="pointsInfo">+20 erfüllt / -10 gescheitert</span></h2>
+      <button class="selectButton" onclick="selectProfiles('Normal')">👥 Profile auswählen</button>
+      <div id="selectedNormal" class="selectedList"></div>
+    </div>
 
-    <h2>🔴 Experte<span class="pointsInfo">+30 erfüllt / -15 gescheitert</span></h2>
-    <textarea id="hardNames" placeholder="Namen für schwere Missionen"></textarea>
+    <div class="difficultyBox">
+      <h2>🔴 Experte<span class="pointsInfo">+30 erfüllt / -15 gescheitert</span></h2>
+      <button class="selectButton" onclick="selectProfiles('Experte')">👥 Profile auswählen</button>
+      <div id="selectedExperte" class="selectedList"></div>
+    </div>
 
     <button class="mainButton" onclick="createGame()">🎮 Spiel starten</button>
     <button class="mainButton saveButton" onclick="saveGame()">💾 Spielstand speichern</button>
@@ -143,13 +161,16 @@
     ];
 
     let players = [];
-
-    function getNames(id) {
-      return document.getElementById(id).value.split("\\n").map(name => name.trim()).filter(name => name !== "");
-    }
+    let selectedProfiles = { Leicht: [], Normal: [], Experte: [] };
 
     function shuffle(list) {
       return [...list].sort(() => Math.random() - 0.5);
+    }
+
+    function getMissionList(difficulty) {
+      if (difficulty === "Leicht") return easyMissions;
+      if (difficulty === "Experte") return hardMissions;
+      return normalMissions;
     }
 
     function createGame() {
@@ -158,12 +179,18 @@
       qrList.innerHTML = "";
       players = [];
 
-      addPlayers(getNames("easyNames"), "Leicht", easyMissions);
-      addPlayers(getNames("normalNames"), "Normal", normalMissions);
-      addPlayers(getNames("hardNames"), "Experte", hardMissions);
+      addPlayers(selectedProfiles.Leicht, "Leicht", easyMissions);
+      addPlayers(selectedProfiles.Normal, "Normal", normalMissions);
+      addPlayers(selectedProfiles.Experte, "Experte", hardMissions);
+
+      if (players.length === 0) {
+        alert("Bitte erst Profile auswählen");
+        return;
+      }
 
       players.forEach((player, index) => createPlayerBox(player, index));
       createScoreTable();
+      autoSaveCurrentRound();
     }
 
     function addPlayers(names, difficulty, missionList) {
@@ -234,6 +261,7 @@
       const status = playerBox.querySelector(".statusText");
       status.innerHTML = "🔄 Neue Mission erstellt!";
       status.style.color = "orange";
+      autoSaveCurrentRound();
     }
 
     function createScoreTable() {
@@ -343,6 +371,8 @@
         status.innerHTML = points > 0 ? `+${points} Punkte` : `${points} Punkte`;
         status.style.color = points > 0 ? "#64ff64" : "#ff5252";
       }
+
+      autoSaveCurrentRound();
     }
 
     function getAllSaves() {
@@ -360,9 +390,7 @@
       const saves = getAllSaves();
       saves[saveName] = {
         date: new Date().toLocaleString(),
-        easyNames: document.getElementById("easyNames").value,
-        normalNames: document.getElementById("normalNames").value,
-        hardNames: document.getElementById("hardNames").value,
+        selectedProfiles,
         players
       };
 
@@ -431,15 +459,36 @@
     }
 
     function restoreGame(gameData) {
-      document.getElementById("easyNames").value = gameData.easyNames || "";
-      document.getElementById("normalNames").value = gameData.normalNames || "";
-      document.getElementById("hardNames").value = gameData.hardNames || "";
+      selectedProfiles = gameData.selectedProfiles || { Leicht: [], Normal: [], Experte: [] };
+      renderSelectedProfiles();
+
       players = gameData.players || [];
       const qrList = document.getElementById("qrList");
       document.getElementById("profileArea").innerHTML = "";
       qrList.innerHTML = "";
+
       players.forEach((player, index) => createPlayerBox(player, index));
-      createScoreTable();
+      if (players.length > 0) createScoreTable();
+    }
+
+    function autoSaveCurrentRound() {
+      if (players.length === 0) return;
+      localStorage.setItem("geheimeMissionenAutoSave", JSON.stringify({
+        date: new Date().toLocaleString(),
+        selectedProfiles,
+        players
+      }));
+    }
+
+    function continueRound() {
+      const saved = localStorage.getItem("geheimeMissionenAutoSave");
+      if (!saved) {
+        alert("Keine laufende Runde gefunden");
+        return;
+      }
+
+      restoreGame(JSON.parse(saved));
+      alert("Laufende Runde wurde fortgesetzt");
     }
 
     function getProfiles() {
@@ -477,6 +526,60 @@
       saveProfiles(profiles);
       alert("Profil erstellt: " + name);
       showProfiles();
+    }
+
+    function selectProfiles(difficulty) {
+      const profiles = getProfiles();
+      const names = Object.keys(profiles);
+
+      if (names.length === 0) {
+        alert("Bitte zuerst Profile erstellen");
+        return;
+      }
+
+      const input = prompt(
+        "Profile für " + difficulty + " auswählen.\\nMehrere Nummern mit Komma trennen.\\nLeer lassen = Auswahl löschen.\\n\\n" +
+        names.map((name, index) => `${index + 1}. ${name}`).join("\\n")
+      );
+
+      if (input === null) return;
+
+      if (input.trim() === "") {
+        selectedProfiles[difficulty] = [];
+        renderSelectedProfiles();
+        autoSaveCurrentRound();
+        return;
+      }
+
+      const selectedNames = input
+        .split(",")
+        .map(item => parseInt(item.trim(), 10))
+        .filter(number => !isNaN(number) && names[number - 1])
+        .map(number => names[number - 1]);
+
+      selectedNames.forEach(name => {
+        selectedProfiles.Leicht = selectedProfiles.Leicht.filter(player => player !== name);
+        selectedProfiles.Normal = selectedProfiles.Normal.filter(player => player !== name);
+        selectedProfiles.Experte = selectedProfiles.Experte.filter(player => player !== name);
+      });
+
+      selectedProfiles[difficulty] = selectedNames;
+      renderSelectedProfiles();
+      autoSaveCurrentRound();
+    }
+
+    function renderSelectedProfiles() {
+      ["Leicht", "Normal", "Experte"].forEach(difficulty => {
+        const box = document.getElementById("selected" + difficulty);
+        const names = selectedProfiles[difficulty] || [];
+
+        if (names.length === 0) {
+          box.innerHTML = `<span style="opacity:0.6;">Keine Profile ausgewählt</span>`;
+          return;
+        }
+
+        box.innerHTML = names.map(name => `<span class="chip">${name}</span>`).join("");
+      });
     }
 
     function getProfileTitle(profile) {
@@ -552,6 +655,8 @@
       alert("Profile wurden aktualisiert 🏆");
       showProfiles();
     }
+
+    renderSelectedProfiles();
 
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.register("./service-worker.js");
