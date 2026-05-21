@@ -421,6 +421,68 @@ font-weight:bold;
   }
 }
 
+
+/* === Avatare + Profilfarbe überall anzeigen === */
+.profileChoice{
+  display:inline-flex !important;
+  align-items:center !important;
+  gap:8px !important;
+  border:2px solid var(--profile-color, rgba(255,140,0,0.45)) !important;
+  box-shadow:0 0 12px color-mix(in srgb, var(--profile-color,#ff8800) 35%, transparent) !important;
+}
+
+.profileChoice.active{
+  background:var(--profile-color,#ff8800) !important;
+  color:white !important;
+  box-shadow:0 0 18px var(--profile-color,#ff8800) !important;
+}
+
+.profileMiniAvatar,
+.rankMiniAvatar,
+.playerMiniAvatar,
+.chipAvatar{
+  width:32px !important;
+  height:32px !important;
+  border-radius:50% !important;
+  object-fit:cover !important;
+  vertical-align:middle !important;
+  border:2px solid var(--profile-color,#ff8800) !important;
+  box-shadow:0 0 10px var(--profile-color,#ff8800) !important;
+  background:#111 !important;
+  flex:0 0 auto !important;
+}
+
+.profileName,
+.rankName,
+.playerNameWithAvatar,
+.chip{
+  display:inline-flex !important;
+  align-items:center !important;
+  gap:8px !important;
+}
+
+.profileCard,
+.rankCard{
+  border-color:var(--profile-color, rgba(255,140,0,0.35)) !important;
+  box-shadow:0 0 16px color-mix(in srgb, var(--profile-color,#ff8800) 32%, transparent) !important;
+}
+
+.chip{
+  border-color:var(--profile-color,#ff8800) !important;
+  background:color-mix(in srgb, var(--profile-color,#ff8800) 25%, transparent) !important;
+  box-shadow:0 0 10px color-mix(in srgb, var(--profile-color,#ff8800) 40%, transparent) !important;
+}
+
+.playerNameWithAvatar{
+  justify-content:center !important;
+  color:white !important;
+}
+
+.playerNameWithAvatar .playerMiniAvatar{
+  width:42px !important;
+  height:42px !important;
+}
+
 </style>
 </head>
 <body>
@@ -573,7 +635,10 @@ font-weight:bold;
       playerBox.id = `playerBox${index}`;
 
       playerBox.innerHTML = `
-        <h3>${player.name}</h3>
+        <h3 class="playerNameWithAvatar" style="--profile-color:${getProfileColor(player.name)}">
+          ${avatarImg(getProfileAvatarSrc(player.name), "playerMiniAvatar", getProfileColor(player.name))}
+          <span>${player.name}</span>
+        </h3>
         <div class="difficulty">Schwierigkeit: ${player.difficulty}</div>
 
         <div class="missionCard" onclick="this.classList.toggle('flipped')">
@@ -652,10 +717,14 @@ font-weight:bold;
         else if (displayRank === 3) medal = "🥉";
 
         list.innerHTML += `
-          <div class="rankCard">
+          <div class="rankCard" style="--profile-color:${getProfileColor(player.name)}">
             <div class="rankTop">
-              <div class="rankName">${medal} ${displayRank}. ${player.name}</div>
-              <div class="rankTotal">${player.total} Pkt.</div>
+              <div class="rankName">
+                <span>${medal} ${displayRank}.</span>
+                ${avatarImg(getProfileAvatarSrc(player.name), "rankMiniAvatar", getProfileColor(player.name))}
+                <span>${player.name}</span>
+              </div>
+              <div class="rankTotal" style="color:${getProfileColor(player.name)}">${player.total} Pkt.</div>
             </div>
             <div class="rankDifficulty">${player.difficulty}</div>
             <div class="rankStatsCompact">
@@ -929,7 +998,10 @@ function selectProfiles(difficulty) {
             button.classList.add("active");
           }
 
-          button.textContent = name;
+          const profileColor = (typeof getProfileColor === "function") ? getProfileColor(name) : "#ff8800";
+          const profileAvatar = (typeof getProfileAvatarSrc === "function") ? getProfileAvatarSrc(name) : "avatars/avatar_01.png";
+          button.style.setProperty("--profile-color", profileColor);
+          button.innerHTML = `<img class="profileMiniAvatar" src="${profileAvatar}" alt=""> <span>${name}</span>`;
 
           button.onclick = () => {
             // Ein Profil darf immer nur in einer Schwierigkeit sein
@@ -962,7 +1034,11 @@ function selectProfiles(difficulty) {
           return;
         }
 
-        box.innerHTML = names.map(name => `<span class="chip">${name}</span>`).join("");
+        box.innerHTML = names.map(name => {
+          const color = (typeof getProfileColor === "function") ? getProfileColor(name) : "#ff8800";
+          const avatar = (typeof getProfileAvatarSrc === "function") ? getProfileAvatarSrc(name) : "avatars/avatar_01.png";
+          return `<span class="chip" style="--profile-color:${color}"><img class="chipAvatar" src="${avatar}" alt="">${name}</span>`;
+        }).join("");
       });
     }
 
@@ -1145,10 +1221,13 @@ renderProfileButtons();
           <h3>👤 Spielerprofile</h3>
           <div class="profileList">
             ${sortedProfiles.map(profile => `
-              <div class="profileCard">
+              <div class="profileCard" style="--profile-color:${profile.color || "#ff8800"}">
                 <div class="profileTop">
-                  <div class="profileName">${profile.name}</div>
-                  <div class="profileTitle">${getProfileTitle(profile)}</div>
+                  <div class="profileName">
+                    ${avatarImg(profile.avatar || window.avatarOptions[0].id, "profileMiniAvatar", profile.color || "#ff8800")}
+                    <span>${profile.name}</span>
+                  </div>
+                  <div class="profileTitle" style="color:${profile.color || "#ff8800"}">${getProfileTitle(profile)}</div>
                 </div>
                 <div class="profileSubtitle">Spiele: ${profile.games} | Siege: ${profile.wins} | Beste Runde: ${profile.bestRound}</div>
                 <div class="profileStatsCompact">
@@ -1194,8 +1273,7 @@ renderProfileButtons();
 renderProfileButtons();
     }
 
-    renderSelectedProfiles();
-    renderProfileButtons();
+    // Initiales Rendern erfolgt nach dem Avatar-System weiter unten.
 
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.register("./service-worker.js");
@@ -1387,6 +1465,11 @@ renderProfileButtons();
 
       openProfileCreateScreen(selectedName);
     };
+
+    // Nach dem Laden des Avatar-Systems einmal alles neu zeichnen
+    renderSelectedProfiles();
+    renderProfileButtons();
+
 
 </script>
 </body>
