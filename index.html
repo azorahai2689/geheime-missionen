@@ -1438,7 +1438,6 @@ font-weight:bold;
         accusationPoints: 0,
         bestRound: 0
       };
-    };
     }
 
     function ensureProfile(name) {
@@ -1452,17 +1451,6 @@ font-weight:bold;
 
     function createProfile() {
       openProfileCreateScreen();
-    }
-
-      openAvatarPicker(function(avatar) {
-        profiles[cleanName] = getEmptyProfile(cleanName, avatar);
-        saveProfiles(profiles);
-
-        renderProfileButtons();
-        renderSelectedProfiles();
-
-        alert("Profil erstellt: " + cleanName);
-      });
     }
 
     
