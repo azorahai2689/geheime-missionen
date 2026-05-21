@@ -69,7 +69,37 @@
       .rankStatsCompact, .profileStatsCompact { font-size: 14px; gap: 5px; }
       .rankMiniStat, .profileMiniStat { padding: 7px 3px; }
     }
-  </style>
+  
+.profileSelectBox{
+margin:20px 0;
+padding:15px;
+border-radius:20px;
+background:#111;
+border:2px solid #ff6600;
+}
+
+.profileButtons{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+margin-top:10px;
+}
+
+.profileChoice{
+padding:10px 16px;
+border:none;
+border-radius:14px;
+background:#222;
+color:white;
+font-size:16px;
+}
+
+.profileChoice.active{
+background:#ff8800;
+font-weight:bold;
+}
+
+</style>
 </head>
 <body>
   <div class="box">
@@ -86,6 +116,9 @@
 
     <button class="mainButton profileButton" onclick="createProfile()">👤 Profil erstellen</button>
     <button class="mainButton profileButton" onclick="showProfiles()">📊 Profile anzeigen</button>
+    <button class="mainButton deleteButton" onclick="deleteProfile()">🗑️ Profil löschen</button>
+    <button class="mainButton saveButton" onclick="exportProfiles()">📤 Profile sichern</button>
+    <button class="mainButton loadButton" onclick="importProfiles()">📥 Profile wiederherstellen</button>
     <button class="mainButton loadButton" onclick="continueRound()">🔄 Runde fortsetzen</button>
 
     <div class="difficultyBox">
@@ -112,6 +145,7 @@
     <button class="mainButton deleteButton" onclick="deleteGameSave()">🗑️ Spielstand löschen</button>
     <button class="mainButton finishButton" onclick="finishRound()">🏁 Runde beenden & Profile aktualisieren</button>
 
+    <input id="importFileInput" type="file" accept="application/json,.json" style="display:none" onchange="handleImportFile(event)">
     <div id="qrList"></div>
     <div id="profileArea"></div>
   </div>
@@ -526,16 +560,53 @@
       saveProfiles(profiles);
       alert("Profil erstellt: " + name);
       showProfiles();
+renderProfileButtons();
     }
 
-    function selectProfiles(difficulty) {
-      const profiles = getProfiles();
-      const names = Object.keys(profiles);
+    
+function selectProfiles(difficulty) {
+    renderProfileButtons();
+}
 
-      if (names.length === 0) {
-        alert("Bitte zuerst Profile erstellen");
-        return;
-      }
+function renderProfileButtons() {
+    const profiles = Object.keys(getProfiles());
+
+    const mapping = {
+        Leicht: document.getElementById("leichtProfiles"),
+        Normal: document.getElementById("normalProfiles"),
+        Experte: document.getElementById("experteProfiles")
+    };
+
+    Object.entries(mapping).forEach(([difficulty, container]) => {
+        container.innerHTML = "";
+
+        profiles.forEach(name => {
+            const button = document.createElement("button");
+            button.className = "profileChoice";
+
+            if (selectedProfiles[difficulty].includes(name)) {
+                button.classList.add("active");
+            }
+
+            button.textContent = name;
+
+            button.onclick = () => {
+                if (selectedProfiles[difficulty].includes(name)) {
+                    selectedProfiles[difficulty] =
+                        selectedProfiles[difficulty].filter(n => n !== name);
+                } else {
+                    selectedProfiles[difficulty].push(name);
+                }
+
+                renderProfileButtons();
+                autoSaveCurrentRound();
+            };
+
+            container.appendChild(button);
+        });
+    });
+}
+
 
       const input = prompt(
         "Profile für " + difficulty + " auswählen.\\nMehrere Nummern mit Komma trennen.\\nLeer lassen = Auswahl löschen.\\n\\n" +
@@ -580,6 +651,159 @@
 
         box.innerHTML = names.map(name => `<span class="chip">${name}</span>`).join("");
       });
+    }
+
+
+    function deleteProfile() {
+      const profiles = getProfiles();
+      const names = Object.keys(profiles);
+
+      if (names.length === 0) {
+        alert("Keine Profile vorhanden");
+        return;
+      }
+
+      const input = prompt(
+        "Welches Profil löschen?\n\n" +
+        names.map((name, index) => `${index + 1}. ${name}`).join("\n")
+      );
+
+      if (!input) return;
+
+      let selectedName = null;
+
+      if (profiles[input]) {
+        selectedName = input;
+      } else {
+        const number = parseInt(input, 10);
+        if (!isNaN(number) && names[number - 1]) {
+          selectedName = names[number - 1];
+        }
+      }
+
+      if (!selectedName) {
+        alert("Profil nicht gefunden");
+        return;
+      }
+
+      if (!confirm("Profil wirklich löschen?\n\n" + selectedName + "\n\nDie Statistik dieses Profils wird dauerhaft gelöscht.")) {
+        return;
+      }
+
+      delete profiles[selectedName];
+      saveProfiles(profiles);
+
+      selectedProfiles.Leicht = selectedProfiles.Leicht.filter(name => name !== selectedName);
+      selectedProfiles.Normal = selectedProfiles.Normal.filter(name => name !== selectedName);
+      selectedProfiles.Experte = selectedProfiles.Experte.filter(name => name !== selectedName);
+
+      renderSelectedProfiles();
+      autoSaveCurrentRound();
+
+      alert("Profil gelöscht: " + selectedName);
+      showProfiles();
+renderProfileButtons();
+    }
+
+
+    function exportProfiles() {
+      const profiles = getProfiles();
+      const saves = getAllSaves();
+      const autoSave = localStorage.getItem("geheimeMissionenAutoSave");
+
+      const backup = {
+        app: "Geheime Missionen",
+        version: 1,
+        date: new Date().toLocaleString(),
+        profiles: profiles,
+        saves: saves,
+        autoSave: autoSave ? JSON.parse(autoSave) : null
+      };
+
+      const blob = new Blob(
+        [JSON.stringify(backup, null, 2)],
+        { type: "application/json" }
+      );
+
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+
+      const dateName = new Date().toISOString().slice(0, 10);
+      link.href = url;
+      link.download = "geheime-missionen-backup-" + dateName + ".json";
+
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      URL.revokeObjectURL(url);
+
+      alert("Backup wurde erstellt. Die Datei liegt in deinen Downloads.");
+    }
+
+    function importProfiles() {
+      document.getElementById("importFileInput").click();
+    }
+
+    function handleImportFile(event) {
+      const file = event.target.files[0];
+
+      if (!file) {
+        return;
+      }
+
+      const reader = new FileReader();
+
+      reader.onload = function(e) {
+        try {
+          const backup = JSON.parse(e.target.result);
+
+          if (!backup.profiles) {
+            alert("Diese Datei enthält keine Profile");
+            return;
+          }
+
+          if (!confirm("Backup wirklich wiederherstellen?\n\nAktuelle Profile und Spielstände werden überschrieben.")) {
+            return;
+          }
+
+          localStorage.setItem(
+            "geheimeMissionenProfiles",
+            JSON.stringify(backup.profiles || {})
+          );
+
+          localStorage.setItem(
+            "geheimeMissionenSaves",
+            JSON.stringify(backup.saves || {})
+          );
+
+          if (backup.autoSave) {
+            localStorage.setItem(
+              "geheimeMissionenAutoSave",
+              JSON.stringify(backup.autoSave)
+            );
+          }
+
+          selectedProfiles = {
+            Leicht: [],
+            Normal: [],
+            Experte: []
+          };
+
+          renderSelectedProfiles();
+          renderProfileButtons();
+          showProfiles();
+
+          alert("Backup wurde wiederhergestellt");
+        }
+
+        catch (error) {
+          alert("Backup konnte nicht gelesen werden");
+        }
+      };
+
+      reader.readAsText(file);
+      event.target.value = "";
     }
 
     function getProfileTitle(profile) {
@@ -654,9 +878,11 @@
       saveProfiles(profiles);
       alert("Profile wurden aktualisiert 🏆");
       showProfiles();
+renderProfileButtons();
     }
 
     renderSelectedProfiles();
+    renderProfileButtons();
 
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.register("./service-worker.js");
