@@ -1399,8 +1399,8 @@ renderProfileButtons();
     };
 
     window.renderAgeBlock = function(age) {
-      let maleTitle = age === "Kind" ? "JUNGEN" : "MÄNNER";
-      let femaleTitle = age === "Kind" ? "MÄDCHEN" : "FRAUEN";
+      let maleTitle = age === "Kinder" ? "JUNGEN" : "MÄNNER";
+      let femaleTitle = age === "Kinder" ? "MÄDCHEN" : "FRAUEN";
       return `
         <div class="avatarAgeTitle">${age}</div>
         <div class="avatarSubGrid">
@@ -1436,8 +1436,8 @@ renderProfileButtons();
 
               <div class="stepRow"><span class="stepNo">2</span> AVATAR AUSWÄHLEN</div>
               <div class="avatarPickArea" id="avatarPickArea">
-                ${renderAgeBlock("Kind")}
-                ${renderAgeBlock("Erwachsen")}
+                ${renderAgeBlock("Kinder")}
+                ${renderAgeBlock("Erwachsene")}
                 ${renderAgeBlock("Rentner")}
               </div>
 
