@@ -1,0 +1,1611 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Geheime Missionen</title>
+
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ff8800">
+  <link rel="apple-touch-icon" href="icon.png">
+
+  <style>
+    body { background: linear-gradient(180deg, #111, #000); color: white; font-family: Arial, sans-serif; display: flex; justify-content: center; padding: 30px; min-height: 100vh; margin: 0; }
+    .box { background: rgba(30,30,30,0.95); padding: 30px; border-radius: 25px; width: 100%; max-width: 800px; box-shadow: 0 0 30px rgba(255,140,0,0.3); overflow: hidden; }
+    .slogan { text-align: center; font-size: 24px; margin-top: 0; margin-bottom: 15px; color: orange; text-shadow: 0 0 10px rgba(255,140,0,0.5); }
+    h1 { text-align: center; font-size: 40px; margin-bottom: 25px; text-shadow: 0 0 10px orange, 0 0 20px orange; }
+    .gameInfo { text-align: center; font-size: 20px; line-height: 1.6; margin-bottom: 35px; color: rgba(255,255,255,0.85); }
+    h2 { color: orange; margin-top: 25px; font-size: 34px; text-shadow: 0 0 10px rgba(255,140,0,0.6); }
+    .pointsInfo { display: block; font-size: 15px; color: white; opacity: 0.75; margin-top: 5px; font-weight: normal; }
+    button { cursor: pointer; touch-action: manipulation; }
+    .mainButton { width: 100%; padding: 18px; background: linear-gradient(90deg, orange, #ff5500); border: none; border-radius: 18px; color: white; font-size: 24px; font-weight: bold; margin-top: 15px; box-shadow: 0 0 20px rgba(255,140,0,0.4); }
+    .saveButton { background: linear-gradient(90deg, #00c853, #64dd17); }
+    .loadButton { background: linear-gradient(90deg, #2962ff, #00b0ff); }
+    .deleteButton { background: linear-gradient(90deg, #424242, #9e9e9e); }
+    .profileButton { background: linear-gradient(90deg, #8e24aa, #d500f9); }
+    .finishButton { background: linear-gradient(90deg, #ff6d00, #ffab00); }
+
+    .difficultyBox { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,140,0,0.25); border-radius: 20px; padding: 16px; margin-top: 18px; }
+    .selectButton { width: 100%; padding: 14px; border: none; border-radius: 14px; color: white; font-size: 18px; font-weight: bold; background: linear-gradient(90deg,#2962ff,#00b0ff); margin-top: 10px; }
+    .selectedList { margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; min-height: 34px; }
+    .chip { background: rgba(255,140,0,0.18); border: 1px solid rgba(255,140,0,0.5); color: white; border-radius: 999px; padding: 8px 12px; font-weight: bold; }
+
+    .playerBox { background: linear-gradient(180deg, #2b2b2b, #1a1a1a); border-radius: 25px; padding: 25px; margin-top: 30px; text-align: center; border: 2px solid rgba(255,140,0,0.3); box-shadow: 0 0 25px rgba(255,140,0,0.25); overflow: hidden; }
+    .playerBox h3 { font-size: 32px; margin-bottom: 10px; color: orange; text-shadow: 0 0 10px orange; }
+    .difficulty { margin-bottom: 15px; opacity: 0.8; font-size: 18px; }
+    .missionCard { width: 220px; height: 220px; margin: 20px auto; perspective: 1000px; cursor: pointer; }
+    .missionInner { width: 100%; height: 100%; position: relative; transition: transform 0.8s; transform-style: preserve-3d; }
+    .missionCard.flipped .missionInner { transform: rotateY(180deg); }
+    .missionFront, .missionBack { position: absolute; width: 100%; height: 100%; border-radius: 20px; backface-visibility: hidden; display: flex; justify-content: center; align-items: center; flex-direction: column; text-align: center; padding: 20px; box-sizing: border-box; box-shadow: 0 0 25px rgba(255,140,0,0.6); }
+    .missionFront { background: linear-gradient(180deg, #1a1a1a, #000); color: orange; font-size: 32px; font-weight: bold; }
+    .missionBack { background: radial-gradient(circle, #2b003d, #000); color: white; font-size: 20px; line-height: 1.3; transform: rotateY(180deg); }
+    .buttonGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
+    .buttonGrid button, .changeButton { padding: 10px; border: none; border-radius: 12px; color: white; font-size: 16px; font-weight: bold; }
+    .statusText { margin-top: 15px; font-size: 20px; font-weight: bold; min-height: 24px; }
+
+    .rankingList, .profileList { display: flex; flex-direction: column; gap: 12px; margin-top: 18px; }
+    .rankCard, .profileCard { background: rgba(0,0,0,0.35); border: 1px solid rgba(255,140,0,0.35); border-radius: 18px; padding: 12px; text-align: left; box-shadow: 0 0 12px rgba(255,140,0,0.15); overflow: hidden; }
+    .rankTop, .profileTop { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 20px; font-weight: bold; }
+    .rankName, .profileName { color: white; overflow-wrap: anywhere; min-width: 0; }
+    .rankTotal, .profileTitle { color: orange; font-size: 21px; white-space: nowrap; }
+    .rankDifficulty, .profileSubtitle { margin-top: 5px; color: rgba(255,255,255,0.75); font-size: 14px; }
+    .rankStatsCompact, .profileStatsCompact { display: flex; justify-content: space-between; gap: 6px; margin-top: 12px; font-size: 16px; font-weight: bold; white-space: nowrap; }
+    .rankMiniStat, .profileMiniStat { flex: 1; background: rgba(255,255,255,0.07); border-radius: 12px; padding: 8px 4px; text-align: center; min-width: 0; }
+
+    @media (max-width: 700px) {
+      body { padding: 16px; }
+      .box { padding: 20px; }
+      h1 { font-size: 28px; }
+      h2 { font-size: 28px; }
+      .slogan { font-size: 20px; }
+      .gameInfo { font-size: 17px; }
+      .mainButton { font-size: 20px; }
+      .playerBox { padding: 18px; }
+      .playerBox h3 { font-size: 26px; }
+      .missionCard { width: 200px; height: 200px; }
+      .buttonGrid { grid-template-columns: 1fr; }
+      .rankTop, .profileTop { font-size: 18px; }
+      .rankTotal, .profileTitle { font-size: 19px; }
+      .rankStatsCompact, .profileStatsCompact { font-size: 14px; gap: 5px; }
+      .rankMiniStat, .profileMiniStat { padding: 7px 3px; }
+    }
+  
+.profileSelectBox{
+margin:20px 0;
+padding:15px;
+border-radius:20px;
+background:#111;
+border:2px solid #ff6600;
+}
+
+.profileButtons{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+margin-top:10px;
+}
+
+.profileChoice{
+padding:10px 16px;
+border:none;
+border-radius:14px;
+background:#222;
+color:white;
+font-size:16px;
+}
+
+.profileChoice.active{
+background:#ff8800;
+font-weight:bold;
+}
+
+
+/* === FINAL: Profil-Erstellung, Avatargröße, Sortierung, Farbwahl === */
+.profileCreateModal{
+  position:fixed !important;
+  inset:0 !important;
+  background:
+    radial-gradient(circle at top, rgba(255,80,0,0.08), transparent 28%),
+    #000 !important;
+  overflow-y:auto !important;
+  z-index:99999 !important;
+  padding:20px !important;
+  box-sizing:border-box !important;
+  color:#fff !important;
+}
+
+.profileCreateInner{
+  max-width:760px !important;
+  margin:0 auto !important;
+  padding-bottom:40px !important;
+}
+
+.profileCreateTop{
+  display:flex !important;
+  align-items:center !important;
+  justify-content:space-between !important;
+  gap:16px !important;
+  margin-bottom:26px !important;
+}
+
+.profileIconBtn{
+  width:58px !important;
+  height:58px !important;
+  border-radius:18px !important;
+  border:2px solid #ff4a23 !important;
+  background:#222 !important;
+  color:white !important;
+  font-size:32px !important;
+  box-shadow:0 0 18px rgba(255,80,0,0.5) !important;
+}
+
+.profileLogo{
+  text-align:center !important;
+  font-weight:900 !important;
+  font-size:38px !important;
+  line-height:0.95 !important;
+  color:#fff !important;
+  text-shadow:0 0 12px rgba(255,255,255,0.45) !important;
+}
+
+.profileLogo span{
+  display:block !important;
+  color:#ff7a1a !important;
+  text-shadow:0 0 16px rgba(255,100,0,0.75) !important;
+}
+
+.profileCreatePanel{
+  border:3px solid #ff4a23 !important;
+  border-radius:30px !important;
+  background:#020202 !important;
+  padding:28px !important;
+  box-shadow:
+    0 0 26px rgba(255,80,0,0.35),
+    inset 0 0 22px rgba(255,80,0,0.08) !important;
+}
+
+.profileCreateTitle{
+  text-align:center !important;
+  color:#ff7a1a !important;
+  font-size:48px !important;
+  line-height:1.05 !important;
+  font-weight:900 !important;
+  margin:0 0 34px !important;
+  text-transform:uppercase !important;
+}
+
+.stepRow{
+  font-size:28px !important;
+  font-weight:900 !important;
+  margin:26px 0 16px !important;
+  text-transform:uppercase !important;
+}
+
+.stepNo{
+  display:none !important;
+}
+
+.profileNameInput{
+  width:100% !important;
+  box-sizing:border-box !important;
+  background:#171717 !important;
+  border:3px solid #2f2f2f !important;
+  border-radius:22px !important;
+  color:white !important;
+  font-size:28px !important;
+  padding:22px 24px !important;
+  outline:none !important;
+}
+
+.profileNameInput:focus{
+  border-color:#ffcf5a !important;
+  box-shadow:0 0 16px rgba(255,207,90,0.55) !important;
+}
+
+.avatarPickArea{
+  background:transparent !important;
+  border:none !important;
+  padding:0 !important;
+  box-shadow:none !important;
+}
+
+.avatarAgeTitle{
+  text-align:center !important;
+  color:#ff7a1a !important;
+  font-size:42px !important;
+  font-weight:900 !important;
+  margin:42px 0 22px !important;
+  text-transform:none !important;
+  text-shadow:0 0 12px rgba(255,122,26,0.6) !important;
+}
+
+.avatarAgeTitle::before,
+.avatarAgeTitle::after{
+  display:none !important;
+}
+
+.avatarSubGrid{
+  display:grid !important;
+  grid-template-columns:1fr !important;
+  gap:34px !important;
+  margin-bottom:44px !important;
+}
+
+.avatarSubTitle{
+  text-align:center !important;
+  color:#65c8ff !important;
+  font-size:28px !important;
+  font-weight:900 !important;
+  margin:0 0 18px !important;
+  text-transform:uppercase !important;
+  text-shadow:0 0 10px rgba(101,200,255,0.6) !important;
+}
+
+.avatarSubTitle.female{
+  color:#ff63bf !important;
+  text-shadow:0 0 10px rgba(255,99,191,0.6) !important;
+}
+
+.avatarRows{
+  display:grid !important;
+  grid-template-columns:repeat(4, 58px) !important;
+  justify-content:center !important;
+  gap:16px 18px !important;
+  margin-bottom:16px !important;
+}
+
+.avatarSelectBtn{
+  width:58px !important;
+  height:58px !important;
+  min-width:58px !important;
+  min-height:58px !important;
+  max-width:58px !important;
+  max-height:58px !important;
+  padding:0 !important;
+  border:2px solid rgba(255,255,255,0.45) !important;
+  border-radius:50% !important;
+  overflow:hidden !important;
+  background:#222 !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  box-shadow:0 0 12px rgba(255,125,0,0.25) !important;
+  cursor:pointer !important;
+}
+
+.avatarSelectBtn img{
+  width:100% !important;
+  height:100% !important;
+  object-fit:cover !important;
+  display:block !important;
+  border-radius:50% !important;
+  pointer-events:none !important;
+}
+
+.avatarSelectBtn.selected{
+  border-color:#ff7a1a !important;
+  outline:7px solid rgba(255,90,0,0.40) !important;
+  box-shadow:0 0 26px rgba(255,90,0,0.85) !important;
+}
+
+.colorRow{
+  display:grid !important;
+  grid-template-columns:repeat(4, 62px) !important;
+  gap:24px !important;
+  justify-content:center !important;
+  margin:28px 0 20px !important;
+  position:relative !important;
+  z-index:10 !important;
+}
+
+.colorPick{
+  width:62px !important;
+  height:62px !important;
+  min-width:62px !important;
+  min-height:62px !important;
+  border-radius:50% !important;
+  border:4px solid rgba(255,255,255,0.16) !important;
+  padding:0 !important;
+  box-shadow:0 0 15px rgba(255,255,255,0.14) !important;
+  cursor:pointer !important;
+}
+
+.colorPick.selected{
+  outline:8px solid rgba(255,255,255,0.22) !important;
+  border-color:rgba(255,255,255,0.45) !important;
+  box-shadow:0 0 28px currentColor !important;
+}
+
+.profileCreateActions{
+  display:grid !important;
+  grid-template-columns:1fr !important;
+  gap:28px !important;
+  margin:30px 0 0 !important;
+  position:relative !important;
+  z-index:20 !important;
+}
+
+.profileCancelBtn,
+.profileSaveBtn{
+  width:100% !important;
+  min-height:96px !important;
+  border-radius:28px !important;
+  border:none !important;
+  color:white !important;
+  font-size:34px !important;
+  font-weight:900 !important;
+}
+
+.profileCancelBtn{
+  background:#333 !important;
+}
+
+.profileSaveBtn{
+  background:linear-gradient(180deg,#0d5a09,#073b04) !important;
+  box-shadow:0 0 20px rgba(0,255,30,0.28) !important;
+}
+
+.avatarSmall{
+  width:34px !important;
+  height:34px !important;
+  border-radius:50% !important;
+  object-fit:cover !important;
+  vertical-align:middle !important;
+  margin-right:7px !important;
+  border:2px solid var(--profile-color,#ff8800) !important;
+}
+
+@media (max-width:700px){
+  .profileCreateModal{
+    padding:14px !important;
+  }
+
+  .profileIconBtn{
+    width:62px !important;
+    height:62px !important;
+    font-size:28px !important;
+  }
+
+  .profileLogo{
+    font-size:32px !important;
+  }
+
+  .profileCreatePanel{
+    padding:24px 18px !important;
+    border-radius:28px !important;
+  }
+
+  .profileCreateTitle{
+    font-size:42px !important;
+  }
+
+  .stepRow{
+    font-size:24px !important;
+  }
+
+  .profileNameInput{
+    font-size:24px !important;
+    padding:18px 20px !important;
+  }
+
+  .avatarRows{
+    grid-template-columns:repeat(4, 54px) !important;
+    gap:15px 18px !important;
+  }
+
+  .avatarSelectBtn{
+    width:54px !important;
+    height:54px !important;
+    min-width:54px !important;
+    min-height:54px !important;
+    max-width:54px !important;
+    max-height:54px !important;
+  }
+
+  .colorRow{
+    grid-template-columns:repeat(4, 58px) !important;
+    gap:22px !important;
+  }
+
+  .colorPick{
+    width:58px !important;
+    height:58px !important;
+    min-width:58px !important;
+    min-height:58px !important;
+  }
+
+  .profileCancelBtn,
+  .profileSaveBtn{
+    min-height:86px !important;
+    font-size:30px !important;
+  }
+}
+
+
+/* === Avatare + Profilfarbe überall anzeigen === */
+.profileChoice{
+  display:inline-flex !important;
+  align-items:center !important;
+  gap:8px !important;
+  border:2px solid var(--profile-color, rgba(255,140,0,0.45)) !important;
+  box-shadow:0 0 12px color-mix(in srgb, var(--profile-color,#ff8800) 35%, transparent) !important;
+}
+
+.profileChoice.active{
+  background:var(--profile-color,#ff8800) !important;
+  color:white !important;
+  box-shadow:0 0 18px var(--profile-color,#ff8800) !important;
+}
+
+.profileMiniAvatar,
+.rankMiniAvatar,
+.playerMiniAvatar,
+.chipAvatar{
+  width:32px !important;
+  height:32px !important;
+  border-radius:50% !important;
+  object-fit:cover !important;
+  vertical-align:middle !important;
+  border:2px solid var(--profile-color,#ff8800) !important;
+  box-shadow:0 0 10px var(--profile-color,#ff8800) !important;
+  background:#111 !important;
+  flex:0 0 auto !important;
+}
+
+.profileName,
+.rankName,
+.playerNameWithAvatar,
+.chip{
+  display:inline-flex !important;
+  align-items:center !important;
+  gap:8px !important;
+}
+
+.profileCard,
+.rankCard{
+  border-color:var(--profile-color, rgba(255,140,0,0.35)) !important;
+  box-shadow:0 0 16px color-mix(in srgb, var(--profile-color,#ff8800) 32%, transparent) !important;
+}
+
+.chip{
+  border-color:var(--profile-color,#ff8800) !important;
+  background:color-mix(in srgb, var(--profile-color,#ff8800) 25%, transparent) !important;
+  box-shadow:0 0 10px color-mix(in srgb, var(--profile-color,#ff8800) 40%, transparent) !important;
+}
+
+.playerNameWithAvatar{
+  justify-content:center !important;
+  color:white !important;
+}
+
+.playerNameWithAvatar .playerMiniAvatar{
+  width:42px !important;
+  height:42px !important;
+}
+
+
+
+/* === Rechtliches: Impressum & Datenschutz === */
+.legalFooter{
+  text-align:center;
+  margin-top:34px;
+  padding-top:18px;
+  border-top:1px solid rgba(255,255,255,0.12);
+  font-size:14px;
+  opacity:0.85;
+}
+
+.legalFooter button{
+  background:none;
+  border:none;
+  color:#aaa;
+  text-decoration:none;
+  font-size:14px;
+  padding:8px 10px;
+  width:auto;
+  box-shadow:none;
+}
+
+.legalFooter button:active{
+  color:orange;
+}
+
+.legalModal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.94);
+  z-index:100000;
+  overflow-y:auto;
+  padding:18px;
+  box-sizing:border-box;
+}
+
+.legalBox{
+  max-width:850px;
+  margin:0 auto;
+  background:#151515;
+  border:2px solid rgba(255,140,0,0.65);
+  border-radius:24px;
+  padding:22px;
+  box-shadow:0 0 28px rgba(255,140,0,0.35);
+  color:white;
+  line-height:1.55;
+}
+
+.legalBox h2{
+  color:orange;
+  margin-top:0;
+  font-size:30px;
+}
+
+.legalBox h3{
+  color:#ffb347;
+  margin-top:26px;
+}
+
+.legalBox p,
+.legalBox li{
+  color:rgba(255,255,255,0.88);
+  font-size:16px;
+}
+
+.legalCloseButton{
+  width:100%;
+  margin-top:22px;
+  padding:16px;
+  border:none;
+  border-radius:16px;
+  background:linear-gradient(90deg, orange, #ff5500);
+  color:white;
+  font-size:20px;
+  font-weight:bold;
+}
+
+</style>
+</head>
+<body>
+  <div class="box">
+    <p class="slogan">Macht euren Spieleabend verdächtig gut 🎭</p>
+    <h1>🎭🎉 Geheime Missionen 🎉🎭</h1>
+
+    <p class="gameInfo">
+      Jeder Spieler erhält eine geheime Mission 🥷<br>
+      Erfülle deine Mission möglichst unauffällig, ohne dass sie scheitert 🎭<br><br>
+      🎯 Richtige Anschuldigung = +5 Punkte<br>
+      ❌ Falsche Anschuldigung = -1 Punkt<br><br>
+      Wer am Ende die meisten Punkte hat, gewinnt 🏆
+    </p>
+
+    <button class="mainButton profileButton" onclick="window.createProfile()">👤 Profil erstellen</button>
+    <button class="mainButton profileButton" onclick="showProfiles()">📊 Profile anzeigen</button>
+    <button class="mainButton profileButton" onclick="window.changeProfileAvatar()">🖼️ Profilbild ändern</button>
+    <button class="mainButton deleteButton" onclick="deleteProfile()">🗑️ Profil löschen</button>
+    <button class="mainButton saveButton" onclick="exportProfiles()">📤 Profile sichern</button>
+    <button class="mainButton loadButton" onclick="importProfiles()">📥 Profile wiederherstellen</button>
+    <button class="mainButton loadButton" onclick="continueRound()">🔄 Runde fortsetzen</button>
+
+    <div class="difficultyBox">
+      <h2>🟢 Leicht<span class="pointsInfo">+10 erfüllt / -5 gescheitert</span></h2>
+      <div class="profileHint">Profile antippen zum Auswählen</div>
+      <div id="profileButtonsLeicht" class="profileButtonList"></div>
+      <div id="selectedLeicht" class="selectedList"></div>
+    </div>
+
+    <div class="difficultyBox">
+      <h2>🟠 Normal<span class="pointsInfo">+20 erfüllt / -10 gescheitert</span></h2>
+      <div class="profileHint">Profile antippen zum Auswählen</div>
+      <div id="profileButtonsNormal" class="profileButtonList"></div>
+      <div id="selectedNormal" class="selectedList"></div>
+    </div>
+
+    <div class="difficultyBox">
+      <h2>🔴 Experte<span class="pointsInfo">+30 erfüllt / -15 gescheitert</span></h2>
+      <div class="profileHint">Profile antippen zum Auswählen</div>
+      <div id="profileButtonsExperte" class="profileButtonList"></div>
+      <div id="selectedExperte" class="selectedList"></div>
+    </div>
+
+    <button class="mainButton" onclick="createGame()">🎮 Spiel starten</button>
+    <button class="mainButton saveButton" onclick="saveGame()">💾 Spielstand speichern</button>
+    <button class="mainButton loadButton" onclick="loadGame()">📂 Spielstand laden</button>
+    <button class="mainButton deleteButton" onclick="deleteGameSave()">🗑️ Spielstand löschen</button>
+    <button class="mainButton finishButton" onclick="finishRound()">🏁 Runde beenden & Profile aktualisieren</button>
+
+    <input id="importFileInput" type="file" accept="application/json,.json" style="display:none" onchange="handleImportFile(event)">
+    <div id="avatarModalRoot"></div>
+    <div id="qrList"></div>
+    <div id="profileArea"></div>
+
+    <div class="legalFooter">
+      <button type="button" onclick="openLegalInfo()">Impressum & Datenschutz</button>
+    </div>
+
+    <div id="legalModalRoot"></div>
+  </div>
+
+  <script>
+    const easyMissions = [
+      "Frag jeden einmal nach seinem Lieblingsessen.", "Sag oft das Wort 'cool'.", "Frag mindestens zwei Leute nach der Uhrzeit.",
+      "Schau immer wieder kurz auf dein Getränk.", "Frag jemanden nach seiner Lieblingsfarbe.", "Benutze häufig das Wort 'wirklich'.",
+      "Frag mehrere Leute, wie ihr Tag war.", "Schau regelmäßig kurz aus dem Fenster.", "Lächle oft ohne Grund.",
+      "Frag jemanden nach seinem Lieblingsfilm.", "Sag häufiger 'interessant'.", "Frag mehrere Leute, ob sie Hunger haben.",
+      "Schau kurz zur Tür, wenn jemand spricht.", "Benutze oft das Wort 'genau'.", "Frag jemanden, ob ihm warm oder kalt ist.",
+      "Sag häufiger 'das macht Sinn'.", "Schau regelmäßig kurz auf dein Handy.", "Frag jemanden nach Musikgeschmack.",
+      "Benutze oft das Wort 'eigentlich'.", "Frag mindestens zwei Leute nach Snacks."
+    ];
+
+    const normalMissions = [
+      "Frage jeden mindestens einmal nach der Uhrzeit.", "Benutze in fast jedem Gespräch das Wort 'genau'.",
+      "Schau alle paar Minuten kurz auf dein Handy.", "Sag mindestens fünfmal 'tatsächlich'.",
+      "Frage mehrere Leute, ob ihnen auch kalt oder warm ist.", "Benutze auffällig oft englische Wörter wie 'safe', 'true' oder 'random'.",
+      "Nimm dein Getränk ständig in die Hand, auch ohne zu trinken.", "Frag mindestens drei Personen nach WLAN oder Empfang.",
+      "Sag immer wieder 'interessant'.", "Schau regelmäßig zur Tür.", "Frag mehrere Leute, wie spät es ungefähr ist.",
+      "Benutze sehr oft das Wort 'eigentlich'.", "Frag verschiedene Leute nach Snacks oder Essen.", "Schau immer wieder aus dem Fenster.",
+      "Sag mindestens fünfmal 'im Endeffekt'.", "Benutze häufig 'ehrlich gesagt'.", "Frag mehrere Leute, ob sie müde sind.",
+      "Tu immer wieder so, als hättest du etwas vergessen.", "Frage mindestens drei Personen, ob sie etwas gehört haben.",
+      "Benutze ständig 'alsoooo'.", "Frag verschiedene Leute nach Musik oder Liedern.", "Benutze mindestens fünfmal das Wort 'wirklich'.",
+      "Lächle immer wieder kurz ohne ersichtlichen Grund.", "Sag auffällig oft 'kann man machen'.", "Frag mehrere Leute nach einem Ladegerät.",
+      "Benutze ständig das Wort 'fair'.", "Schau regelmäßig nachdenklich an die Decke.", "Frage mehrere Personen nach dem Wochentag.",
+      "Sage bei vielen Aussagen 'das macht Sinn'.", "Benutze ständig das Wort 'theoretisch'."
+    ];
+
+    const hardMissions = [
+      "Bring jemanden dazu, dich zu korrigieren.", "Sorge dafür, dass jemand sein Handy rausholt.",
+      "Lass jemanden nachfragen, was du meintest.", "Bring zwei Personen gleichzeitig zum Lachen.",
+      "Lass jemanden dir freiwillig etwas anbieten.", "Sorge dafür, dass jemand auf die Uhr schaut.",
+      "Bring jemanden dazu, dich beim Namen zu nennen.", "Lass jemanden ein englisches Wort benutzen.",
+      "Bring jemanden dazu, dir eine Frage zu stellen.", "Sorge dafür, dass jemand sein Getränk anhebt.",
+      "Lass jemanden sagen: 'wirklich?'.", "Bring jemanden dazu, aus dem Fenster zu schauen.",
+      "Sorge dafür, dass jemand laut lacht.", "Bring jemanden dazu, nach der Uhrzeit zu fragen.",
+      "Lass jemanden das Thema wechseln.", "Sorge dafür, dass jemand 'genau' sagt.",
+      "Bring jemanden dazu, sein Handy zu entsperren.", "Lass jemanden dich etwas wiederholen lassen.",
+      "Sorge dafür, dass jemand dich unterbricht.", "Bring jemanden dazu, dir zuzustimmen.",
+      "Lass jemanden sagen: 'das ist wild'.", "Bring jemanden dazu, dich anzuschauen, während jemand anderes redet.",
+      "Sorge dafür, dass jemand nach Snacks fragt.", "Bring jemanden dazu, sich umzudrehen.",
+      "Lass jemanden seine Sitzposition ändern.", "Bring jemanden dazu, zu fragen, ob alles okay ist.",
+      "Sorge dafür, dass jemand 'interessant' sagt.", "Bring jemanden dazu, zu seufzen.",
+      "Lass jemanden fragen, worüber du redest.", "Bring jemanden dazu, sein Getränk nachzufüllen."
+    ];
+
+    let players = [];
+    let selectedProfiles = { Leicht: [], Normal: [], Experte: [] };
+
+    function shuffle(list) {
+      return [...list].sort(() => Math.random() - 0.5);
+    }
+
+    function getMissionList(difficulty) {
+      if (difficulty === "Leicht") return easyMissions;
+      if (difficulty === "Experte") return hardMissions;
+      return normalMissions;
+    }
+
+    function createGame() {
+      const qrList = document.getElementById("qrList");
+      document.getElementById("profileArea").innerHTML = "";
+      qrList.innerHTML = "";
+      players = [];
+
+      addPlayers(selectedProfiles.Leicht, "Leicht", easyMissions);
+      addPlayers(selectedProfiles.Normal, "Normal", normalMissions);
+      addPlayers(selectedProfiles.Experte, "Experte", hardMissions);
+
+      if (players.length === 0) {
+        alert("Bitte erst Profile auswählen");
+        return;
+      }
+
+      players.forEach((player, index) => createPlayerBox(player, index));
+      createScoreTable();
+      autoSaveCurrentRound();
+    }
+
+    function addPlayers(names, difficulty, missionList) {
+      const shuffledMissions = shuffle(missionList);
+      names.forEach((name, index) => {
+        ensureProfile(name);
+        players.push({
+          name, difficulty, missionList,
+          mission: shuffledMissions[index % shuffledMissions.length],
+          accusation: 0, done: 0, caught: 0, total: 0
+        });
+      });
+    }
+
+    function createPlayerBox(player, index) {
+      const qrList = document.getElementById("qrList");
+      const playerBox = document.createElement("div");
+      playerBox.className = "playerBox";
+      playerBox.id = `playerBox${index}`;
+
+      playerBox.innerHTML = `
+        <h3 class="playerNameWithAvatar" style="--profile-color:${getProfileColor(player.name)}">
+          ${avatarImg(getProfileAvatarSrc(player.name), "playerMiniAvatar", getProfileColor(player.name))}
+          <span>${player.name}</span>
+        </h3>
+        <div class="difficulty">Schwierigkeit: ${player.difficulty}</div>
+
+        <div class="missionCard" onclick="this.classList.toggle('flipped')">
+          <div class="missionInner">
+            <div class="missionFront">
+              <div>GEHEIME</div>
+              <div style="font-size:55px; margin:10px 0;">🥷</div>
+              <div>MISSION</div>
+              <small style="margin-top:15px; opacity:0.7; font-size:14px;">Antippen</small>
+            </div>
+            <div class="missionBack">${player.mission}</div>
+          </div>
+        </div>
+
+        <button class="changeButton" onclick="changeMission(${index})" style="background:linear-gradient(90deg,#8e24aa,#d500f9); margin-top:15px;">
+          🔄 Mission ändern
+        </button>
+
+        <div class="buttonGrid">
+          <button onclick="addMissionScore(${index}, this)" style="background:linear-gradient(90deg,#00c853,#64dd17);">✅ Mission erfüllt</button>
+          <button onclick="addCaughtScore(${index}, this)" style="background:linear-gradient(90deg,#ff1744,#ff9100);">❌ Mission gescheitert</button>
+          <button onclick="addScore(${index}, 'accusation', 5, this)" style="background:linear-gradient(90deg,#2962ff,#00b0ff);">🎯 Anschuldigung korrekt</button>
+          <button onclick="addScore(${index}, 'accusation', -1, this)" style="background:linear-gradient(90deg,#616161,#9e9e9e);">❌ Anschuldigung falsch</button>
+        </div>
+        <div class="statusText"></div>
+      `;
+      qrList.appendChild(playerBox);
+    }
+
+    function changeMission(index) {
+      const player = players[index];
+      const usedMissions = players.filter((p, i) => i !== index && p.difficulty === player.difficulty).map(p => p.mission);
+      let availableMissions = player.missionList.filter(mission => !usedMissions.includes(mission) && mission !== player.mission);
+
+      if (availableMissions.length === 0) {
+        availableMissions = player.missionList.filter(mission => mission !== player.mission);
+      }
+
+      const newMission = availableMissions[Math.floor(Math.random() * availableMissions.length)];
+      player.mission = newMission;
+
+      const playerBox = document.getElementById(`playerBox${index}`);
+      playerBox.querySelector(".missionBack").innerHTML = newMission;
+      playerBox.querySelector(".missionCard").classList.remove("flipped");
+
+      const status = playerBox.querySelector(".statusText");
+      status.innerHTML = "🔄 Neue Mission erstellt!";
+      status.style.color = "orange";
+      autoSaveCurrentRound();
+    }
+
+    function createScoreTable() {
+      const qrList = document.getElementById("qrList");
+      const tableBox = document.createElement("div");
+      tableBox.className = "playerBox";
+      tableBox.id = "scoreTableBox";
+      tableBox.innerHTML = `<h3>🏆 Rangliste</h3><div id="scoreTableBody" class="rankingList"></div>`;
+      qrList.appendChild(tableBox);
+      updateScoreTable();
+    }
+
+    function updateScoreTable() {
+      const list = document.getElementById("scoreTableBody");
+      if (!list) return;
+
+      list.innerHTML = "";
+      const sortedPlayers = [...players].sort((a, b) => b.total - a.total);
+      let displayRank = 1;
+
+      sortedPlayers.forEach((player, rank) => {
+        if (rank > 0 && player.total < sortedPlayers[rank - 1].total) displayRank = rank + 1;
+
+        let medal = "";
+        if (displayRank === 1) medal = "🥇";
+        else if (displayRank === 2) medal = "🥈";
+        else if (displayRank === 3) medal = "🥉";
+
+        list.innerHTML += `
+          <div class="rankCard" style="--profile-color:${getProfileColor(player.name)}">
+            <div class="rankTop">
+              <div class="rankName">
+                <span>${medal} ${displayRank}.</span>
+                ${avatarImg(getProfileAvatarSrc(player.name), "rankMiniAvatar", getProfileColor(player.name))}
+                <span>${player.name}</span>
+              </div>
+              <div class="rankTotal" style="color:${getProfileColor(player.name)}">${player.total} Pkt.</div>
+            </div>
+            <div class="rankDifficulty">${player.difficulty}</div>
+            <div class="rankStatsCompact">
+              <div class="rankMiniStat">🎯 ${player.accusation}</div>
+              <div class="rankMiniStat">✅ ${player.done}</div>
+              <div class="rankMiniStat">❌ ${player.caught}</div>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    function addMissionScore(index, button) {
+      const player = players[index];
+      let points = 20;
+      if (player.difficulty === "Leicht") points = 10;
+      else if (player.difficulty === "Experte") points = 30;
+      addScore(index, "done", points, button);
+    }
+
+    function addCaughtScore(index, button) {
+      const player = players[index];
+      let points = -10;
+      if (player.difficulty === "Leicht") points = -5;
+      else if (player.difficulty === "Experte") points = -15;
+      addScore(index, "caught", points, button);
+    }
+
+    function addScore(index, type, points, button) {
+      const player = players[index];
+
+      if (type === "done") {
+        if (player.done !== 0) {
+          player.done = 0;
+          button.style.opacity = "1";
+        } else {
+          player.done = points;
+          player.caught = 0;
+          const buttons = button.parentElement.querySelectorAll("button");
+          buttons[0].style.opacity = "1";
+          buttons[1].style.opacity = "0.5";
+        }
+      } else if (type === "caught") {
+        if (player.caught !== 0) {
+          player.caught = 0;
+          button.style.opacity = "1";
+        } else {
+          player.caught = points;
+          player.done = 0;
+          const buttons = button.parentElement.querySelectorAll("button");
+          buttons[0].style.opacity = "0.5";
+          buttons[1].style.opacity = "1";
+        }
+      } else if (type === "accusation") {
+        player.accusation += points;
+      }
+
+      player.total = player.accusation + player.done + player.caught;
+      updateScoreTable();
+
+      const status = button.parentElement.nextElementSibling;
+      if (type === "done" || type === "caught") {
+        if (player.done === 0 && player.caught === 0) {
+          status.innerHTML = "Auswahl zurückgesetzt";
+          status.style.color = "orange";
+        } else if (player.done !== 0) {
+          status.innerHTML = `Mission erfüllt: +${player.done} Punkte`;
+          status.style.color = "#64ff64";
+        } else if (player.caught !== 0) {
+          status.innerHTML = `Mission gescheitert: ${player.caught} Punkte`;
+          status.style.color = "#ff5252";
+        }
+      } else {
+        status.innerHTML = points > 0 ? `+${points} Punkte` : `${points} Punkte`;
+        status.style.color = points > 0 ? "#64ff64" : "#ff5252";
+      }
+
+      autoSaveCurrentRound();
+    }
+
+    function getAllSaves() {
+      return JSON.parse(localStorage.getItem("geheimeMissionenSaves")) || {};
+    }
+
+    function saveAllSaves(saves) {
+      localStorage.setItem("geheimeMissionenSaves", JSON.stringify(saves));
+    }
+
+    function saveGame() {
+      const saveName = prompt("Name für den Spielstand:");
+      if (!saveName) return;
+
+      const saves = getAllSaves();
+      saves[saveName] = {
+        date: new Date().toLocaleString(),
+        selectedProfiles,
+        players
+      };
+
+      saveAllSaves(saves);
+      alert("Spielstand gespeichert: " + saveName);
+    }
+
+    function loadGame() {
+      const saves = getAllSaves();
+      const saveNames = Object.keys(saves);
+
+      if (saveNames.length === 0) {
+        alert("Keine Spielstände gefunden");
+        return;
+      }
+
+      const input = prompt(
+        "Welchen Spielstand laden?\\n\\n" +
+        saveNames.map((name, index) => `${index + 1}. ${name} (${saves[name].date})`).join("\\n")
+      );
+      if (!input) return;
+
+      const selectedName = resolveSaveName(input, saveNames, saves);
+      if (!selectedName) {
+        alert("Spielstand nicht gefunden");
+        return;
+      }
+
+      restoreGame(saves[selectedName]);
+      alert("Spielstand geladen: " + selectedName);
+    }
+
+    function deleteGameSave() {
+      const saves = getAllSaves();
+      const saveNames = Object.keys(saves);
+
+      if (saveNames.length === 0) {
+        alert("Keine Spielstände vorhanden");
+        return;
+      }
+
+      const input = prompt(
+        "Welchen Spielstand löschen?\\n\\n" +
+        saveNames.map((name, index) => `${index + 1}. ${name} (${saves[name].date})`).join("\\n")
+      );
+      if (!input) return;
+
+      const selectedName = resolveSaveName(input, saveNames, saves);
+      if (!selectedName) {
+        alert("Spielstand nicht gefunden");
+        return;
+      }
+
+      if (confirm("Spielstand wirklich löschen?\\n\\n" + selectedName)) {
+        delete saves[selectedName];
+        saveAllSaves(saves);
+        alert("Spielstand gelöscht");
+      }
+    }
+
+    function resolveSaveName(input, saveNames, saves) {
+      if (saves[input]) return input;
+      const number = parseInt(input, 10);
+      if (!isNaN(number) && saveNames[number - 1]) return saveNames[number - 1];
+      return null;
+    }
+
+    function restoreGame(gameData) {
+      selectedProfiles = gameData.selectedProfiles || { Leicht: [], Normal: [], Experte: [] };
+      renderSelectedProfiles();
+
+      players = gameData.players || [];
+      const qrList = document.getElementById("qrList");
+      document.getElementById("profileArea").innerHTML = "";
+      qrList.innerHTML = "";
+
+      players.forEach((player, index) => createPlayerBox(player, index));
+      if (players.length > 0) createScoreTable();
+    }
+
+    function autoSaveCurrentRound() {
+      if (players.length === 0) return;
+      localStorage.setItem("geheimeMissionenAutoSave", JSON.stringify({
+        date: new Date().toLocaleString(),
+        selectedProfiles,
+        players
+      }));
+    }
+
+    function continueRound() {
+      const saved = localStorage.getItem("geheimeMissionenAutoSave");
+      if (!saved) {
+        alert("Keine laufende Runde gefunden");
+        return;
+      }
+
+      restoreGame(JSON.parse(saved));
+      alert("Laufende Runde wurde fortgesetzt");
+    }
+
+    function getProfiles() {
+      return JSON.parse(localStorage.getItem("geheimeMissionenProfiles")) || {};
+    }
+
+    function saveProfiles(profiles) {
+      localStorage.setItem("geheimeMissionenProfiles", JSON.stringify(profiles));
+    }
+
+    function getEmptyProfile(name) {
+      return { name, games: 0, wins: 0, totalPoints: 0, missionsDone: 0, missionsFailed: 0, accusationPoints: 0, bestRound: 0 };
+    }
+
+    function ensureProfile(name) {
+      if (!name) return;
+      const profiles = getProfiles();
+      if (!profiles[name]) {
+        profiles[name] = getEmptyProfile(name);
+        saveProfiles(profiles);
+      }
+    }
+
+    function createProfile() {
+      const name = prompt("Name für das neue Profil:");
+      if (!name || !name.trim()) return;
+
+      const cleanName = name.trim();
+      const profiles = getProfiles();
+
+      if (profiles[cleanName]) {
+        alert("Dieses Profil gibt es schon");
+        return;
+      }
+
+      profiles[cleanName] = getEmptyProfile(cleanName);
+      saveProfiles(profiles);
+
+      renderProfileButtons();
+      renderSelectedProfiles();
+
+      alert("Profil erstellt: " + cleanName);
+    }
+
+    
+
+function selectProfiles(difficulty) {
+      // bleibt als Platzhalter, falls ein alter Button noch im Cache ist
+      renderProfileButtons();
+    }
+
+    function renderProfileButtons() {
+      const profiles = Object.keys(getProfiles());
+
+      const mapping = {
+        Leicht: document.getElementById("profileButtonsLeicht"),
+        Normal: document.getElementById("profileButtonsNormal"),
+        Experte: document.getElementById("profileButtonsExperte")
+      };
+
+      Object.entries(mapping).forEach(([difficulty, container]) => {
+        if (!container) return;
+
+        container.innerHTML = "";
+
+        if (profiles.length === 0) {
+          container.innerHTML = '<div class="noProfiles">Noch keine Profile vorhanden</div>';
+          return;
+        }
+
+        profiles.forEach(name => {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "profileChoice";
+
+          if ((selectedProfiles[difficulty] || []).includes(name)) {
+            button.classList.add("active");
+          }
+
+          const profileColor = (typeof getProfileColor === "function") ? getProfileColor(name) : "#ff8800";
+          const profileAvatar = (typeof getProfileAvatarSrc === "function") ? getProfileAvatarSrc(name) : "avatars/avatar_01.png";
+          button.style.setProperty("--profile-color", profileColor);
+          button.innerHTML = `<img class="profileMiniAvatar" src="${profileAvatar}" alt=""> <span>${name}</span>`;
+
+          button.onclick = () => {
+            // Ein Profil darf immer nur in einer Schwierigkeit sein
+            ["Leicht", "Normal", "Experte"].forEach(level => {
+              selectedProfiles[level] = (selectedProfiles[level] || []).filter(n => n !== name);
+            });
+
+            // Wenn es vorher nicht aktiv war, jetzt hier hinzufügen
+            if (!button.classList.contains("active")) {
+              selectedProfiles[difficulty].push(name);
+            }
+
+            renderProfileButtons();
+            renderSelectedProfiles();
+            autoSaveCurrentRound();
+          };
+
+          container.appendChild(button);
+        });
+      });
+    }
+
+    function renderSelectedProfiles() {
+      ["Leicht", "Normal", "Experte"].forEach(difficulty => {
+        const box = document.getElementById("selected" + difficulty);
+        const names = selectedProfiles[difficulty] || [];
+
+        if (names.length === 0) {
+          box.innerHTML = `<span style="opacity:0.6;">Keine Profile ausgewählt</span>`;
+          return;
+        }
+
+        box.innerHTML = names.map(name => {
+          const color = (typeof getProfileColor === "function") ? getProfileColor(name) : "#ff8800";
+          const avatar = (typeof getProfileAvatarSrc === "function") ? getProfileAvatarSrc(name) : "avatars/avatar_01.png";
+          return `<span class="chip" style="--profile-color:${color}"><img class="chipAvatar" src="${avatar}" alt="">${name}</span>`;
+        }).join("");
+      });
+    }
+
+
+    function deleteProfile() {
+      const profiles = getProfiles();
+      const names = Object.keys(profiles);
+
+      if (names.length === 0) {
+        alert("Keine Profile vorhanden");
+        return;
+      }
+
+      const input = prompt(
+        "Welches Profil löschen?\n\n" +
+        names.map((name, index) => `${index + 1}. ${name}`).join("\n")
+      );
+
+      if (!input) return;
+
+      let selectedName = null;
+
+      if (profiles[input]) {
+        selectedName = input;
+      } else {
+        const number = parseInt(input, 10);
+        if (!isNaN(number) && names[number - 1]) {
+          selectedName = names[number - 1];
+        }
+      }
+
+      if (!selectedName) {
+        alert("Profil nicht gefunden");
+        return;
+      }
+
+      if (!confirm("Profil wirklich löschen?\n\n" + selectedName + "\n\nDie Statistik dieses Profils wird dauerhaft gelöscht.")) {
+        return;
+      }
+
+      delete profiles[selectedName];
+      saveProfiles(profiles);
+
+      selectedProfiles.Leicht = selectedProfiles.Leicht.filter(name => name !== selectedName);
+      selectedProfiles.Normal = selectedProfiles.Normal.filter(name => name !== selectedName);
+      selectedProfiles.Experte = selectedProfiles.Experte.filter(name => name !== selectedName);
+
+      renderSelectedProfiles();
+      renderProfileButtons();
+      autoSaveCurrentRound();
+
+      alert("Profil gelöscht: " + selectedName);
+renderProfileButtons();
+    }
+
+
+    function exportProfiles() {
+      const profiles = getProfiles();
+      const saves = getAllSaves();
+      const autoSave = localStorage.getItem("geheimeMissionenAutoSave");
+
+      const backup = {
+        app: "Geheime Missionen",
+        version: 1,
+        date: new Date().toLocaleString(),
+        profiles: profiles,
+        saves: saves,
+        autoSave: autoSave ? JSON.parse(autoSave) : null
+      };
+
+      const blob = new Blob(
+        [JSON.stringify(backup, null, 2)],
+        { type: "application/json" }
+      );
+
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+
+      const dateName = new Date().toISOString().slice(0, 10);
+      link.href = url;
+      link.download = "geheime-missionen-backup-" + dateName + ".json";
+
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      URL.revokeObjectURL(url);
+
+      alert("Backup wurde erstellt. Die Datei liegt in deinen Downloads.");
+    }
+
+    function importProfiles() {
+      document.getElementById("importFileInput").click();
+    }
+
+    function handleImportFile(event) {
+      const file = event.target.files[0];
+
+      if (!file) {
+        return;
+      }
+
+      const reader = new FileReader();
+
+      reader.onload = function(e) {
+        try {
+          const backup = JSON.parse(e.target.result);
+
+          if (!backup.profiles) {
+            alert("Diese Datei enthält keine Profile");
+            return;
+          }
+
+          if (!confirm("Backup wirklich wiederherstellen?\n\nAktuelle Profile und Spielstände werden überschrieben.")) {
+            return;
+          }
+
+          localStorage.setItem(
+            "geheimeMissionenProfiles",
+            JSON.stringify(backup.profiles || {})
+          );
+
+          localStorage.setItem(
+            "geheimeMissionenSaves",
+            JSON.stringify(backup.saves || {})
+          );
+
+          if (backup.autoSave) {
+            localStorage.setItem(
+              "geheimeMissionenAutoSave",
+              JSON.stringify(backup.autoSave)
+            );
+          }
+
+          selectedProfiles = {
+            Leicht: [],
+            Normal: [],
+            Experte: []
+          };
+
+          renderSelectedProfiles();
+          renderProfileButtons();
+          showProfiles();
+
+          alert("Backup wurde wiederhergestellt");
+        }
+
+        catch (error) {
+          alert("Backup konnte nicht gelesen werden");
+        }
+      };
+
+      reader.readAsText(file);
+      event.target.value = "";
+    }
+
+    function getProfileTitle(profile) {
+      if (profile.totalPoints >= 1000) return "💀 Schattenlegende";
+      if (profile.totalPoints >= 500) return "🥇 Meisterspion";
+      if (profile.totalPoints >= 200) return "🥈 Ermittler";
+      if (profile.totalPoints >= 50) return "🥉 Anfänger-Agent";
+      return "🕵️ Neuling";
+    }
+
+    function showProfiles() {
+      const profiles = getProfiles();
+      const names = Object.keys(profiles);
+      const area = document.getElementById("profileArea");
+      document.getElementById("qrList").innerHTML = "";
+
+      if (names.length === 0) {
+        area.innerHTML = `<div class="playerBox"><h3>👤 Profile</h3><p>Noch keine Profile vorhanden.</p></div>`;
+        return;
+      }
+
+      const sortedProfiles = names.map(name => profiles[name]).sort((a, b) => b.totalPoints - a.totalPoints);
+
+      area.innerHTML = `
+        <div class="playerBox">
+          <h3>👤 Spielerprofile</h3>
+          <div class="profileList">
+            ${sortedProfiles.map(profile => `
+              <div class="profileCard" style="--profile-color:${profile.color || "#ff8800"}">
+                <div class="profileTop">
+                  <div class="profileName">
+                    ${avatarImg(profile.avatar || window.avatarOptions[0].id, "profileMiniAvatar", profile.color || "#ff8800")}
+                    <span>${profile.name}</span>
+                  </div>
+                  <div class="profileTitle" style="color:${profile.color || "#ff8800"}">${getProfileTitle(profile)}</div>
+                </div>
+                <div class="profileSubtitle">Spiele: ${profile.games} | Siege: ${profile.wins} | Beste Runde: ${profile.bestRound}</div>
+                <div class="profileStatsCompact">
+                  <div class="profileMiniStat">⭐ ${profile.totalPoints}</div>
+                  <div class="profileMiniStat">✅ ${profile.missionsDone}</div>
+                  <div class="profileMiniStat">❌ ${profile.missionsFailed}</div>
+                  <div class="profileMiniStat">🎯 ${profile.accusationPoints}</div>
+                </div>
+              </div>
+            `).join("")}
+          </div>
+        </div>
+      `;
+    }
+
+    function finishRound() {
+      if (players.length === 0) {
+        alert("Es läuft noch keine Runde");
+        return;
+      }
+
+      if (!confirm("Runde wirklich beenden und Profile aktualisieren?")) return;
+
+      const profiles = getProfiles();
+      const maxPoints = Math.max(...players.map(player => player.total));
+
+      players.forEach(player => {
+        if (!profiles[player.name]) profiles[player.name] = getEmptyProfile(player.name);
+        const profile = profiles[player.name];
+
+        profile.games += 1;
+        profile.totalPoints += player.total;
+        profile.accusationPoints += player.accusation;
+        if (player.done > 0) profile.missionsDone += 1;
+        if (player.caught < 0) profile.missionsFailed += 1;
+        if (player.total === maxPoints) profile.wins += 1;
+        if (player.total > profile.bestRound) profile.bestRound = player.total;
+      });
+
+      saveProfiles(profiles);
+      alert("Profile wurden aktualisiert 🏆");
+      showProfiles();
+renderProfileButtons();
+    }
+
+    // Initiales Rendern erfolgt nach dem Avatar-System weiter unten.
+
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("./service-worker.js");
+    }
+  
+    // === ROBUSTE PROFIL-ERSTELLUNG MIT AVATAREN ===
+    window.avatarOptions = [{"id": "avatars/avatar_01.png", "age": "Kind", "gender": "m"}, {"id": "avatars/avatar_04.png", "age": "Kind", "gender": "m"}, {"id": "avatars/avatar_05.png", "age": "Kind", "gender": "m"}, {"id": "avatars/avatar_06.png", "age": "Kind", "gender": "m"}, {"id": "avatars/avatar_09.png", "age": "Kind", "gender": "m"}, {"id": "avatars/avatar_10.png", "age": "Kind", "gender": "m"}, {"id": "avatars/avatar_14.png", "age": "Kind", "gender": "m"}, {"id": "avatars/avatar_15.png", "age": "Kind", "gender": "m"}, {"id": "avatars/avatar_16.png", "age": "Kind", "gender": "m"}, {"id": "avatars/avatar_17.png", "age": "Kind", "gender": "m"}, {"id": "avatars/avatar_18.png", "age": "Kind", "gender": "m"}, {"id": "avatars/avatar_23.png", "age": "Kind", "gender": "m"}, {"id": "avatars/avatar_02.png", "age": "Kind", "gender": "f"}, {"id": "avatars/avatar_03.png", "age": "Kind", "gender": "f"}, {"id": "avatars/avatar_07.png", "age": "Kind", "gender": "f"}, {"id": "avatars/avatar_08.png", "age": "Kind", "gender": "f"}, {"id": "avatars/avatar_11.png", "age": "Kind", "gender": "f"}, {"id": "avatars/avatar_12.png", "age": "Kind", "gender": "f"}, {"id": "avatars/avatar_13.png", "age": "Kind", "gender": "f"}, {"id": "avatars/avatar_19.png", "age": "Kind", "gender": "f"}, {"id": "avatars/avatar_20.png", "age": "Kind", "gender": "f"}, {"id": "avatars/avatar_21.png", "age": "Kind", "gender": "f"}, {"id": "avatars/avatar_22.png", "age": "Kind", "gender": "f"}, {"id": "avatars/avatar_24.png", "age": "Kind", "gender": "f"}, {"id": "avatars/avatar_27.png", "age": "Erwachsen", "gender": "m"}, {"id": "avatars/avatar_28.png", "age": "Erwachsen", "gender": "m"}, {"id": "avatars/avatar_30.png", "age": "Erwachsen", "gender": "m"}, {"id": "avatars/avatar_31.png", "age": "Erwachsen", "gender": "m"}, {"id": "avatars/avatar_32.png", "age": "Erwachsen", "gender": "m"}, {"id": "avatars/avatar_33.png", "age": "Erwachsen", "gender": "m"}, {"id": "avatars/avatar_37.png", "age": "Erwachsen", "gender": "m"}, {"id": "avatars/avatar_40.png", "age": "Erwachsen", "gender": "m"}, {"id": "avatars/avatar_41.png", "age": "Erwachsen", "gender": "m"}, {"id": "avatars/avatar_42.png", "age": "Erwachsen", "gender": "m"}, {"id": "avatars/avatar_44.png", "age": "Erwachsen", "gender": "m"}, {"id": "avatars/avatar_45.png", "age": "Erwachsen", "gender": "m"}, {"id": "avatars/avatar_25.png", "age": "Erwachsen", "gender": "f"}, {"id": "avatars/avatar_26.png", "age": "Erwachsen", "gender": "f"}, {"id": "avatars/avatar_29.png", "age": "Erwachsen", "gender": "f"}, {"id": "avatars/avatar_34.png", "age": "Erwachsen", "gender": "f"}, {"id": "avatars/avatar_35.png", "age": "Erwachsen", "gender": "f"}, {"id": "avatars/avatar_36.png", "age": "Erwachsen", "gender": "f"}, {"id": "avatars/avatar_38.png", "age": "Erwachsen", "gender": "f"}, {"id": "avatars/avatar_39.png", "age": "Erwachsen", "gender": "f"}, {"id": "avatars/avatar_43.png", "age": "Erwachsen", "gender": "f"}, {"id": "avatars/avatar_46.png", "age": "Erwachsen", "gender": "f"}, {"id": "avatars/avatar_47.png", "age": "Erwachsen", "gender": "f"}, {"id": "avatars/avatar_48.png", "age": "Erwachsen", "gender": "f"}, {"id": "avatars/avatar_51.png", "age": "Rentner", "gender": "m"}, {"id": "avatars/avatar_52.png", "age": "Rentner", "gender": "m"}, {"id": "avatars/avatar_53.png", "age": "Rentner", "gender": "m"}, {"id": "avatars/avatar_55.png", "age": "Rentner", "gender": "m"}, {"id": "avatars/avatar_56.png", "age": "Rentner", "gender": "m"}, {"id": "avatars/avatar_57.png", "age": "Rentner", "gender": "m"}, {"id": "avatars/avatar_61.png", "age": "Rentner", "gender": "m"}, {"id": "avatars/avatar_62.png", "age": "Rentner", "gender": "m"}, {"id": "avatars/avatar_65.png", "age": "Rentner", "gender": "m"}, {"id": "avatars/avatar_66.png", "age": "Rentner", "gender": "m"}, {"id": "avatars/avatar_67.png", "age": "Rentner", "gender": "m"}, {"id": "avatars/avatar_68.png", "age": "Rentner", "gender": "m"}, {"id": "avatars/avatar_49.png", "age": "Rentner", "gender": "f"}, {"id": "avatars/avatar_50.png", "age": "Rentner", "gender": "f"}, {"id": "avatars/avatar_54.png", "age": "Rentner", "gender": "f"}, {"id": "avatars/avatar_58.png", "age": "Rentner", "gender": "f"}, {"id": "avatars/avatar_59.png", "age": "Rentner", "gender": "f"}, {"id": "avatars/avatar_60.png", "age": "Rentner", "gender": "f"}, {"id": "avatars/avatar_63.png", "age": "Rentner", "gender": "f"}, {"id": "avatars/avatar_64.png", "age": "Rentner", "gender": "f"}, {"id": "avatars/avatar_69.png", "age": "Rentner", "gender": "f"}, {"id": "avatars/avatar_70.png", "age": "Rentner", "gender": "f"}, {"id": "avatars/avatar_71.png", "age": "Rentner", "gender": "f"}, {"id": "avatars/avatar_72.png", "age": "Rentner", "gender": "f"}];
+    window.profileColors = ["#ff2b1a", "#ff8a00", "#ffd21f", "#20d94f", "#27c4ff", "#1876ff", "#8b35e8", "#ff3d9d"];
+    window.pendingProfileAvatar = window.avatarOptions[0].id;
+    window.pendingProfileColor = window.profileColors[0];
+
+    window.avatarImg = function(src, cls = "avatarSmall", color = "#ff8800") {
+      return `<img class="${cls}" src="${src}" alt="" style="--profile-color:${color}">`;
+    };
+
+    window.getProfileAvatarSrc = function(name) {
+      const profiles = getProfiles();
+      return (profiles[name] && profiles[name].avatar) ? profiles[name].avatar : window.avatarOptions[0].id;
+    };
+
+    window.getProfileColor = function(name) {
+      const profiles = getProfiles();
+      return (profiles[name] && profiles[name].color) ? profiles[name].color : "#ff8800";
+    };
+
+    window.renderAvatarButtons = function(age, gender, title, female = false) {
+      const avatars = window.avatarOptions.filter(a => a.age === age && a.gender === gender);
+      return `
+        <div>
+          <div class="avatarSubTitle ${female ? "female" : ""}">${title}</div>
+          <div class="avatarRows">
+            ${avatars.map(avatar => `
+              <button type="button" class="avatarSelectBtn ${window.pendingProfileAvatar === avatar.id ? "selected" : ""}" onclick="selectPendingAvatar('${avatar.id}')">
+                <img src="${avatar.id}" alt="">
+              </button>
+            `).join("")}
+          </div>
+        </div>`;
+    };
+
+    window.renderAgeBlock = function(age) {
+      let maleTitle = age === "Kind" ? "JUNGEN" : "MÄNNER";
+      let femaleTitle = age === "Kind" ? "MÄDCHEN" : "FRAUEN";
+      return `
+        <div class="avatarAgeTitle">${age}</div>
+        <div class="avatarSubGrid">
+          ${renderAvatarButtons(age, "m", maleTitle)}
+          ${renderAvatarButtons(age, "f", femaleTitle, true)}
+        </div>`;
+    };
+
+    window.openProfileCreateScreen = function(editName = null) {
+      window.pendingProfileAvatar = editName ? getProfileAvatarSrc(editName) : window.avatarOptions[0].id;
+      window.pendingProfileColor = editName ? getProfileColor(editName) : window.profileColors[0];
+
+      const root = document.getElementById("avatarModalRoot");
+      if (!root) {
+        alert("Fehler: avatarModalRoot fehlt");
+        return;
+      }
+
+      root.innerHTML = `
+        <div class="profileCreateModal">
+          <div class="profileCreateInner">
+            <div class="profileCreateTop">
+              <button type="button" class="profileIconBtn" onclick="closeProfileCreateScreen()">←</button>
+              <div class="profileLogo">🎯 GEHEIME <span>MISSIONEN</span></div>
+              <button type="button" class="profileIconBtn" onclick="closeProfileCreateScreen()">⚙️</button>
+            </div>
+
+            <div class="profileCreatePanel">
+              <h2 class="profileCreateTitle">${editName ? "PROFILBILD ÄNDERN" : "PROFIL ERSTELLEN"}</h2>
+
+              <div class="stepRow"><span class="stepNo">1</span> PROFILNAME EINGEBEN</div>
+              <input id="newProfileNameInput" class="profileNameInput" placeholder="Dein Name..." maxlength="24" value="${editName || ""}" ${editName ? "disabled" : ""}>
+
+              <div class="stepRow"><span class="stepNo">2</span> AVATAR AUSWÄHLEN</div>
+              <div class="avatarPickArea" id="avatarPickArea">
+                ${renderAgeBlock("Kind")}
+                ${renderAgeBlock("Erwachsen")}
+                ${renderAgeBlock("Rentner")}
+              </div>
+
+              <div class="stepRow"><span class="stepNo">3</span> PROFILFARBE WÄHLEN</div>
+              <div class="colorRow" id="profileColorRow">
+                ${window.profileColors.map(color => `
+                  <button type="button" class="colorPick ${color === window.pendingProfileColor ? "selected" : ""}"
+                    style="background:${color}; color:${color};"
+                    onclick="selectPendingColor('${color}')"></button>
+                `).join("")}
+              </div>
+              <div class="profileCreateActions">
+                <button type="button" class="profileCancelBtn" onclick="closeProfileCreateScreen()">✕ ABBRECHEN</button>
+                <button type="button" class="profileSaveBtn" onclick="saveCreatedProfile(${editName ? "'" + editName.replace(/'/g, "\\'") + "'" : "null"})">✓ ${editName ? "SPEICHERN" : "PROFIL ERSTELLEN"}</button>
+              </div>
+            </div>
+          </div>
+        </div>`;
+    };
+
+    window.closeProfileCreateScreen = function() {
+      const root = document.getElementById("avatarModalRoot");
+      if (root) root.innerHTML = "";
+    };
+
+    window.selectPendingAvatar = function(src) {
+      window.pendingProfileAvatar = src;
+      const area = document.getElementById("avatarPickArea");
+      if (area) area.innerHTML = renderAgeBlock("Kind") + renderAgeBlock("Erwachsen") + renderAgeBlock("Rentner");
+    };
+
+    window.selectPendingColor = function(color) {
+      window.pendingProfileColor = color;
+      const row = document.getElementById("profileColorRow");
+      if (row) {
+        row.innerHTML = window.profileColors.map(c => `
+          <button type="button" class="colorPick ${c === window.pendingProfileColor ? "selected" : ""}"
+            style="background:${c}; color:${c};"
+            onclick="selectPendingColor('${c}')"></button>
+        `).join("");
+      }
+    };
+
+    window.saveCreatedProfile = function(editName = null) {
+      const input = document.getElementById("newProfileNameInput");
+      const cleanName = editName || (input ? input.value.trim() : "");
+
+      if (!cleanName) {
+        alert("Bitte einen Namen eingeben");
+        return;
+      }
+
+      const profiles = getProfiles();
+
+      if (!editName && profiles[cleanName]) {
+        alert("Dieses Profil gibt es schon");
+        return;
+      }
+
+      if (!profiles[cleanName]) {
+        profiles[cleanName] = {
+          name: cleanName,
+          games: 0,
+          wins: 0,
+          totalPoints: 0,
+          missionsDone: 0,
+          missionsFailed: 0,
+          accusationPoints: 0,
+          bestRound: 0
+        };
+      }
+
+      profiles[cleanName].avatar = window.pendingProfileAvatar;
+      profiles[cleanName].color = window.pendingProfileColor;
+
+      saveProfiles(profiles);
+      closeProfileCreateScreen();
+      if (typeof renderProfileButtons === "function") renderProfileButtons();
+      if (typeof renderSelectedProfiles === "function") renderSelectedProfiles();
+      alert(editName ? "Profilbild gespeichert" : "Profil erstellt: " + cleanName);
+    };
+
+    window.createProfile = function() {
+      openProfileCreateScreen(null);
+    };
+
+    window.changeProfileAvatar = function() {
+      const profiles = getProfiles();
+      const names = Object.keys(profiles);
+      if (names.length === 0) {
+        alert("Keine Profile vorhanden");
+        return;
+      }
+
+      const input = prompt("Für welches Profil das Bild ändern?\n\n" + names.map((name, index) => `${index + 1}. ${name}`).join("\n"));
+      if (!input) return;
+
+      let selectedName = null;
+      if (profiles[input]) selectedName = input;
+      else {
+        const number = parseInt(input, 10);
+        if (!isNaN(number) && names[number - 1]) selectedName = names[number - 1];
+      }
+
+      if (!selectedName) {
+        alert("Profil nicht gefunden");
+        return;
+      }
+
+      openProfileCreateScreen(selectedName);
+    };
+
+    // Nach dem Laden des Avatar-Systems einmal alles neu zeichnen
+    renderSelectedProfiles();
+    renderProfileButtons();
+
+
+
+    function openLegalInfo() {
+      const root = document.getElementById("legalModalRoot");
+      if (!root) return;
+
+      root.innerHTML = `
+        <div class="legalModal">
+          <div class="legalBox">
+            <h2>Impressum & Datenschutz</h2>
+
+            <h3>Impressum</h3>
+            <p>
+              Angaben gemäß § 5 DDG<br><br>
+              Verantwortlich für diese Anwendung:<br>
+              Eric Hase<br>
+              Kontakt: erichase@web.de
+            </p>
+
+            <h3>Datenschutz</h3>
+            <p>
+              Diese Anwendung ist ein privates Hobbyprojekt und dient der Unterhaltung.
+            </p>
+            <p>
+              Profile, Avatare, Profilfarben, Spielstände und Statistiken werden ausschließlich lokal im Browser-Speicher des jeweiligen Geräts gespeichert.
+            </p>
+            <p>
+              Es werden keine Profile, Spielstände oder sonstigen Eingaben an einen Server übertragen.
+            </p>
+            <p>
+              Die Anwendung verwendet keine Werbung, kein Tracking, keine Analyse-Tools und keine externen Cookies.
+            </p>
+            <p>
+              Beim Löschen des Browser-Speichers oder der Website-Daten können gespeicherte Profile und Spielstände verloren gehen.
+            </p>
+
+            <h3>Hinweis</h3>
+            <p>
+              Diese Anwendung wird ohne Gewähr bereitgestellt. Sie ist für private Spieleabende gedacht.
+            </p>
+
+            <button type="button" class="legalCloseButton" onclick="closeLegalInfo()">Schließen</button>
+          </div>
+        </div>
+      `;
+    }
+
+    function closeLegalInfo() {
+      const root = document.getElementById("legalModalRoot");
+      if (root) root.innerHTML = "";
+    }
+
+</script>
+</body>
+</html>
