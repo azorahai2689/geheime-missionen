@@ -566,11 +566,11 @@ font-weight:bold;
 <body>
   <div class="box">
     <p class="slogan">Macht euren Spieleabend verdächtig gut 🎭</p>
-    <h1>Geheime Missionen</h1>
+    <h1>🎭🎉 Geheime Missionen 🎉🎭</h1>
 
     <p class="gameInfo">
       Jeder Spieler erhält eine geheime Mission 🥷<br>
-      Erfülle deine Mission möglichst unauffällig, ohne dass sie scheitert<br><br>
+      Erfülle deine Mission möglichst unauffällig, ohne dass sie scheitert 🎭<br><br>
       🎯 Richtige Anschuldigung = +5 Punkte<br>
       ❌ Falsche Anschuldigung = -1 Punkt<br><br>
       Wer am Ende die meisten Punkte hat, gewinnt 🏆
@@ -1399,15 +1399,10 @@ renderProfileButtons();
     };
 
     window.renderAgeBlock = function(age) {
-      let ageTitle = age;
-
-      if(age === "Kind") ageTitle = "Kinder";
-      if(age === "Erwachsen") ageTitle = "Erwachsene";
-
       let maleTitle = age === "Kind" ? "JUNGEN" : "MÄNNER";
       let femaleTitle = age === "Kind" ? "MÄDCHEN" : "FRAUEN";
       return `
-        <div class="avatarAgeTitle">${ageTitle}</div>
+        <div class="avatarAgeTitle">${age}</div>
         <div class="avatarSubGrid">
           ${renderAvatarButtons(age, "m", maleTitle)}
           ${renderAvatarButtons(age, "f", femaleTitle, true)}
