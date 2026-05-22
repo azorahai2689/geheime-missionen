@@ -561,20 +561,185 @@ font-weight:bold;
   font-weight:bold;
 }
 
+
+/* === Startbildschirm Logo wie App-Icon === */
+.hero-section{
+  text-align:center;
+  padding:8px 0 24px;
+  margin-bottom:16px;
+}
+
+.hero-top-text{
+  font-size:24px;
+  color:#ff9d2f;
+  margin:8px 0 24px;
+  font-weight:500;
+  line-height:1.25;
+  text-shadow:0 0 10px rgba(255,140,0,0.45);
+}
+
+.hero-logo-wrapper{
+  position:relative;
+  margin:0 auto 28px;
+  max-width:720px;
+  padding:4px 0 8px;
+  filter:drop-shadow(0 0 18px rgba(160,30,255,0.55));
+}
+
+.hero-title-top{
+  font-size:74px;
+  font-weight:900;
+  line-height:0.88;
+  color:#ffd23d;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  text-shadow:
+    0 3px 0 #7a3b00,
+    0 0 10px #ff9d00,
+    4px 4px 0 #000,
+    -3px -3px 0 #000;
+}
+
+.hero-title-bottom{
+  font-size:76px;
+  font-weight:900;
+  line-height:0.88;
+  color:#ffffff;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  text-shadow:
+    0 4px 0 #5a2f7f,
+    0 0 16px #9d35ff,
+    4px 4px 0 #000,
+    -3px -3px 0 #000;
+}
+
+.hero-card{
+  width:96px;
+  height:126px;
+  margin:10px auto 0;
+  border-radius:16px;
+  border:5px solid #ffd23d;
+  background:linear-gradient(180deg,#24102f,#050505);
+  color:#ffd23d;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:82px;
+  font-weight:900;
+  transform:rotate(-5deg);
+  box-shadow:
+    0 0 28px rgba(160,30,255,0.95),
+    0 0 12px rgba(255,190,30,0.85),
+    inset 0 0 18px rgba(255,255,255,0.08);
+  text-shadow:0 0 10px rgba(255,210,61,0.9);
+}
+
+.hero-description{
+  font-size:22px;
+  line-height:1.55;
+  color:#f2f2f2;
+  max-width:720px;
+  margin:auto;
+}
+
+.hero-description p{
+  margin:12px 0;
+}
+
+.highlight-orange{
+  color:#ffb12a;
+  font-weight:800;
+}
+
+.rules-box{
+  margin:26px 0 24px;
+}
+
+.rule{
+  font-size:23px;
+  margin:14px 0;
+  font-weight:700;
+}
+
+.rule.good span{
+  color:#ffb12a;
+}
+
+.rule.bad span{
+  color:#ff4040;
+}
+
+.winner-text{
+  font-size:23px;
+  margin-top:26px !important;
+  font-weight:700;
+}
+
+@media(max-width:700px){
+  .hero-top-text{
+    font-size:23px;
+    margin-top:4px;
+    margin-bottom:24px;
+  }
+
+  .hero-title-top{
+    font-size:48px;
+  }
+
+  .hero-title-bottom{
+    font-size:50px;
+  }
+
+  .hero-card{
+    width:72px;
+    height:94px;
+    font-size:62px;
+    border-radius:13px;
+    border-width:4px;
+  }
+
+  .hero-description{
+    font-size:20px;
+    line-height:1.55;
+  }
+
+  .rule{
+    font-size:20px;
+  }
+
+  .winner-text{
+    font-size:20px;
+  }
+}
+
 </style>
 </head>
 <body>
   <div class="box">
-    <p class="slogan">Macht euren Spieleabend verdächtig gut 🎭</p>
-    <h1>🎭🎉 Geheime Missionen 🎉🎭</h1>
+    
+    <div class="hero-section">
+      <div class="hero-top-text">Macht euren Spieleabend verdächtig gut 🎭</div>
 
-    <p class="gameInfo">
-      Jeder Spieler erhält eine geheime Mission 🥷<br>
-      Erfülle deine Mission möglichst unauffällig, ohne dass sie scheitert 🎭<br><br>
-      🎯 Richtige Anschuldigung = +5 Punkte<br>
-      ❌ Falsche Anschuldigung = -1 Punkt<br><br>
-      Wer am Ende die meisten Punkte hat, gewinnt 🏆
-    </p>
+      <div class="hero-logo-wrapper">
+        <div class="hero-title-top">GEHEIME</div>
+        <div class="hero-title-bottom">MISSIONEN</div>
+        <div class="hero-card">?</div>
+      </div>
+
+      <div class="hero-description">
+        <p>Jeder Spieler erhält eine <span class="highlight-orange">geheime Mission</span>.</p>
+        <p>Erfülle deine Mission möglichst unauffällig,<br>ohne dass sie scheitert.</p>
+
+        <div class="rules-box">
+          <div class="rule good">🎯 Richtige Anschuldigung = <span>+5 Punkte</span></div>
+          <div class="rule bad">❌ Falsche Anschuldigung = <span>-1 Punkt</span></div>
+        </div>
+
+        <p class="winner-text">Wer am Ende die meisten Punkte hat,<br>gewinnt! 🏆</p>
+      </div>
+    </div>
+
 
     <button class="mainButton profileButton" onclick="window.createProfile()">👤 Profil erstellen</button>
     <button class="mainButton profileButton" onclick="showProfiles()">📊 Profile anzeigen</button>
