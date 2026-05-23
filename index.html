@@ -848,6 +848,14 @@ font-weight:bold;
     }
 
     function createGame() {
+      if (players.length > 0 && document.getElementById("qrList").innerHTML.trim() !== "") {
+        const reallyRestart = confirm("Es läuft bereits eine Runde.\n\nNeue Runde wirklich starten?");
+
+        if (!reallyRestart) {
+          return;
+        }
+      }
+
       const qrList = document.getElementById("qrList");
       document.getElementById("profileArea").innerHTML = "";
       qrList.innerHTML = "";
@@ -1458,7 +1466,7 @@ renderProfileButtons();
       const profiles = getProfiles();
       const names = Object.keys(profiles);
       const area = document.getElementById("profileArea");
-      document.getElementById("qrList").innerHTML = "";
+      // Spiel darf beim Profile anzeigen nicht gelöscht werden
 
       if (names.length === 0) {
         area.innerHTML = `<div class="playerBox"><h3>👤 Profile</h3><p>Noch keine Profile vorhanden.</p></div>`;
@@ -1519,6 +1527,12 @@ renderProfileButtons();
       });
 
       saveProfiles(profiles);
+
+      localStorage.removeItem("geheimeMissionenAutoSave");
+
+      players = [];
+      document.getElementById("qrList").innerHTML = "";
+
       alert("Profile wurden aktualisiert 🏆");
       showProfiles();
 renderProfileButtons();
