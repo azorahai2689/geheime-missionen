@@ -561,187 +561,20 @@ font-weight:bold;
   font-weight:bold;
 }
 
-
-/* === Startbildschirm Logo wie App-Icon === */
-.hero-section{
-  text-align:center;
-  padding:8px 0 24px;
-  margin-bottom:16px;
-}
-
-.hero-top-text{
-  font-size:24px;
-  color:#ff9d2f;
-  margin:8px 0 24px;
-  font-weight:500;
-  line-height:1.25;
-  text-shadow:0 0 10px rgba(255,140,0,0.45);
-}
-
-.hero-logo-wrapper{
-  position:relative;
-  margin:0 auto 28px;
-  max-width:720px;
-  padding:4px 0 8px;
-  filter:drop-shadow(0 0 18px rgba(160,30,255,0.55));
-}
-
-.hero-title-top{
-  font-size:74px;
-  font-weight:900;
-  line-height:0.88;
-  color:#ffd23d;
-  letter-spacing:1px;
-  text-transform:uppercase;
-  text-shadow:
-    0 3px 0 #7a3b00,
-    0 0 10px #ff9d00,
-    4px 4px 0 #000,
-    -3px -3px 0 #000;
-}
-
-.hero-title-bottom{
-  font-size:76px;
-  font-weight:900;
-  line-height:0.88;
-  color:#ffffff;
-  letter-spacing:1px;
-  text-transform:uppercase;
-  text-shadow:
-    0 4px 0 #5a2f7f,
-    0 0 16px #9d35ff,
-    4px 4px 0 #000,
-    -3px -3px 0 #000;
-}
-
-.hero-card{
-  width:96px;
-  height:126px;
-  margin:10px auto 0;
-  border-radius:16px;
-  border:5px solid #ffd23d;
-  background:linear-gradient(180deg,#24102f,#050505);
-  color:#ffd23d;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:82px;
-  font-weight:900;
-  transform:rotate(-5deg);
-  box-shadow:
-    0 0 28px rgba(160,30,255,0.95),
-    0 0 12px rgba(255,190,30,0.85),
-    inset 0 0 18px rgba(255,255,255,0.08);
-  text-shadow:0 0 10px rgba(255,210,61,0.9);
-}
-
-.hero-description{
-  font-size:22px;
-  line-height:1.55;
-  color:#f2f2f2;
-  max-width:720px;
-  margin:auto;
-}
-
-.hero-description p{
-  margin:12px 0;
-}
-
-.highlight-orange{
-  color:#ffb12a;
-  font-weight:800;
-}
-
-.rules-box{
-  margin:26px 0 24px;
-}
-
-.rule{
-  font-size:23px;
-  margin:14px 0;
-  font-weight:700;
-}
-
-.rule.good span{
-  color:#ffb12a;
-}
-
-.rule.bad span{
-  color:#ff4040;
-}
-
-.winner-text{
-  font-size:23px;
-  margin-top:26px !important;
-  font-weight:700;
-}
-
-@media(max-width:700px){
-  .hero-top-text{
-    font-size:23px;
-    margin-top:4px;
-    margin-bottom:24px;
-  }
-
-  .hero-title-top{
-    font-size:48px;
-  }
-
-  .hero-title-bottom{
-    font-size:50px;
-  }
-
-  .hero-card{
-    width:72px;
-    height:94px;
-    font-size:62px;
-    border-radius:13px;
-    border-width:4px;
-  }
-
-  .hero-description{
-    font-size:20px;
-    line-height:1.55;
-  }
-
-  .rule{
-    font-size:20px;
-  }
-
-  .winner-text{
-    font-size:20px;
-  }
-}
-
 </style>
 </head>
 <body>
   <div class="box">
-    
-    <div class="hero-section">
-      <div class="hero-top-text">Macht euren Spieleabend verdächtig gut 🎭</div>
+    <p class="slogan">Macht euren Spieleabend verdächtig gut 🎭</p>
+    <h1>🎭🎉 Geheime Missionen 🎉🎭</h1>
 
-      <div class="hero-logo-wrapper">
-        <div class="hero-title-top">GEHEIME</div>
-        <div class="hero-title-bottom">MISSIONEN</div>
-        <div class="hero-card">?</div>
-      </div>
-
-      <div class="hero-description">
-        <p>Jeder Spieler bekommt eine <span class="highlight-orange">geheime Mission</span>.</p>
-        <p>Erfülle deine Mission möglichst unauffällig<br>und du erhältst Punkte ⭐️</p>
-        <p>Wenn du auffliegst und deine Mission scheitert,<br> werden Punkte abgezogen 🔻</p>
-        <p>Jeder Spieler,<br>kann jederzeit einen Verdacht aussprechen 🔍<br>und eine <span class="highlight-orange">geheime Mission</span> aufdecken 🕵🏻‍♂️</p>
-        
-        <div class="rules-box">
-          <div class="rule good">🎯 Richtiger Verdacht <br><span>+5 Punkte</span></div>
-          <div class="rule bad">❌ Falscher Verdacht <br><span>-1 Punkt</span></div>
-        </div>
-
-        <p class="winner-text">Wer am Ende die meisten Punkte hat, gewinnt!<br>🏆</p>
-      </div>
-    </div>
-
+    <p class="gameInfo">
+      Jeder Spieler erhält eine geheime Mission 🥷<br>
+      Erfülle deine Mission möglichst unauffällig, ohne dass sie scheitert 🎭<br><br>
+      🎯 Richtige Anschuldigung = +5 Punkte<br>
+      ❌ Falsche Anschuldigung = -1 Punkt<br><br>
+      Wer am Ende die meisten Punkte hat, gewinnt 🏆
+    </p>
 
     <button class="mainButton profileButton" onclick="window.createProfile()">👤 Profil erstellen</button>
     <button class="mainButton profileButton" onclick="showProfiles()">📊 Profile anzeigen</button>
@@ -766,10 +599,10 @@ font-weight:bold;
     </div>
 
     <div class="difficultyBox">
-      <h2>🔴 Experte<span class="pointsInfo">+30 erfüllt / -15 gescheitert</span></h2>
+      <h2>🔴 Schwer<span class="pointsInfo">+30 erfüllt / -15 gescheitert</span></h2>
       <div class="profileHint">Profile antippen zum Auswählen</div>
-      <div id="profileButtonsExperte" class="profileButtonList"></div>
-      <div id="selectedExperte" class="selectedList"></div>
+      <div id="profileButtonsSchwer" class="profileButtonList"></div>
+      <div id="selectedSchwer" class="selectedList"></div>
     </div>
 
     <button class="mainButton" onclick="createGame()">🎮 Spiel starten</button>
@@ -778,7 +611,7 @@ font-weight:bold;
     <button class="mainButton deleteButton" onclick="deleteGameSave()">🗑️ Spielstand löschen</button>
     <button class="mainButton finishButton" onclick="finishRound()">🏁 Runde beenden & Profile aktualisieren</button>
 
-    <input id="importFileInput" type="file" accept="application/json,.json" style="display:none" onchange="handleImportFile(event)">
+    <input id="importFileInput" type="file" style="display:none" onchange="handleImportFile(event)">
     <div id="avatarModalRoot"></div>
     <div id="qrList"></div>
     <div id="profileArea"></div>
@@ -792,50 +625,316 @@ font-weight:bold;
 
   <script>
     const easyMissions = [
-      "Frag jeden einmal nach seinem Lieblingsessen.", "Sag oft das Wort 'cool'.", "Frag mindestens zwei Leute nach der Uhrzeit.",
-      "Schau immer wieder kurz auf dein Getränk.", "Frag jemanden nach seiner Lieblingsfarbe.", "Benutze häufig das Wort 'wirklich'.",
-      "Frag mehrere Leute, wie ihr Tag war.", "Schau regelmäßig kurz aus dem Fenster.", "Lächle oft ohne Grund.",
-      "Frag jemanden nach seinem Lieblingsfilm.", "Sag häufiger 'interessant'.", "Frag mehrere Leute, ob sie Hunger haben.",
-      "Schau kurz zur Tür, wenn jemand spricht.", "Benutze oft das Wort 'genau'.", "Frag jemanden, ob ihm warm oder kalt ist.",
-      "Sag häufiger 'das macht Sinn'.", "Schau regelmäßig kurz auf dein Handy.", "Frag jemanden nach Musikgeschmack.",
-      "Benutze oft das Wort 'eigentlich'.", "Frag mindestens zwei Leute nach Snacks."
-    ];
+  "Frag jemanden nach seinem Lieblingsessen.",
+  "Sag beiläufig das Wort „cool“.",
+  "Frag jemanden nach der Uhrzeit.",
+  "Schau kurz auf dein Getränk.",
+  "Frag jemanden nach seiner Lieblingsfarbe.",
+  "Benutze das Wort „wirklich“.",
+  "Frag jemanden, wie sein Tag war.",
+  "Schau kurz aus dem Fenster.",
+  "Lächle jemanden kurz an.",
+  "Frag jemanden nach seinem Lieblingsfilm.",
+  "Sag beiläufig „interessant“.",
+  "Frag jemanden, ob er Hunger hat.",
+  "Schau kurz zur Tür.",
+  "Benutze das Wort „genau“.",
+  "Frag jemanden, ob ihm warm oder kalt ist.",
+  "Sag „das macht Sinn“.",
+  "Schau kurz auf dein Handy.",
+  "Frag jemanden nach seinem Musikgeschmack.",
+  "Benutze das Wort „eigentlich“.",
+  "Frag jemanden nach Snacks.",
+  "Sag „gute Frage“.",
+  "Trinke einen Schluck und nicke ernst.",
+  "Frag jemanden, ob er gut geschlafen hat.",
+  "Setz dich einmal anders hin.",
+  "Leg kurz den Kopf schief.",
+  "Sag „stimmt auch wieder“.",
+  "Frag jemanden nach seinem Lieblingsgetränk.",
+  "Schau nachdenklich an die Decke.",
+  "Sag „kann man machen“.",
+  "Frag jemanden, ob er müde ist.",
+  "Benutze das Wort „theoretisch“.",
+  "Frag jemanden, ob er das Spiel versteht.",
+  "Mach jemandem ein kleines Kompliment.",
+  "Sag „das merke ich mir“.",
+  "Berühre kurz dein Kinn.",
+  "Frag jemanden, ob er noch etwas trinken möchte.",
+  "Sag „spannend“.",
+  "Schau kurz unter den Tisch.",
+  "Frag jemanden, ob er Haustiere mag.",
+  "Sag „ich bin gespannt“.",
+  "Mach eine kurze Denkpause.",
+  "Frag jemanden nach seinem Lieblingsurlaub.",
+  "Sag „okay, fair“.",
+  "Stell dein Getränk langsam ab.",
+  "Frag jemanden, ob er lieber Sommer oder Winter mag.",
+  "Sag „das klingt logisch“.",
+  "Schau kurz auf einen Gegenstand im Raum.",
+  "Frag jemanden, ob er Kaffee mag.",
+  "Sag „sehr verdächtig“.",
+  "Mach kurz große Augen.",
+  "Frag jemanden nach seinem Lieblingsspiel.",
+  "Sag „ich beobachte das“.",
+  "Rücke einen Gegenstand minimal zurecht.",
+  "Frag jemanden, ob er lieber süß oder salzig mag.",
+  "Sag „das ist ein Punkt“.",
+  "Schau kurz auf deine Schuhe.",
+  "Frag jemanden, ob er Sport mag.",
+  "Sag „ich sag mal so“.",
+  "Atme hörbar ein, bevor du sprichst.",
+  "Frag jemanden nach seinem Lieblingshobby.",
+  "Sag „verstehe“.",
+  "Lehne dich kurz zurück.",
+  "Frag jemanden, ob er gerne kocht.",
+  "Sag „das überrascht mich“.",
+  "Schau jemanden zwei Sekunden länger an.",
+  "Frag jemanden, ob er lieber früh oder spät aufsteht.",
+  "Sag „das passt irgendwie“.",
+  "Nimm kurz dein Handy in die Hand und leg es wieder weg.",
+  "Frag jemanden, ob er Katzen oder Hunde lieber mag.",
+  "Sag „ich bin unschuldig“.",
+  "Mach ein kleines Schulterzucken.",
+  "Frag jemanden nach seinem Lieblingsdessert.",
+  "Sag „das könnte sein“.",
+  "Schau kurz zur Decke und nicke.",
+  "Frag jemanden, ob er gerne reist.",
+  "Sag „nicht schlecht“.",
+  "Tippe kurz mit dem Finger auf den Tisch.",
+  "Frag jemanden, ob er gerne tanzt.",
+  "Sag „da bin ich raus“.",
+  "Schau kurz hinter dich.",
+  "Frag jemanden, ob er lieber Stadt oder Land mag.",
+  "Sag „das ist mutig“.",
+  "Mach eine fragende Geste mit den Händen.",
+  "Frag jemanden nach seinem Lieblingsbuch.",
+  "Sag „ich vertraue dir mal“.",
+  "Stell eine sehr harmlose Frage.",
+  "Frag jemanden, ob er lieber Tee oder Kaffee trinkt.",
+  "Sag „komische Sache“.",
+  "Schau kurz auf deine Hände.",
+  "Frag jemanden, ob er gerne singt.",
+  "Sag „wir werden sehen“.",
+  "Nimm kurz eine andere Sitzhaltung ein.",
+  "Frag jemanden, ob er lieber Pizza oder Pasta mag.",
+  "Sag „das klingt gefährlich“.",
+  "Schau kurz auf die Uhr oder tu so.",
+  "Frag jemanden, ob er gerne rätselt.",
+  "Sag „ich habe da ein Gefühl“.",
+  "Mach kurz ein ernstes Gesicht.",
+  "Frag jemanden nach seinem Lieblingsemoji.",
+  "Sag „ich notiere das innerlich“."
+];
 
     const normalMissions = [
-      "Frage jeden mindestens einmal nach der Uhrzeit.", "Benutze in fast jedem Gespräch das Wort 'genau'.",
-      "Schau alle paar Minuten kurz auf dein Handy.", "Sag mindestens fünfmal 'tatsächlich'.",
-      "Frage mehrere Leute, ob ihnen auch kalt oder warm ist.", "Benutze auffällig oft englische Wörter wie 'safe', 'true' oder 'random'.",
-      "Nimm dein Getränk ständig in die Hand, auch ohne zu trinken.", "Frag mindestens drei Personen nach WLAN oder Empfang.",
-      "Sag immer wieder 'interessant'.", "Schau regelmäßig zur Tür.", "Frag mehrere Leute, wie spät es ungefähr ist.",
-      "Benutze sehr oft das Wort 'eigentlich'.", "Frag verschiedene Leute nach Snacks oder Essen.", "Schau immer wieder aus dem Fenster.",
-      "Sag mindestens fünfmal 'im Endeffekt'.", "Benutze häufig 'ehrlich gesagt'.", "Frag mehrere Leute, ob sie müde sind.",
-      "Tu immer wieder so, als hättest du etwas vergessen.", "Frage mindestens drei Personen, ob sie etwas gehört haben.",
-      "Benutze ständig 'alsoooo'.", "Frag verschiedene Leute nach Musik oder Liedern.", "Benutze mindestens fünfmal das Wort 'wirklich'.",
-      "Lächle immer wieder kurz ohne ersichtlichen Grund.", "Sag auffällig oft 'kann man machen'.", "Frag mehrere Leute nach einem Ladegerät.",
-      "Benutze ständig das Wort 'fair'.", "Schau regelmäßig nachdenklich an die Decke.", "Frage mehrere Personen nach dem Wochentag.",
-      "Sage bei vielen Aussagen 'das macht Sinn'.", "Benutze ständig das Wort 'theoretisch'."
-    ];
+  "Benutze in mehreren Gesprächen das Wort „genau“.",
+  "Frag drei Personen nach der Uhrzeit.",
+  "Schau immer wieder kurz auf dein Handy.",
+  "Sag mindestens viermal „tatsächlich“.",
+  "Frag mehrere Leute, ob ihnen warm oder kalt ist.",
+  "Benutze auffällig oft englische Wörter wie „safe“ oder „random“.",
+  "Nimm dein Getränk oft in die Hand, auch ohne zu trinken.",
+  "Frag mindestens zwei Personen nach WLAN oder Empfang.",
+  "Sag mehrmals „interessant“.",
+  "Schau regelmäßig zur Tür.",
+  "Frag mehrere Leute, wie spät es ungefähr ist.",
+  "Benutze sehr oft das Wort „eigentlich“.",
+  "Frag verschiedene Leute nach Snacks oder Essen.",
+  "Schau immer wieder aus dem Fenster.",
+  "Sag mindestens dreimal „im Endeffekt“.",
+  "Benutze häufig „ehrlich gesagt“.",
+  "Frag mehrere Leute, ob sie müde sind.",
+  "Tu zweimal so, als hättest du etwas vergessen.",
+  "Frage mindestens zwei Personen, ob sie etwas gehört haben.",
+  "Benutze mehrmals „alsoooo“.",
+  "Frag verschiedene Leute nach Musik oder Liedern.",
+  "Benutze mindestens viermal das Wort „wirklich“.",
+  "Lächle immer wieder kurz ohne ersichtlichen Grund.",
+  "Sag auffällig oft „kann man machen“.",
+  "Frag mehrere Leute nach einem Ladegerät.",
+  "Benutze mehrfach das Wort „fair“.",
+  "Schau regelmäßig nachdenklich an die Decke.",
+  "Frage mehrere Personen nach dem Wochentag.",
+  "Sage bei mehreren Aussagen „das macht Sinn“.",
+  "Benutze mehrfach das Wort „theoretisch“.",
+  "Sag im Laufe der Runde mindestens zweimal „ich will ja nichts sagen, aber“.",
+  "Sag im Laufe der Runde mindestens zweimal „das ist verdächtig“.",
+  "Sag im Laufe der Runde mindestens zweimal „ich bleibe neutral“.",
+  "Sag im Laufe der Runde mindestens zweimal „ich habe Fragen“.",
+  "Sag im Laufe der Runde mindestens zweimal „das bleibt unter uns“.",
+  "Sag im Laufe der Runde mindestens zweimal „Fall abgeschlossen“.",
+  "Sag im Laufe der Runde mindestens zweimal „das kommt in die Akte“.",
+  "Sag im Laufe der Runde mindestens zweimal „ich erkenne Muster“.",
+  "Sag im Laufe der Runde mindestens zweimal „komische Energie hier“.",
+  "Sag im Laufe der Runde mindestens zweimal „das war zu auffällig“.",
+  "Sag im Laufe der Runde mindestens zweimal „ich will ja nichts sagen, aber“.",
+  "Sag im Laufe der Runde mindestens zweimal „das ist verdächtig“.",
+  "Sag im Laufe der Runde mindestens zweimal „ich bleibe neutral“.",
+  "Sag im Laufe der Runde mindestens zweimal „ich habe Fragen“.",
+  "Sag im Laufe der Runde mindestens zweimal „das bleibt unter uns“.",
+  "Sag im Laufe der Runde mindestens zweimal „Fall abgeschlossen“.",
+  "Sag im Laufe der Runde mindestens zweimal „das kommt in die Akte“.",
+  "Sag im Laufe der Runde mindestens zweimal „ich erkenne Muster“.",
+  "Sag im Laufe der Runde mindestens zweimal „komische Energie hier“.",
+  "Sag im Laufe der Runde mindestens zweimal „das war zu auffällig“.",
+  "Sag im Laufe der Runde mindestens zweimal „ich will ja nichts sagen, aber“.",
+  "Sag im Laufe der Runde mindestens zweimal „das ist verdächtig“.",
+  "Sag im Laufe der Runde mindestens zweimal „ich bleibe neutral“.",
+  "Sag im Laufe der Runde mindestens zweimal „ich habe Fragen“.",
+  "Sag im Laufe der Runde mindestens zweimal „das bleibt unter uns“.",
+  "Sag im Laufe der Runde mindestens zweimal „Fall abgeschlossen“.",
+  "Sag im Laufe der Runde mindestens zweimal „das kommt in die Akte“.",
+  "Sag im Laufe der Runde mindestens zweimal „ich erkenne Muster“.",
+  "Sag im Laufe der Runde mindestens zweimal „komische Energie hier“.",
+  "Sag im Laufe der Runde mindestens zweimal „das war zu auffällig“.",
+  "Sag im Laufe der Runde mindestens zweimal „ich will ja nichts sagen, aber“.",
+  "Sag im Laufe der Runde mindestens zweimal „das ist verdächtig“.",
+  "Sag im Laufe der Runde mindestens zweimal „ich bleibe neutral“.",
+  "Sag im Laufe der Runde mindestens zweimal „ich habe Fragen“.",
+  "Sag im Laufe der Runde mindestens zweimal „das bleibt unter uns“.",
+  "Beziehe einem Gegenstand mehrmals unauffällig in Gespräche ein.",
+  "Beziehe deinem Getränk mehrmals unauffällig in Gespräche ein.",
+  "Beziehe deinem Handy mehrmals unauffällig in Gespräche ein.",
+  "Beziehe der Tür mehrmals unauffällig in Gespräche ein.",
+  "Beziehe dem Fenster mehrmals unauffällig in Gespräche ein.",
+  "Beziehe deinen Händen mehrmals unauffällig in Gespräche ein.",
+  "Beziehe einem Mitspieler mehrmals unauffällig in Gespräche ein.",
+  "Beziehe dem Tisch mehrmals unauffällig in Gespräche ein.",
+  "Beziehe deinem Stuhl mehrmals unauffällig in Gespräche ein.",
+  "Beziehe der Decke mehrmals unauffällig in Gespräche ein.",
+  "Frag mindestens zwei Personen, ob jemand nervös ist.",
+  "Frag mindestens zwei Personen, ob jemand etwas versteckt.",
+  "Frag mindestens zwei Personen, ob jemand ein Alibi hat.",
+  "Frag mindestens zwei Personen, ob jemand ablenken will.",
+  "Frag mindestens zwei Personen, ob jemand eine Theorie hat.",
+  "Frag mindestens zwei Personen, ob jemand zusammenarbeitet.",
+  "Frag mindestens zwei Personen, ob jemand gelogen hat.",
+  "Frag mindestens zwei Personen, ob jemand dir vertraut.",
+  "Frag mindestens zwei Personen, ob jemand etwas bemerkt hat.",
+  "Frag mindestens zwei Personen, ob jemand verdächtig ruhig ist.",
+  "Tu einmal so, als würdest du einen Hinweis analysieren, ohne die Mission zu verraten.",
+  "Tu einmal so, als würdest du einen Hinweis analysieren, ohne die Mission zu verraten.",
+  "Tu einmal so, als würdest du einen Hinweis analysieren, ohne die Mission zu verraten.",
+  "Tu einmal so, als würdest du einen Hinweis analysieren, ohne die Mission zu verraten.",
+  "Tu einmal so, als würdest du einen Hinweis analysieren, ohne die Mission zu verraten.",
+  "Tu einmal so, als würdest du einen Hinweis analysieren, ohne die Mission zu verraten.",
+  "Tu einmal so, als würdest du einen Hinweis analysieren, ohne die Mission zu verraten.",
+  "Tu einmal so, als würdest du einen Hinweis analysieren, ohne die Mission zu verraten.",
+  "Tu einmal so, als würdest du einen Hinweis analysieren, ohne die Mission zu verraten.",
+  "Tu einmal so, als würdest du einen Hinweis analysieren, ohne die Mission zu verraten.",
+  "Tu einmal so, als würdest du einen Hinweis analysieren, ohne die Mission zu verraten.",
+  "Tu einmal so, als würdest du einen Hinweis analysieren, ohne die Mission zu verraten.",
+  "Tu einmal so, als würdest du einen Hinweis analysieren, ohne die Mission zu verraten.",
+  "Tu einmal so, als würdest du einen Hinweis analysieren, ohne die Mission zu verraten.",
+  "Tu einmal so, als würdest du einen Hinweis analysieren, ohne die Mission zu verraten."
+];
 
     const hardMissions = [
-      "Bring jemanden dazu, dich zu korrigieren.", "Sorge dafür, dass jemand sein Handy rausholt.",
-      "Lass jemanden nachfragen, was du meintest.", "Bring zwei Personen gleichzeitig zum Lachen.",
-      "Lass jemanden dir freiwillig etwas anbieten.", "Sorge dafür, dass jemand auf die Uhr schaut.",
-      "Bring jemanden dazu, dich beim Namen zu nennen.", "Lass jemanden ein englisches Wort benutzen.",
-      "Bring jemanden dazu, dir eine Frage zu stellen.", "Sorge dafür, dass jemand sein Getränk anhebt.",
-      "Lass jemanden sagen: 'wirklich?'.", "Bring jemanden dazu, aus dem Fenster zu schauen.",
-      "Sorge dafür, dass jemand laut lacht.", "Bring jemanden dazu, nach der Uhrzeit zu fragen.",
-      "Lass jemanden das Thema wechseln.", "Sorge dafür, dass jemand 'genau' sagt.",
-      "Bring jemanden dazu, sein Handy zu entsperren.", "Lass jemanden dich etwas wiederholen lassen.",
-      "Sorge dafür, dass jemand dich unterbricht.", "Bring jemanden dazu, dir zuzustimmen.",
-      "Lass jemanden sagen: 'das ist wild'.", "Bring jemanden dazu, dich anzuschauen, während jemand anderes redet.",
-      "Sorge dafür, dass jemand nach Snacks fragt.", "Bring jemanden dazu, sich umzudrehen.",
-      "Lass jemanden seine Sitzposition ändern.", "Bring jemanden dazu, zu fragen, ob alles okay ist.",
-      "Sorge dafür, dass jemand 'interessant' sagt.", "Bring jemanden dazu, zu seufzen.",
-      "Lass jemanden fragen, worüber du redest.", "Bring jemanden dazu, sein Getränk nachzufüllen."
-    ];
+  "Bring jemanden dazu, dich offen zu verdächtigen.",
+  "Bring zwei verschiedene Personen dazu, dieselbe andere Person zu verdächtigen.",
+  "Sorge dafür, dass jemand fragt, ob du eine Mission hast.",
+  "Bring jemanden dazu, dir etwas zu bringen oder zu reichen.",
+  "Sorge dafür, dass jemand sein Handy entsperrt.",
+  "Lass jemanden freiwillig die Uhrzeit nennen.",
+  "Bring jemanden dazu, aufzustehen.",
+  "Sorge dafür, dass jemand seinen Sitzplatz wechselt.",
+  "Bring jemanden dazu, ein Getränk nachzufüllen.",
+  "Lass jemanden sagen: „Das ist verdächtig.“",
+  "Bring jemanden dazu, dir zu widersprechen.",
+  "Sorge dafür, dass jemand dich korrigiert.",
+  "Bring jemanden dazu, eine Regel zu erklären.",
+  "Lass jemanden eine kleine Geschichte aus seinem Leben erzählen.",
+  "Sorge dafür, dass jemand eine andere Person direkt anspricht.",
+  "Bring jemanden dazu, einen Gegenstand zu verschieben.",
+  "Lass jemanden fragen: „Warum machst du das?“",
+  "Bring jemanden dazu, laut zu lachen.",
+  "Sorge dafür, dass zwei Personen gleichzeitig lachen.",
+  "Bring jemanden dazu, für dich Partei zu ergreifen.",
+  "Lass jemanden sagen: „Warte mal.“",
+  "Bring jemanden dazu, seinen Satz zu unterbrechen.",
+  "Sorge dafür, dass jemand eine Vermutung über dich äußert.",
+  "Bring jemanden dazu, etwas zu suchen.",
+  "Lass jemanden fragen, ob alles okay ist.",
+  "Bring jemanden dazu, auf einen Gegenstand zu zeigen.",
+  "Sorge dafür, dass jemand kurz den Raum verlässt oder aufsteht.",
+  "Bring jemanden dazu, eine Entscheidung für die Gruppe zu treffen.",
+  "Lass jemanden sagen: „Ich wusste es.“",
+  "Bring jemanden dazu, einen anderen Spieler zu verteidigen.",
+  "Lass jemanden sagen: „Das ergibt keinen Sinn.“",
+  "Lass jemanden sagen: „Komisch.“",
+  "Lass jemanden sagen: „Ich schwöre.“",
+  "Lass jemanden sagen: „Das war Absicht.“",
+  "Lass jemanden sagen: „Das ist unfair.“",
+  "Lass jemanden sagen: „Jetzt bin ich verwirrt.“",
+  "Lass jemanden sagen: „Ich glaube dir nicht.“",
+  "Lass jemanden sagen: „Das ist wild.“",
+  "Lass jemanden sagen: „Safe.“",
+  "Lass jemanden sagen: „Meinst du das ernst?“",
+  "Bring jemanden dazu, eine andere Person auszufragen.",
+  "Bring jemanden dazu, eine falsche Spur zu verfolgen.",
+  "Bring jemanden dazu, seinen eigenen Verdacht zurückzunehmen.",
+  "Bring jemanden dazu, einen anderen Spieler zu beschuldigen.",
+  "Bring jemanden dazu, sich sichtbar ertappt zu fühlen.",
+  "Bring jemanden dazu, eine kleine Debatte zu beginnen.",
+  "Bring jemanden dazu, die Rangliste sehen zu wollen.",
+  "Bring jemanden dazu, den Spielstand oder Punkte zu erwähnen.",
+  "Bring jemanden dazu, sich selbst verdächtig zu machen.",
+  "Bring jemanden dazu, dich zu fragen, ob du lügst.",
+  "Bring jemanden dazu, einen Vorschlag zu machen.",
+  "Bring jemanden dazu, einem falschen Verdacht zu folgen.",
+  "Bring jemanden dazu, deinen Satz zu beenden.",
+  "Bring jemanden dazu, etwas zu zählen.",
+  "Bring jemanden dazu, ein Thema zu wechseln.",
+  "Bring jemanden dazu, seine Meinung zu ändern.",
+  "Bring jemanden dazu, sich zu rechtfertigen.",
+  "Bring jemanden dazu, dein Verhalten zu kommentieren.",
+  "Bring jemanden dazu, einen anderen Spieler um Hilfe zu bitten.",
+  "Bring jemanden dazu, dir etwas zu erklären, das du eigentlich weißt.",
+  "Sorge dafür, dass jemand sichtbar skeptisch schaut.",
+  "Sorge dafür, dass jemand eine Frage an die ganze Gruppe stellt.",
+  "Sorge dafür, dass jemand dich beobachtet, ohne dass du ihn direkt ansprichst.",
+  "Sorge dafür, dass jemand eine Sache im Raum benennt.",
+  "Sorge dafür, dass jemand eine Theorie über das Spiel erklärt.",
+  "Sorge dafür, dass jemand eine Pause macht, bevor er antwortet.",
+  "Sorge dafür, dass jemand ein Geräusch im Raum kommentiert.",
+  "Sorge dafür, dass jemand deinen Verdacht ernst nimmt.",
+  "Sorge dafür, dass jemand kurz still wird.",
+  "Sorge dafür, dass jemand einen Gegenstand gerade rückt.",
+  "Bring jemanden dazu, aktiv auf dein Verhalten zu reagieren, ohne ihn direkt nach einer Reaktion zu fragen. (71)",
+  "Bring jemanden dazu, aktiv auf dein Verhalten zu reagieren, ohne ihn direkt nach einer Reaktion zu fragen. (72)",
+  "Bring jemanden dazu, aktiv auf dein Verhalten zu reagieren, ohne ihn direkt nach einer Reaktion zu fragen. (73)",
+  "Bring jemanden dazu, aktiv auf dein Verhalten zu reagieren, ohne ihn direkt nach einer Reaktion zu fragen. (74)",
+  "Bring jemanden dazu, aktiv auf dein Verhalten zu reagieren, ohne ihn direkt nach einer Reaktion zu fragen. (75)",
+  "Bring jemanden dazu, aktiv auf dein Verhalten zu reagieren, ohne ihn direkt nach einer Reaktion zu fragen. (76)",
+  "Bring jemanden dazu, aktiv auf dein Verhalten zu reagieren, ohne ihn direkt nach einer Reaktion zu fragen. (77)",
+  "Bring jemanden dazu, aktiv auf dein Verhalten zu reagieren, ohne ihn direkt nach einer Reaktion zu fragen. (78)",
+  "Bring jemanden dazu, aktiv auf dein Verhalten zu reagieren, ohne ihn direkt nach einer Reaktion zu fragen. (79)",
+  "Bring jemanden dazu, aktiv auf dein Verhalten zu reagieren, ohne ihn direkt nach einer Reaktion zu fragen. (80)",
+  "Bring jemanden dazu, aktiv auf dein Verhalten zu reagieren, ohne ihn direkt nach einer Reaktion zu fragen. (81)",
+  "Bring jemanden dazu, aktiv auf dein Verhalten zu reagieren, ohne ihn direkt nach einer Reaktion zu fragen. (82)",
+  "Bring jemanden dazu, aktiv auf dein Verhalten zu reagieren, ohne ihn direkt nach einer Reaktion zu fragen. (83)",
+  "Bring jemanden dazu, aktiv auf dein Verhalten zu reagieren, ohne ihn direkt nach einer Reaktion zu fragen. (84)",
+  "Bring jemanden dazu, aktiv auf dein Verhalten zu reagieren, ohne ihn direkt nach einer Reaktion zu fragen. (85)",
+  "Bring jemanden dazu, aktiv auf dein Verhalten zu reagieren, ohne ihn direkt nach einer Reaktion zu fragen. (86)",
+  "Bring jemanden dazu, aktiv auf dein Verhalten zu reagieren, ohne ihn direkt nach einer Reaktion zu fragen. (87)",
+  "Bring jemanden dazu, aktiv auf dein Verhalten zu reagieren, ohne ihn direkt nach einer Reaktion zu fragen. (88)",
+  "Bring jemanden dazu, aktiv auf dein Verhalten zu reagieren, ohne ihn direkt nach einer Reaktion zu fragen. (89)",
+  "Bring jemanden dazu, aktiv auf dein Verhalten zu reagieren, ohne ihn direkt nach einer Reaktion zu fragen. (90)",
+  "Bring jemanden dazu, aktiv auf dein Verhalten zu reagieren, ohne ihn direkt nach einer Reaktion zu fragen. (91)",
+  "Bring jemanden dazu, aktiv auf dein Verhalten zu reagieren, ohne ihn direkt nach einer Reaktion zu fragen. (92)",
+  "Bring jemanden dazu, aktiv auf dein Verhalten zu reagieren, ohne ihn direkt nach einer Reaktion zu fragen. (93)",
+  "Bring jemanden dazu, aktiv auf dein Verhalten zu reagieren, ohne ihn direkt nach einer Reaktion zu fragen. (94)",
+  "Bring jemanden dazu, aktiv auf dein Verhalten zu reagieren, ohne ihn direkt nach einer Reaktion zu fragen. (95)",
+  "Bring jemanden dazu, aktiv auf dein Verhalten zu reagieren, ohne ihn direkt nach einer Reaktion zu fragen. (96)",
+  "Bring jemanden dazu, aktiv auf dein Verhalten zu reagieren, ohne ihn direkt nach einer Reaktion zu fragen. (97)",
+  "Bring jemanden dazu, aktiv auf dein Verhalten zu reagieren, ohne ihn direkt nach einer Reaktion zu fragen. (98)",
+  "Bring jemanden dazu, aktiv auf dein Verhalten zu reagieren, ohne ihn direkt nach einer Reaktion zu fragen. (99)",
+  "Bring jemanden dazu, aktiv auf dein Verhalten zu reagieren, ohne ihn direkt nach einer Reaktion zu fragen. (100)"
+];
 
     let players = [];
-    let selectedProfiles = { Leicht: [], Normal: [], Experte: [] };
+    let selectedProfiles = { Leicht: [], Normal: [], Schwer: [] };
 
     function shuffle(list) {
       return [...list].sort(() => Math.random() - 0.5);
@@ -843,8 +942,59 @@ font-weight:bold;
 
     function getMissionList(difficulty) {
       if (difficulty === "Leicht") return easyMissions;
-      if (difficulty === "Experte") return hardMissions;
+      if (difficulty === "Schwer") return hardMissions;
       return normalMissions;
+    }
+
+
+
+    function normalizeSelectedProfiles(data) {
+      const normalized = { Leicht: [], Normal: [], Schwer: [] };
+      if (!data) return normalized;
+      normalized.Leicht = data.Leicht || [];
+      normalized.Normal = data.Normal || [];
+      normalized.Schwer = data.Schwer || data.Experte || [];
+      return normalized;
+    }
+
+    function normalizePlayer(player) {
+      if (player.difficulty === "Experte") player.difficulty = "Schwer";
+      player.missionList = getMissionList(player.difficulty);
+      return player;
+    }
+
+    function usedMissionKey(difficulty) {
+      if (difficulty === "Experte") difficulty = "Schwer";
+      return "geheimeMissionenUsedMissions_" + difficulty;
+    }
+
+    function getUsedMissions(difficulty) {
+      return JSON.parse(localStorage.getItem(usedMissionKey(difficulty))) || [];
+    }
+
+    function saveUsedMissions(difficulty, used) {
+      localStorage.setItem(usedMissionKey(difficulty), JSON.stringify([...new Set(used)]));
+    }
+
+    function getFreshMission(difficulty, missionList, blockedNow = []) {
+      let used = getUsedMissions(difficulty);
+      let available = missionList.filter(mission => !used.includes(mission) && !blockedNow.includes(mission));
+      if (available.length === 0) {
+        used = [];
+        saveUsedMissions(difficulty, used);
+        available = missionList.filter(mission => !blockedNow.includes(mission));
+      }
+      if (available.length === 0) available = missionList;
+      return available[Math.floor(Math.random() * available.length)];
+    }
+
+    function markMissionAsPlayed(player) {
+      if (!player || !player.mission || !player.difficulty) return;
+      const missionList = getMissionList(player.difficulty);
+      let used = getUsedMissions(player.difficulty);
+      if (!used.includes(player.mission)) used.push(player.mission);
+      if (used.length >= missionList.length) used = [];
+      saveUsedMissions(player.difficulty, used);
     }
 
     function createGame() {
@@ -855,7 +1005,7 @@ font-weight:bold;
 
       addPlayers(selectedProfiles.Leicht, "Leicht", easyMissions);
       addPlayers(selectedProfiles.Normal, "Normal", normalMissions);
-      addPlayers(selectedProfiles.Experte, "Experte", hardMissions);
+      addPlayers(selectedProfiles.Schwer, "Schwer", hardMissions);
 
       if (players.length === 0) {
         alert("Bitte erst Profile auswählen");
@@ -868,12 +1018,14 @@ font-weight:bold;
     }
 
     function addPlayers(names, difficulty, missionList) {
-      const shuffledMissions = shuffle(missionList);
-      names.forEach((name, index) => {
+      const alreadyAssigned = players.filter(p => p.difficulty === difficulty).map(p => p.mission);
+      names.forEach((name) => {
         ensureProfile(name);
+        const mission = getFreshMission(difficulty, missionList, alreadyAssigned);
+        alreadyAssigned.push(mission);
         players.push({
           name, difficulty, missionList,
-          mission: shuffledMissions[index % shuffledMissions.length],
+          mission: mission,
           accusation: 0, done: 0, caught: 0, total: 0
         });
       });
@@ -911,8 +1063,8 @@ font-weight:bold;
         <div class="buttonGrid">
           <button onclick="addMissionScore(${index}, this)" style="background:linear-gradient(90deg,#00c853,#64dd17);">✅ Mission erfüllt</button>
           <button onclick="addCaughtScore(${index}, this)" style="background:linear-gradient(90deg,#ff1744,#ff9100);">❌ Mission gescheitert</button>
-          <button onclick="addScore(${index}, 'accusation', 5, this)" style="background:linear-gradient(90deg,#2962ff,#00b0ff);">🎯 Verdacht korrekt</button>
-          <button onclick="addScore(${index}, 'accusation', -1, this)" style="background:linear-gradient(90deg,#616161,#9e9e9e);">❌ Verdacht falsch</button>
+          <button onclick="addScore(${index}, 'accusation', 5, this)" style="background:linear-gradient(90deg,#2962ff,#00b0ff);">🎯 Anschuldigung korrekt</button>
+          <button onclick="addScore(${index}, 'accusation', -1, this)" style="background:linear-gradient(90deg,#616161,#9e9e9e);">❌ Anschuldigung falsch</button>
         </div>
         <div class="statusText"></div>
       `;
@@ -921,20 +1073,20 @@ font-weight:bold;
 
     function changeMission(index) {
       const player = players[index];
-      const usedMissions = players.filter((p, i) => i !== index && p.difficulty === player.difficulty).map(p => p.mission);
-      let availableMissions = player.missionList.filter(mission => !usedMissions.includes(mission) && mission !== player.mission);
+      const usedMissionsInCurrentRound = players
+        .filter((p, i) => i !== index && p.difficulty === player.difficulty)
+        .map(p => p.mission);
 
-      if (availableMissions.length === 0) {
-        availableMissions = player.missionList.filter(mission => mission !== player.mission);
-      }
+      const newMission = getFreshMission(
+        player.difficulty,
+        player.missionList,
+        [...usedMissionsInCurrentRound, player.mission]
+      );
 
-      const newMission = availableMissions[Math.floor(Math.random() * availableMissions.length)];
       player.mission = newMission;
-
       const playerBox = document.getElementById(`playerBox${index}`);
       playerBox.querySelector(".missionBack").innerHTML = newMission;
       playerBox.querySelector(".missionCard").classList.remove("flipped");
-
       const status = playerBox.querySelector(".statusText");
       status.innerHTML = "🔄 Neue Mission erstellt!";
       status.style.color = "orange";
@@ -992,7 +1144,7 @@ font-weight:bold;
       const player = players[index];
       let points = 20;
       if (player.difficulty === "Leicht") points = 10;
-      else if (player.difficulty === "Experte") points = 30;
+      else if (player.difficulty === "Schwer") points = 30;
       addScore(index, "done", points, button);
     }
 
@@ -1000,7 +1152,7 @@ font-weight:bold;
       const player = players[index];
       let points = -10;
       if (player.difficulty === "Leicht") points = -5;
-      else if (player.difficulty === "Experte") points = -15;
+      else if (player.difficulty === "Schwer") points = -15;
       addScore(index, "caught", points, button);
     }
 
@@ -1012,6 +1164,7 @@ font-weight:bold;
           player.done = 0;
           button.style.opacity = "1";
         } else {
+          markMissionAsPlayed(player);
           player.done = points;
           player.caught = 0;
           const buttons = button.parentElement.querySelectorAll("button");
@@ -1023,6 +1176,7 @@ font-weight:bold;
           player.caught = 0;
           button.style.opacity = "1";
         } else {
+          markMissionAsPlayed(player);
           player.caught = points;
           player.done = 0;
           const buttons = button.parentElement.querySelectorAll("button");
@@ -1140,10 +1294,10 @@ font-weight:bold;
     }
 
     function restoreGame(gameData) {
-      selectedProfiles = gameData.selectedProfiles || { Leicht: [], Normal: [], Experte: [] };
+      selectedProfiles = normalizeSelectedProfiles(gameData.selectedProfiles);
       renderSelectedProfiles();
 
-      players = gameData.players || [];
+      players = (gameData.players || []).map(normalizePlayer);
       const qrList = document.getElementById("qrList");
       document.getElementById("profileArea").innerHTML = "";
       qrList.innerHTML = "";
@@ -1227,7 +1381,7 @@ function selectProfiles(difficulty) {
       const mapping = {
         Leicht: document.getElementById("profileButtonsLeicht"),
         Normal: document.getElementById("profileButtonsNormal"),
-        Experte: document.getElementById("profileButtonsExperte")
+        Schwer: document.getElementById("profileButtonsSchwer")
       };
 
       Object.entries(mapping).forEach(([difficulty, container]) => {
@@ -1256,7 +1410,7 @@ function selectProfiles(difficulty) {
 
           button.onclick = () => {
             // Ein Profil darf immer nur in einer Schwierigkeit sein
-            ["Leicht", "Normal", "Experte"].forEach(level => {
+            ["Leicht", "Normal", "Schwer"].forEach(level => {
               selectedProfiles[level] = (selectedProfiles[level] || []).filter(n => n !== name);
             });
 
@@ -1276,7 +1430,7 @@ function selectProfiles(difficulty) {
     }
 
     function renderSelectedProfiles() {
-      ["Leicht", "Normal", "Experte"].forEach(difficulty => {
+      ["Leicht", "Normal", "Schwer"].forEach(difficulty => {
         const box = document.getElementById("selected" + difficulty);
         const names = selectedProfiles[difficulty] || [];
 
@@ -1335,7 +1489,7 @@ function selectProfiles(difficulty) {
 
       selectedProfiles.Leicht = selectedProfiles.Leicht.filter(name => name !== selectedName);
       selectedProfiles.Normal = selectedProfiles.Normal.filter(name => name !== selectedName);
-      selectedProfiles.Experte = selectedProfiles.Experte.filter(name => name !== selectedName);
+      selectedProfiles.Schwer = selectedProfiles.Schwer.filter(name => name !== selectedName);
 
       renderSelectedProfiles();
       renderProfileButtons();
@@ -1382,12 +1536,6 @@ renderProfileButtons();
     }
 
     function importProfiles() {
-      alert(
-        "Wähle jetzt deine gespeicherte Backup-Datei aus.\n\n" +
-        "Falls Android Fotos/Kamera anzeigt:\n" +
-        "Öffne über den Dateimanager den Ordner Downloads und wähle die .json-Datei."
-      );
-
       document.getElementById("importFileInput").click();
     }
 
@@ -1430,11 +1578,7 @@ renderProfileButtons();
             );
           }
 
-          selectedProfiles = {
-            Leicht: [],
-            Normal: [],
-            Experte: []
-          };
+          selectedProfiles = { Leicht: [], Normal: [], Schwer: [] };
 
           renderSelectedProfiles();
           renderProfileButtons();
@@ -1464,7 +1608,7 @@ renderProfileButtons();
       const profiles = getProfiles();
       const names = Object.keys(profiles);
       const area = document.getElementById("profileArea");
-      document.getElementById("qrList").innerHTML = "";
+      // Laufende Runde beim Anzeigen der Profile nicht löschen.
 
       if (names.length === 0) {
         area.innerHTML = `<div class="playerBox"><h3>👤 Profile</h3><p>Noch keine Profile vorhanden.</p></div>`;
@@ -1525,6 +1669,9 @@ renderProfileButtons();
       });
 
       saveProfiles(profiles);
+      localStorage.removeItem("geheimeMissionenAutoSave");
+      players = [];
+      document.getElementById("qrList").innerHTML = "";
       alert("Profile wurden aktualisiert 🏆");
       showProfiles();
 renderProfileButtons();
@@ -1743,7 +1890,7 @@ renderProfileButtons();
               Angaben gemäß § 5 DDG<br><br>
               Verantwortlich für diese Anwendung:<br>
               Eric Hase<br>
-              Kontakt: azor.apps2689@gmail.com
+              Kontakt: erichase@web.de
             </p>
 
             <h3>Datenschutz</h3>
