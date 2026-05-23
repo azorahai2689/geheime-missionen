@@ -778,7 +778,7 @@ font-weight:bold;
     <button class="mainButton deleteButton" onclick="deleteGameSave()">🗑️ Spielstand löschen</button>
     <button class="mainButton finishButton" onclick="finishRound()">🏁 Runde beenden & Profile aktualisieren</button>
 
-    <input id="importFileInput" type="file" style="display:none" onchange="handleImportFile(event)">
+    <input id="importFileInput" type="file" accept="application/json,.json" style="display:none" onchange="handleImportFile(event)">
     <div id="avatarModalRoot"></div>
     <div id="qrList"></div>
     <div id="profileArea"></div>
@@ -848,14 +848,6 @@ font-weight:bold;
     }
 
     function createGame() {
-      if (players.length > 0 && document.getElementById("qrList").innerHTML.trim() !== "") {
-        const reallyRestart = confirm("Es läuft bereits eine Runde.\n\nNeue Runde wirklich starten?");
-
-        if (!reallyRestart) {
-          return;
-        }
-      }
-
       const qrList = document.getElementById("qrList");
       document.getElementById("profileArea").innerHTML = "";
       qrList.innerHTML = "";
@@ -1358,7 +1350,6 @@ renderProfileButtons();
       const profiles = getProfiles();
       const saves = getAllSaves();
       const autoSave = localStorage.getItem("geheimeMissionenAutoSave");
-      const hadBackupBefore = localStorage.getItem("geheimeMissionenBackupCreated") === "true";
 
       const backup = {
         app: "Geheime Missionen",
@@ -1385,22 +1376,18 @@ renderProfileButtons();
       link.click();
       document.body.removeChild(link);
 
-      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      URL.revokeObjectURL(url);
 
-      localStorage.setItem("geheimeMissionenBackupCreated", "true");
-      localStorage.setItem("geheimeMissionenLastBackupDate", new Date().toLocaleString());
-
-      if (hadBackupBefore) {
-        alert("Backup wurde aktualisiert. Tippe im nächsten Fenster auf Herunterladen.");
-      } else {
-        alert("Backup-Datei wurde erstellt. Tippe im nächsten Fenster auf Herunterladen.");
-      }
+      alert("Backup wurde erstellt. Die Datei liegt in deinen Downloads.");
     }
 
     function importProfiles() {
-      alert("Wähle jetzt deine gespeicherte Backup-Datei aus.
+      alert(
+        "Wähle jetzt deine gespeicherte Backup-Datei aus.\n\n" +
+        "Falls Android Fotos/Kamera anzeigt:\n" +
+        "Öffne über den Dateimanager den Ordner Downloads und wähle die .json-Datei."
+      );
 
-Falls Android Fotos/Kamera anzeigt: öffne über den Dateimanager den Ordner Downloads und wähle die .json-Datei.");
       document.getElementById("importFileInput").click();
     }
 
@@ -1477,7 +1464,7 @@ Falls Android Fotos/Kamera anzeigt: öffne über den Dateimanager den Ordner Dow
       const profiles = getProfiles();
       const names = Object.keys(profiles);
       const area = document.getElementById("profileArea");
-      // Spiel darf beim Profile anzeigen nicht gelöscht werden
+      document.getElementById("qrList").innerHTML = "";
 
       if (names.length === 0) {
         area.innerHTML = `<div class="playerBox"><h3>👤 Profile</h3><p>Noch keine Profile vorhanden.</p></div>`;
@@ -1538,12 +1525,6 @@ Falls Android Fotos/Kamera anzeigt: öffne über den Dateimanager den Ordner Dow
       });
 
       saveProfiles(profiles);
-
-      localStorage.removeItem("geheimeMissionenAutoSave");
-
-      players = [];
-      document.getElementById("qrList").innerHTML = "";
-
       alert("Profile wurden aktualisiert 🏆");
       showProfiles();
 renderProfileButtons();
