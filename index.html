@@ -778,7 +778,7 @@ font-weight:bold;
     <button class="mainButton deleteButton" onclick="deleteGameSave()">🗑️ Spielstand löschen</button>
     <button class="mainButton finishButton" onclick="finishRound()">🏁 Runde beenden & Profile aktualisieren</button>
 
-    <input id="importFileInput" type="file" accept=".json" style="display:none" onchange="handleImportFile(event)">
+    <input id="importFileInput" type="file" style="display:none" onchange="handleImportFile(event)">
     <div id="avatarModalRoot"></div>
     <div id="qrList"></div>
     <div id="profileArea"></div>
@@ -1358,6 +1358,7 @@ renderProfileButtons();
       const profiles = getProfiles();
       const saves = getAllSaves();
       const autoSave = localStorage.getItem("geheimeMissionenAutoSave");
+      const hadBackupBefore = localStorage.getItem("geheimeMissionenBackupCreated") === "true";
 
       const backup = {
         app: "Geheime Missionen",
@@ -1384,12 +1385,22 @@ renderProfileButtons();
       link.click();
       document.body.removeChild(link);
 
-      URL.revokeObjectURL(url);
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
 
-      alert("Backup wurde erstellt. Die Datei liegt in deinen Downloads.");
+      localStorage.setItem("geheimeMissionenBackupCreated", "true");
+      localStorage.setItem("geheimeMissionenLastBackupDate", new Date().toLocaleString());
+
+      if (hadBackupBefore) {
+        alert("Backup wurde aktualisiert. Tippe im nächsten Fenster auf Herunterladen.");
+      } else {
+        alert("Backup-Datei wurde erstellt. Tippe im nächsten Fenster auf Herunterladen.");
+      }
     }
 
     function importProfiles() {
+      alert("Wähle jetzt deine gespeicherte Backup-Datei aus.
+
+Falls Android Fotos/Kamera anzeigt: öffne über den Dateimanager den Ordner Downloads und wähle die .json-Datei.");
       document.getElementById("importFileInput").click();
     }
 
