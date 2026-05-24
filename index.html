@@ -715,29 +715,33 @@ font-weight:bold;
 }
 
 
-.menuGrid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:14px;
-  margin-top:15px;
+.ruleCard{
+  background: linear-gradient(180deg,#151515,#050505);
+  border:2px solid rgba(255,140,0,0.45);
+  border-radius:22px;
+  padding:22px 18px;
+  margin:18px 0;
+  box-shadow:
+    0 0 18px rgba(255,140,0,0.18),
+    inset 0 0 12px rgba(255,140,0,0.08);
 }
 
-.menuGrid .mainButton{
-  margin-top:0;
-  font-size:20px;
-  padding:18px 12px;
+.ruleCardTitle{
+  font-size:22px;
+  font-weight:900;
+  color:#ffb12a;
+  margin-bottom:14px;
+  text-transform:uppercase;
+  text-shadow:0 0 10px rgba(255,177,42,0.35);
 }
 
-@media(max-width:700px){
-  .menuGrid{
-    grid-template-columns:1fr 1fr;
-    gap:12px;
-  }
+.ruleCard p{
+  margin:10px 0;
+}
 
-  .menuGrid .mainButton{
-    font-size:18px;
-    padding:16px 10px;
-  }
+.highlight-red{
+  color:#ff4d4d;
+  font-weight:bold;
 }
 
 </style>
@@ -754,32 +758,60 @@ font-weight:bold;
         <div class="hero-card">?</div>
       </div>
 
-      <div class="hero-description">
-        <p>Jeder Spieler bekommt eine <span class="highlight-orange">geheime Mission</span>.</p>
-        <p>Erfülle deine Mission möglichst unauffällig<br>und du erhältst Punkte ⭐️</p>
-        <p>Wenn du auffliegst und deine Mission scheitert,<br> werden Punkte abgezogen 🔻</p>
-        <p>Eine Mission kann geändert werden 🔄<br>Die ersten 3 Änderungen kosten jeweils <span class="highlight-orange">-1 Punkt</span> ⭐️</p>
-        <p>Jeder Spieler,<br>kann jederzeit einen Verdacht aussprechen 🔍<br>und eine <span class="highlight-orange">geheime Mission</span> aufdecken 🕵🏻‍♂️</p>
-        
-        <div class="rules-box">
-          <div class="rule good">🎯 Richtiger Verdacht <br><span>+5 Punkte</span></div>
-          <div class="rule bad">❌ Falscher Verdacht <br><span>-1 Punkt</span></div>
-        </div>
+      
+<div class="hero-description">
 
-        <p class="winner-text">Wer am Ende die meisten Punkte hat, gewinnt!<br>🏆</p>
-      </div>
+  <div class="ruleCard">
+    <div class="ruleCardTitle">🥷 Missionen</div>
+
+    <p>Jeder Spieler bekommt eine <span class="highlight-orange">geheime Mission</span>.</p>
+
+    <p>Erfülle deine Mission möglichst unauffällig<br>
+    und du erhältst Punkte ⭐️</p>
+
+    <p>Wenn du auffliegst und deine Mission scheitert,<br>
+    werden Punkte abgezogen 🔻</p>
+  </div>
+
+  <div class="ruleCard">
+    <div class="ruleCardTitle">🔄 Mission ändern</div>
+
+    <p>Eine Mission kann geändert werden 🔄</p>
+
+    <p>Beim Ändern wechselst du zwischen<br>
+    3 zufälligen Missionen 🎲</p>
+
+    <p>Jede neue Mission kostet<br>
+    <span class="highlight-red">1 Punkt</span></p>
+  </div>
+
+  <div class="ruleCard">
+    <div class="ruleCardTitle">🕵🏻 Verdacht</div>
+
+    <p>Jeder Spieler kann jederzeit einen Verdacht aussprechen 🔍<br>
+    und eine <span class="highlight-orange">geheime Mission</span> aufdecken 🕵🏻‍♂️</p>
+
+    <div class="rules-box">
+      <div class="rule good">🎯 Richtiger Verdacht <br><span>+5 Punkte</span></div>
+      <div class="rule bad">❌ Falscher Verdacht <br><span>-1 Punkt</span></div>
+    </div>
+  </div>
+
+  <p class="winner-text">
+    Wer am Ende die meisten Punkte hat, gewinnt!<br>🏆
+  </p>
+
+</div>
+
     </div>
 
 
-    <div class="menuGrid">
-      <button class="mainButton profileButton" onclick="window.createProfile()">👤 Profil erstellen</button>
-      <button class="mainButton profileButton" onclick="showProfiles()">📊 Profile anzeigen</button>
-      <button class="mainButton profileButton" onclick="window.changeProfileAvatar()">🖼️ Profilbild ändern</button>
-      <button class="mainButton deleteButton" onclick="deleteProfile()">🗑️ Profil löschen</button>
-      <button class="mainButton saveButton" onclick="exportProfiles()">📤 Profile sichern</button>
-      <button class="mainButton loadButton" onclick="importProfiles()">📥 Profile wiederherstellen</button>
-    </div>
-
+    <button class="mainButton profileButton" onclick="window.createProfile()">👤 Profil erstellen</button>
+    <button class="mainButton profileButton" onclick="showProfiles()">📊 Profile anzeigen</button>
+    <button class="mainButton profileButton" onclick="window.changeProfileAvatar()">🖼️ Profilbild ändern</button>
+    <button class="mainButton deleteButton" onclick="deleteProfile()">🗑️ Profil löschen</button>
+    <button class="mainButton saveButton" onclick="exportProfiles()">📤 Profile sichern</button>
+    <button class="mainButton loadButton" onclick="importProfiles()">📥 Profile wiederherstellen</button>
     <button class="mainButton loadButton" onclick="continueRound()">🔄 Runde fortsetzen</button>
 
     <div class="difficultyBox">
@@ -803,13 +835,10 @@ font-weight:bold;
       <div id="selectedSchwer" class="selectedList"></div>
     </div>
 
-    <div class="menuGrid">
-      <button class="mainButton" onclick="createGame()">🎮 Spiel starten</button>
-      <button class="mainButton saveButton" onclick="saveGame()">💾 Spielstand speichern</button>
-      <button class="mainButton loadButton" onclick="loadGame()">📂 Spielstand laden</button>
-      <button class="mainButton deleteButton" onclick="deleteGameSave()">🗑️ Spielstand löschen</button>
-    </div>
-
+    <button class="mainButton" onclick="createGame()">🎮 Spiel starten</button>
+    <button class="mainButton saveButton" onclick="saveGame()">💾 Spielstand speichern</button>
+    <button class="mainButton loadButton" onclick="loadGame()">📂 Spielstand laden</button>
+    <button class="mainButton deleteButton" onclick="deleteGameSave()">🗑️ Spielstand löschen</button>
     <button class="mainButton finishButton" onclick="finishRound()">🏁 Runde beenden & Profile aktualisieren</button>
 
     <input id="importFileInput" type="file" accept="application/json,.json" style="display:none" onchange="handleImportFile(event)">
@@ -1018,16 +1047,26 @@ font-weight:bold;
     }
 
     function addPlayers(names, difficulty, missionList) {
-      const shuffledMissions = shuffle(missionList);
-      names.forEach((name, index) => {
+      names.forEach((name) => {
         ensureProfile(name);
+
+        const missionPool = shuffle(missionList).slice(0, 3);
+        const startMission = missionPool[0];
+
         players.push({
-          name, difficulty, missionList,
-          mission: shuffledMissions[index % shuffledMissions.length],
-          originalMission: shuffledMissions[index % shuffledMissions.length],
+          name,
+          difficulty,
+          missionList,
+          missionPool,
+          missionIndex: 0,
+          mission: startMission,
+          originalMission: startMission,
           changeCount: 0,
           changePenalty: 0,
-          accusation: 0, done: 0, caught: 0, total: 0
+          accusation: 0,
+          done: 0,
+          caught: 0,
+          total: 0
         });
       });
     }
@@ -1075,8 +1114,20 @@ font-weight:bold;
     function changeMission(index) {
       const player = players[index];
 
-      if (!player.originalMission) {
-        player.originalMission = player.mission;
+      if (!player.missionPool || player.missionPool.length !== 3) {
+        const fallbackPool = shuffle(player.missionList).filter(m => m !== player.mission).slice(0, 2);
+        player.missionPool = [player.mission, ...fallbackPool];
+
+        while (player.missionPool.length < 3) {
+          const extraMission = player.missionList.find(m => !player.missionPool.includes(m));
+          if (!extraMission) break;
+          player.missionPool.push(extraMission);
+        }
+      }
+
+      if (player.missionIndex === undefined) {
+        player.missionIndex = player.missionPool.indexOf(player.mission);
+        if (player.missionIndex < 0) player.missionIndex = 0;
       }
 
       if (player.changeCount === undefined) {
@@ -1084,6 +1135,8 @@ font-weight:bold;
       }
 
       player.changeCount++;
+      player.missionIndex = (player.missionIndex + 1) % player.missionPool.length;
+      player.mission = player.missionPool[player.missionIndex];
 
       const pointLoss = Math.min(player.changeCount, 3);
       player.changePenalty = -pointLoss;
@@ -1091,30 +1144,6 @@ font-weight:bold;
       const counter = document.getElementById(`rerollCount${index}`);
       if (counter) {
         counter.innerHTML = `(-${pointLoss})`;
-      }
-
-      if (player.changeCount === 3) {
-        player.mission = player.originalMission;
-      } else {
-        const usedMissions = players
-          .filter((p, i) => i !== index && p.difficulty === player.difficulty)
-          .map(p => p.mission);
-
-        let availableMissions = player.missionList.filter(mission =>
-          !usedMissions.includes(mission) &&
-          mission !== player.mission
-        );
-
-        if (availableMissions.length === 0) {
-          availableMissions = player.missionList.filter(mission =>
-            mission !== player.mission
-          );
-        }
-
-        const randomMission =
-          availableMissions[Math.floor(Math.random() * availableMissions.length)];
-
-        player.mission = randomMission;
       }
 
       player.total = player.accusation + player.done + player.caught + (player.changePenalty || 0);
@@ -1126,13 +1155,13 @@ font-weight:bold;
       const status = playerBox.querySelector(".statusText");
 
       if (player.changeCount === 1) {
-        status.innerHTML = "🔄 Mission geändert (-1 Punkt)";
+        status.innerHTML = "🔄 Mission 2 von 3 aktiv (-1 Punkt)";
       } else if (player.changeCount === 2) {
-        status.innerHTML = "🔄 Mission erneut geändert (-2 Punkte gesamt)";
+        status.innerHTML = "🔄 Mission 3 von 3 aktiv (-2 Punkte gesamt)";
       } else if (player.changeCount === 3) {
-        status.innerHTML = "↩️ Erste Mission wieder aktiv (-3 Punkte gesamt)";
+        status.innerHTML = "↩️ Mission 1 von 3 wieder aktiv (-3 Punkte gesamt)";
       } else {
-        status.innerHTML = "🔄 Mission geändert (kein weiterer Punktverlust)";
+        status.innerHTML = `🔄 Mission ${player.missionIndex + 1} von 3 aktiv (kein weiterer Punktverlust)`;
       }
 
       status.style.color = "orange";
