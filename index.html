@@ -1270,7 +1270,7 @@ font-weight:bold;
     }
 
     function restoreGame(gameData) {
-      selectedProfiles = gameData.selectedProfiles || { Leicht: [], Normal: [], Experte: [] };
+      selectedProfiles = gameData.selectedProfiles || { Leicht: [], Normal: [], Schwer: [] };
       renderSelectedProfiles();
 
       players = gameData.players || [];
@@ -1357,7 +1357,7 @@ function selectProfiles(difficulty) {
       const mapping = {
         Leicht: document.getElementById("profileButtonsLeicht"),
         Normal: document.getElementById("profileButtonsNormal"),
-        Experte: document.getElementById("profileButtonsSchwer")
+        Schwer: document.getElementById("profileButtonsSchwer")
       };
 
       Object.entries(mapping).forEach(([difficulty, container]) => {
@@ -1560,11 +1560,7 @@ renderProfileButtons();
             );
           }
 
-          selectedProfiles = {
-            Leicht: [],
-            Normal: [],
-            Experte: []
-          };
+          selectedProfiles = { Leicht: [], Normal: [], Schwer: [] };
 
           renderSelectedProfiles();
           renderProfileButtons();
