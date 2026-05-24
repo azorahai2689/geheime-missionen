@@ -732,6 +732,7 @@ font-weight:bold;
         <p>Jeder Spieler bekommt eine <span class="highlight-orange">geheime Mission</span>.</p>
         <p>Erfülle deine Mission möglichst unauffällig<br>und du erhältst Punkte ⭐️</p>
         <p>Wenn du auffliegst und deine Mission scheitert,<br> werden Punkte abgezogen 🔻</p>
+        <p>Eine Mission kann geändert werden 🔄<br>Die ersten 3 Änderungen kosten jeweils <span class="highlight-orange">-1 Punkt</span> ⭐️</p>
         <p>Jeder Spieler,<br>kann jederzeit einen Verdacht aussprechen 🔍<br>und eine <span class="highlight-orange">geheime Mission</span> aufdecken 🕵🏻‍♂️</p>
         
         <div class="rules-box">
@@ -991,6 +992,9 @@ font-weight:bold;
         players.push({
           name, difficulty, missionList,
           mission: shuffledMissions[index % shuffledMissions.length],
+          originalMission: shuffledMissions[index % shuffledMissions.length],
+          changeCount: 0,
+          changePenalty: 0,
           accusation: 0, done: 0, caught: 0, total: 0
         });
       });
@@ -1036,8 +1040,7 @@ font-weight:bold;
       qrList.appendChild(playerBox);
     }
 
-    
-function changeMission(index) {
+    function changeMission(index) {
       const player = players[index];
 
       if (!player.originalMission) {
@@ -1050,7 +1053,8 @@ function changeMission(index) {
 
       player.changeCount++;
 
-      let pointLoss = Math.min(player.changeCount, 3);
+      const pointLoss = Math.min(player.changeCount, 3);
+      player.changePenalty = -pointLoss;
 
       const counter = document.getElementById(`rerollCount${index}`);
       if (counter) {
@@ -1081,6 +1085,8 @@ function changeMission(index) {
         player.mission = randomMission;
       }
 
+      player.total = player.accusation + player.done + player.caught + (player.changePenalty || 0);
+
       const playerBox = document.getElementById(`playerBox${index}`);
       playerBox.querySelector(".missionBack").innerHTML = player.mission;
       playerBox.querySelector(".missionCard").classList.remove("flipped");
@@ -1090,18 +1096,18 @@ function changeMission(index) {
       if (player.changeCount === 1) {
         status.innerHTML = "🔄 Mission geändert (-1 Punkt)";
       } else if (player.changeCount === 2) {
-        status.innerHTML = "🔄 Mission erneut geändert (-2 Punkte)";
+        status.innerHTML = "🔄 Mission erneut geändert (-2 Punkte gesamt)";
       } else if (player.changeCount === 3) {
-        status.innerHTML = "↩️ Erste Mission wieder aktiv (-3 Punkte)";
+        status.innerHTML = "↩️ Erste Mission wieder aktiv (-3 Punkte gesamt)";
       } else {
         status.innerHTML = "🔄 Mission geändert (kein weiterer Punktverlust)";
       }
 
       status.style.color = "orange";
 
+      updateScoreTable();
       autoSaveCurrentRound();
     }
-
 
     function createScoreTable() {
       const qrList = document.getElementById("qrList");
@@ -1202,7 +1208,7 @@ function changeMission(index) {
         }
       }
 
-      player.total = player.accusation + player.done + player.caught;
+      player.total = player.accusation + player.done + player.caught + (player.changePenalty || 0);
       updateScoreTable();
 
       const status = button.parentElement.nextElementSibling;
@@ -1309,7 +1315,7 @@ function changeMission(index) {
     }
 
     function restoreGame(gameData) {
-      selectedProfiles = gameData.selectedProfiles || { Leicht: [], Normal: [], Experte: [] };
+      selectedProfiles = gameData.selectedProfiles || { Leicht: [], Normal: [], Schwer: [] };
       renderSelectedProfiles();
 
       players = gameData.players || [];
@@ -1317,7 +1323,11 @@ function changeMission(index) {
       document.getElementById("profileArea").innerHTML = "";
       qrList.innerHTML = "";
 
-      players.forEach((player, index) => createPlayerBox(player, index));
+      players.forEach((player, index) => {
+        createPlayerBox(player, index);
+        const counter = document.getElementById(`rerollCount${index}`);
+        if (counter) counter.innerHTML = `(-${Math.min(player.changeCount || 0, 3)})`;
+      });
       if (players.length > 0) createScoreTable();
     }
 
@@ -1396,7 +1406,7 @@ function selectProfiles(difficulty) {
       const mapping = {
         Leicht: document.getElementById("profileButtonsLeicht"),
         Normal: document.getElementById("profileButtonsNormal"),
-        Experte: document.getElementById("profileButtonsSchwer")
+        Schwer: document.getElementById("profileButtonsSchwer")
       };
 
       Object.entries(mapping).forEach(([difficulty, container]) => {
@@ -1602,7 +1612,7 @@ renderProfileButtons();
           selectedProfiles = {
             Leicht: [],
             Normal: [],
-            Experte: []
+            Schwer: []
           };
 
           renderSelectedProfiles();
