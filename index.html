@@ -1047,16 +1047,26 @@ font-weight:bold;
     }
 
     function addPlayers(names, difficulty, missionList) {
-      const shuffledMissions = shuffle(missionList);
-      names.forEach((name, index) => {
+      names.forEach((name) => {
         ensureProfile(name);
+
+        const missionPool = shuffle(missionList).slice(0, 3);
+        const startMission = missionPool[0];
+
         players.push({
-          name, difficulty, missionList,
-          mission: shuffledMissions[index % shuffledMissions.length],
-          originalMission: shuffledMissions[index % shuffledMissions.length],
+          name,
+          difficulty,
+          missionList,
+          missionPool,
+          missionIndex: 0,
+          mission: startMission,
+          originalMission: startMission,
           changeCount: 0,
           changePenalty: 0,
-          accusation: 0, done: 0, caught: 0, total: 0
+          accusation: 0,
+          done: 0,
+          caught: 0,
+          total: 0
         });
       });
     }
@@ -1104,8 +1114,20 @@ font-weight:bold;
     function changeMission(index) {
       const player = players[index];
 
-      if (!player.originalMission) {
-        player.originalMission = player.mission;
+      if (!player.missionPool || player.missionPool.length !== 3) {
+        const fallbackPool = shuffle(player.missionList).filter(m => m !== player.mission).slice(0, 2);
+        player.missionPool = [player.mission, ...fallbackPool];
+
+        while (player.missionPool.length < 3) {
+          const extraMission = player.missionList.find(m => !player.missionPool.includes(m));
+          if (!extraMission) break;
+          player.missionPool.push(extraMission);
+        }
+      }
+
+      if (player.missionIndex === undefined) {
+        player.missionIndex = player.missionPool.indexOf(player.mission);
+        if (player.missionIndex < 0) player.missionIndex = 0;
       }
 
       if (player.changeCount === undefined) {
@@ -1113,6 +1135,8 @@ font-weight:bold;
       }
 
       player.changeCount++;
+      player.missionIndex = (player.missionIndex + 1) % player.missionPool.length;
+      player.mission = player.missionPool[player.missionIndex];
 
       const pointLoss = Math.min(player.changeCount, 3);
       player.changePenalty = -pointLoss;
@@ -1120,30 +1144,6 @@ font-weight:bold;
       const counter = document.getElementById(`rerollCount${index}`);
       if (counter) {
         counter.innerHTML = `(-${pointLoss})`;
-      }
-
-      if (player.changeCount === 3) {
-        player.mission = player.originalMission;
-      } else {
-        const usedMissions = players
-          .filter((p, i) => i !== index && p.difficulty === player.difficulty)
-          .map(p => p.mission);
-
-        let availableMissions = player.missionList.filter(mission =>
-          !usedMissions.includes(mission) &&
-          mission !== player.mission
-        );
-
-        if (availableMissions.length === 0) {
-          availableMissions = player.missionList.filter(mission =>
-            mission !== player.mission
-          );
-        }
-
-        const randomMission =
-          availableMissions[Math.floor(Math.random() * availableMissions.length)];
-
-        player.mission = randomMission;
       }
 
       player.total = player.accusation + player.done + player.caught + (player.changePenalty || 0);
@@ -1155,13 +1155,13 @@ font-weight:bold;
       const status = playerBox.querySelector(".statusText");
 
       if (player.changeCount === 1) {
-        status.innerHTML = "🔄 Mission geändert (-1 Punkt)";
+        status.innerHTML = "🔄 Mission 2 von 3 aktiv (-1 Punkt)";
       } else if (player.changeCount === 2) {
-        status.innerHTML = "🔄 Mission erneut geändert (-2 Punkte gesamt)";
+        status.innerHTML = "🔄 Mission 3 von 3 aktiv (-2 Punkte gesamt)";
       } else if (player.changeCount === 3) {
-        status.innerHTML = "↩️ Erste Mission wieder aktiv (-3 Punkte gesamt)";
+        status.innerHTML = "↩️ Mission 1 von 3 wieder aktiv (-3 Punkte gesamt)";
       } else {
-        status.innerHTML = "🔄 Mission geändert (kein weiterer Punktverlust)";
+        status.innerHTML = `🔄 Mission ${player.missionIndex + 1} von 3 aktiv (kein weiterer Punktverlust)`;
       }
 
       status.style.color = "orange";
