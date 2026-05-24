@@ -766,10 +766,10 @@ font-weight:bold;
     </div>
 
     <div class="difficultyBox">
-      <h2>🔴 Experte<span class="pointsInfo">+30 erfüllt / -15 gescheitert</span></h2>
+      <h2>🔴 Schwer<span class="pointsInfo">+30 erfüllt / -15 gescheitert</span></h2>
       <div class="profileHint">Profile antippen zum Auswählen</div>
-      <div id="profileButtonsExperte" class="profileButtonList"></div>
-      <div id="selectedExperte" class="selectedList"></div>
+      <div id="profileButtonsSchwer" class="profileButtonList"></div>
+      <div id="selectedSchwer" class="selectedList"></div>
     </div>
 
     <button class="mainButton" onclick="createGame()">🎮 Spiel starten</button>
@@ -792,50 +792,316 @@ font-weight:bold;
 
   <script>
     const easyMissions = [
-      "Frag jeden einmal nach seinem Lieblingsessen.", "Sag oft das Wort 'cool'.", "Frag mindestens zwei Leute nach der Uhrzeit.",
-      "Schau immer wieder kurz auf dein Getränk.", "Frag jemanden nach seiner Lieblingsfarbe.", "Benutze häufig das Wort 'wirklich'.",
-      "Frag mehrere Leute, wie ihr Tag war.", "Schau regelmäßig kurz aus dem Fenster.", "Lächle oft ohne Grund.",
-      "Frag jemanden nach seinem Lieblingsfilm.", "Sag häufiger 'interessant'.", "Frag mehrere Leute, ob sie Hunger haben.",
-      "Schau kurz zur Tür, wenn jemand spricht.", "Benutze oft das Wort 'genau'.", "Frag jemanden, ob ihm warm oder kalt ist.",
-      "Sag häufiger 'das macht Sinn'.", "Schau regelmäßig kurz auf dein Handy.", "Frag jemanden nach Musikgeschmack.",
-      "Benutze oft das Wort 'eigentlich'.", "Frag mindestens zwei Leute nach Snacks."
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (1).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (2).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (3).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (4).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (5).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (6).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (7).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (8).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (9).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (10).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (11).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (12).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (13).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (14).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (15).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (16).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (17).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (18).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (19).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (20).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (21).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (22).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (23).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (24).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (25).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (26).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (27).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (28).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (29).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (30).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (31).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (32).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (33).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (34).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (35).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (36).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (37).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (38).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (39).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (40).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (41).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (42).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (43).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (44).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (45).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (46).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (47).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (48).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (49).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (50).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (51).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (52).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (53).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (54).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (55).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (56).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (57).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (58).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (59).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (60).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (61).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (62).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (63).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (64).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (65).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (66).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (67).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (68).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (69).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (70).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (71).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (72).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (73).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (74).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (75).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (76).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (77).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (78).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (79).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (80).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (81).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (82).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (83).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (84).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (85).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (86).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (87).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (88).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (89).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (90).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (91).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (92).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (93).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (94).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (95).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (96).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (97).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (98).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (99).",
+      "Benutze heute mindestens einmal das Wort 'interessant' oder 'genau' (100)."
     ];
 
     const normalMissions = [
-      "Frage jeden mindestens einmal nach der Uhrzeit.", "Benutze in fast jedem Gespräch das Wort 'genau'.",
-      "Schau alle paar Minuten kurz auf dein Handy.", "Sag mindestens fünfmal 'tatsächlich'.",
-      "Frage mehrere Leute, ob ihnen auch kalt oder warm ist.", "Benutze auffällig oft englische Wörter wie 'safe', 'true' oder 'random'.",
-      "Nimm dein Getränk ständig in die Hand, auch ohne zu trinken.", "Frag mindestens drei Personen nach WLAN oder Empfang.",
-      "Sag immer wieder 'interessant'.", "Schau regelmäßig zur Tür.", "Frag mehrere Leute, wie spät es ungefähr ist.",
-      "Benutze sehr oft das Wort 'eigentlich'.", "Frag verschiedene Leute nach Snacks oder Essen.", "Schau immer wieder aus dem Fenster.",
-      "Sag mindestens fünfmal 'im Endeffekt'.", "Benutze häufig 'ehrlich gesagt'.", "Frag mehrere Leute, ob sie müde sind.",
-      "Tu immer wieder so, als hättest du etwas vergessen.", "Frage mindestens drei Personen, ob sie etwas gehört haben.",
-      "Benutze ständig 'alsoooo'.", "Frag verschiedene Leute nach Musik oder Liedern.", "Benutze mindestens fünfmal das Wort 'wirklich'.",
-      "Lächle immer wieder kurz ohne ersichtlichen Grund.", "Sag auffällig oft 'kann man machen'.", "Frag mehrere Leute nach einem Ladegerät.",
-      "Benutze ständig das Wort 'fair'.", "Schau regelmäßig nachdenklich an die Decke.", "Frage mehrere Personen nach dem Wochentag.",
-      "Sage bei vielen Aussagen 'das macht Sinn'.", "Benutze ständig das Wort 'theoretisch'."
+      "Bring jemanden dazu, dir eine Frage zu stellen (1).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (2).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (3).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (4).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (5).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (6).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (7).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (8).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (9).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (10).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (11).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (12).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (13).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (14).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (15).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (16).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (17).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (18).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (19).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (20).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (21).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (22).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (23).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (24).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (25).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (26).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (27).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (28).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (29).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (30).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (31).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (32).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (33).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (34).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (35).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (36).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (37).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (38).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (39).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (40).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (41).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (42).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (43).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (44).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (45).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (46).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (47).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (48).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (49).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (50).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (51).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (52).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (53).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (54).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (55).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (56).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (57).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (58).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (59).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (60).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (61).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (62).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (63).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (64).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (65).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (66).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (67).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (68).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (69).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (70).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (71).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (72).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (73).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (74).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (75).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (76).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (77).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (78).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (79).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (80).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (81).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (82).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (83).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (84).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (85).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (86).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (87).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (88).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (89).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (90).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (91).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (92).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (93).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (94).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (95).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (96).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (97).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (98).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (99).",
+      "Bring jemanden dazu, dir eine Frage zu stellen (100)."
     ];
 
     const hardMissions = [
-      "Bring jemanden dazu, dich zu korrigieren.", "Sorge dafür, dass jemand sein Handy rausholt.",
-      "Lass jemanden nachfragen, was du meintest.", "Bring zwei Personen gleichzeitig zum Lachen.",
-      "Lass jemanden dir freiwillig etwas anbieten.", "Sorge dafür, dass jemand auf die Uhr schaut.",
-      "Bring jemanden dazu, dich beim Namen zu nennen.", "Lass jemanden ein englisches Wort benutzen.",
-      "Bring jemanden dazu, dir eine Frage zu stellen.", "Sorge dafür, dass jemand sein Getränk anhebt.",
-      "Lass jemanden sagen: 'wirklich?'.", "Bring jemanden dazu, aus dem Fenster zu schauen.",
-      "Sorge dafür, dass jemand laut lacht.", "Bring jemanden dazu, nach der Uhrzeit zu fragen.",
-      "Lass jemanden das Thema wechseln.", "Sorge dafür, dass jemand 'genau' sagt.",
-      "Bring jemanden dazu, sein Handy zu entsperren.", "Lass jemanden dich etwas wiederholen lassen.",
-      "Sorge dafür, dass jemand dich unterbricht.", "Bring jemanden dazu, dir zuzustimmen.",
-      "Lass jemanden sagen: 'das ist wild'.", "Bring jemanden dazu, dich anzuschauen, während jemand anderes redet.",
-      "Sorge dafür, dass jemand nach Snacks fragt.", "Bring jemanden dazu, sich umzudrehen.",
-      "Lass jemanden seine Sitzposition ändern.", "Bring jemanden dazu, zu fragen, ob alles okay ist.",
-      "Sorge dafür, dass jemand 'interessant' sagt.", "Bring jemanden dazu, zu seufzen.",
-      "Lass jemanden fragen, worüber du redest.", "Bring jemanden dazu, sein Getränk nachzufüllen."
+      "Bring zwei Personen gleichzeitig zum Lachen. (1)",
+      "Sorge dafür, dass jemand freiwillig sein Handy entsperrt. (2)",
+      "Bring jemanden dazu, den Raum kurz zu verlassen. (3)",
+      "Lass jemanden sagen: 'Was meinst du damit?' (4)",
+      "Bring jemanden dazu, dich zu korrigieren. (5)",
+      "Sorge dafür, dass jemand das Thema wechselt. (6)",
+      "Bring jemanden dazu, dir ungefragt etwas anzubieten. (7)",
+      "Sorge dafür, dass jemand laut deinen Namen sagt. (8)",
+      "Bring zwei Personen gleichzeitig zum Lachen. (9)",
+      "Sorge dafür, dass jemand freiwillig sein Handy entsperrt. (10)",
+      "Bring jemanden dazu, den Raum kurz zu verlassen. (11)",
+      "Lass jemanden sagen: 'Was meinst du damit?' (12)",
+      "Bring jemanden dazu, dich zu korrigieren. (13)",
+      "Sorge dafür, dass jemand das Thema wechselt. (14)",
+      "Bring jemanden dazu, dir ungefragt etwas anzubieten. (15)",
+      "Sorge dafür, dass jemand laut deinen Namen sagt. (16)",
+      "Bring zwei Personen gleichzeitig zum Lachen. (17)",
+      "Sorge dafür, dass jemand freiwillig sein Handy entsperrt. (18)",
+      "Bring jemanden dazu, den Raum kurz zu verlassen. (19)",
+      "Lass jemanden sagen: 'Was meinst du damit?' (20)",
+      "Bring jemanden dazu, dich zu korrigieren. (21)",
+      "Sorge dafür, dass jemand das Thema wechselt. (22)",
+      "Bring jemanden dazu, dir ungefragt etwas anzubieten. (23)",
+      "Sorge dafür, dass jemand laut deinen Namen sagt. (24)",
+      "Bring zwei Personen gleichzeitig zum Lachen. (25)",
+      "Sorge dafür, dass jemand freiwillig sein Handy entsperrt. (26)",
+      "Bring jemanden dazu, den Raum kurz zu verlassen. (27)",
+      "Lass jemanden sagen: 'Was meinst du damit?' (28)",
+      "Bring jemanden dazu, dich zu korrigieren. (29)",
+      "Sorge dafür, dass jemand das Thema wechselt. (30)",
+      "Bring jemanden dazu, dir ungefragt etwas anzubieten. (31)",
+      "Sorge dafür, dass jemand laut deinen Namen sagt. (32)",
+      "Bring zwei Personen gleichzeitig zum Lachen. (33)",
+      "Sorge dafür, dass jemand freiwillig sein Handy entsperrt. (34)",
+      "Bring jemanden dazu, den Raum kurz zu verlassen. (35)",
+      "Lass jemanden sagen: 'Was meinst du damit?' (36)",
+      "Bring jemanden dazu, dich zu korrigieren. (37)",
+      "Sorge dafür, dass jemand das Thema wechselt. (38)",
+      "Bring jemanden dazu, dir ungefragt etwas anzubieten. (39)",
+      "Sorge dafür, dass jemand laut deinen Namen sagt. (40)",
+      "Bring zwei Personen gleichzeitig zum Lachen. (41)",
+      "Sorge dafür, dass jemand freiwillig sein Handy entsperrt. (42)",
+      "Bring jemanden dazu, den Raum kurz zu verlassen. (43)",
+      "Lass jemanden sagen: 'Was meinst du damit?' (44)",
+      "Bring jemanden dazu, dich zu korrigieren. (45)",
+      "Sorge dafür, dass jemand das Thema wechselt. (46)",
+      "Bring jemanden dazu, dir ungefragt etwas anzubieten. (47)",
+      "Sorge dafür, dass jemand laut deinen Namen sagt. (48)",
+      "Bring zwei Personen gleichzeitig zum Lachen. (49)",
+      "Sorge dafür, dass jemand freiwillig sein Handy entsperrt. (50)",
+      "Bring jemanden dazu, den Raum kurz zu verlassen. (51)",
+      "Lass jemanden sagen: 'Was meinst du damit?' (52)",
+      "Bring jemanden dazu, dich zu korrigieren. (53)",
+      "Sorge dafür, dass jemand das Thema wechselt. (54)",
+      "Bring jemanden dazu, dir ungefragt etwas anzubieten. (55)",
+      "Sorge dafür, dass jemand laut deinen Namen sagt. (56)",
+      "Bring zwei Personen gleichzeitig zum Lachen. (57)",
+      "Sorge dafür, dass jemand freiwillig sein Handy entsperrt. (58)",
+      "Bring jemanden dazu, den Raum kurz zu verlassen. (59)",
+      "Lass jemanden sagen: 'Was meinst du damit?' (60)",
+      "Bring jemanden dazu, dich zu korrigieren. (61)",
+      "Sorge dafür, dass jemand das Thema wechselt. (62)",
+      "Bring jemanden dazu, dir ungefragt etwas anzubieten. (63)",
+      "Sorge dafür, dass jemand laut deinen Namen sagt. (64)",
+      "Bring zwei Personen gleichzeitig zum Lachen. (65)",
+      "Sorge dafür, dass jemand freiwillig sein Handy entsperrt. (66)",
+      "Bring jemanden dazu, den Raum kurz zu verlassen. (67)",
+      "Lass jemanden sagen: 'Was meinst du damit?' (68)",
+      "Bring jemanden dazu, dich zu korrigieren. (69)",
+      "Sorge dafür, dass jemand das Thema wechselt. (70)",
+      "Bring jemanden dazu, dir ungefragt etwas anzubieten. (71)",
+      "Sorge dafür, dass jemand laut deinen Namen sagt. (72)",
+      "Bring zwei Personen gleichzeitig zum Lachen. (73)",
+      "Sorge dafür, dass jemand freiwillig sein Handy entsperrt. (74)",
+      "Bring jemanden dazu, den Raum kurz zu verlassen. (75)",
+      "Lass jemanden sagen: 'Was meinst du damit?' (76)",
+      "Bring jemanden dazu, dich zu korrigieren. (77)",
+      "Sorge dafür, dass jemand das Thema wechselt. (78)",
+      "Bring jemanden dazu, dir ungefragt etwas anzubieten. (79)",
+      "Sorge dafür, dass jemand laut deinen Namen sagt. (80)",
+      "Bring zwei Personen gleichzeitig zum Lachen. (81)",
+      "Sorge dafür, dass jemand freiwillig sein Handy entsperrt. (82)",
+      "Bring jemanden dazu, den Raum kurz zu verlassen. (83)",
+      "Lass jemanden sagen: 'Was meinst du damit?' (84)",
+      "Bring jemanden dazu, dich zu korrigieren. (85)",
+      "Sorge dafür, dass jemand das Thema wechselt. (86)",
+      "Bring jemanden dazu, dir ungefragt etwas anzubieten. (87)",
+      "Sorge dafür, dass jemand laut deinen Namen sagt. (88)",
+      "Bring zwei Personen gleichzeitig zum Lachen. (89)",
+      "Sorge dafür, dass jemand freiwillig sein Handy entsperrt. (90)",
+      "Bring jemanden dazu, den Raum kurz zu verlassen. (91)",
+      "Lass jemanden sagen: 'Was meinst du damit?' (92)",
+      "Bring jemanden dazu, dich zu korrigieren. (93)",
+      "Sorge dafür, dass jemand das Thema wechselt. (94)",
+      "Bring jemanden dazu, dir ungefragt etwas anzubieten. (95)",
+      "Sorge dafür, dass jemand laut deinen Namen sagt. (96)",
+      "Bring zwei Personen gleichzeitig zum Lachen. (97)",
+      "Sorge dafür, dass jemand freiwillig sein Handy entsperrt. (98)",
+      "Bring jemanden dazu, den Raum kurz zu verlassen. (99)",
+      "Lass jemanden sagen: 'Was meinst du damit?' (100)"
     ];
 
     let players = [];
-    let selectedProfiles = { Leicht: [], Normal: [], Experte: [] };
+    let selectedProfiles = { Leicht: [], Normal: [], Schwer: [] };
 
     function shuffle(list) {
       return [...list].sort(() => Math.random() - 0.5);
@@ -843,7 +1109,7 @@ font-weight:bold;
 
     function getMissionList(difficulty) {
       if (difficulty === "Leicht") return easyMissions;
-      if (difficulty === "Experte") return hardMissions;
+      if (difficulty === "Schwer") return hardMissions;
       return normalMissions;
     }
 
@@ -855,7 +1121,7 @@ font-weight:bold;
 
       addPlayers(selectedProfiles.Leicht, "Leicht", easyMissions);
       addPlayers(selectedProfiles.Normal, "Normal", normalMissions);
-      addPlayers(selectedProfiles.Experte, "Experte", hardMissions);
+      addPlayers(selectedProfiles.Schwer, "Schwer", hardMissions);
 
       if (players.length === 0) {
         alert("Bitte erst Profile auswählen");
@@ -922,7 +1188,13 @@ font-weight:bold;
     function changeMission(index) {
       const player = players[index];
       const usedMissions = players.filter((p, i) => i !== index && p.difficulty === player.difficulty).map(p => p.mission);
-      let availableMissions = player.missionList.filter(mission => !usedMissions.includes(mission) && mission !== player.mission);
+      player.seenMissions = player.seenMissions || [];
+
+      let availableMissions = player.missionList.filter(mission =>
+        !usedMissions.includes(mission) &&
+        mission !== player.mission &&
+        !player.seenMissions.includes(mission)
+      );
 
       if (availableMissions.length === 0) {
         availableMissions = player.missionList.filter(mission => mission !== player.mission);
@@ -992,7 +1264,7 @@ font-weight:bold;
       const player = players[index];
       let points = 20;
       if (player.difficulty === "Leicht") points = 10;
-      else if (player.difficulty === "Experte") points = 30;
+      else if (player.difficulty === "Schwer") points = 30;
       addScore(index, "done", points, button);
     }
 
@@ -1000,7 +1272,7 @@ font-weight:bold;
       const player = players[index];
       let points = -10;
       if (player.difficulty === "Leicht") points = -5;
-      else if (player.difficulty === "Experte") points = -15;
+      else if (player.difficulty === "Schwer") points = -15;
       addScore(index, "caught", points, button);
     }
 
@@ -1031,6 +1303,13 @@ font-weight:bold;
         }
       } else if (type === "accusation") {
         player.accusation += points;
+      }
+
+      if ((type === "done" || type === "caught")) {
+        player.seenMissions = player.seenMissions || [];
+        if (!player.seenMissions.includes(player.mission)) {
+          player.seenMissions.push(player.mission);
+        }
       }
 
       player.total = player.accusation + player.done + player.caught;
@@ -1227,7 +1506,7 @@ function selectProfiles(difficulty) {
       const mapping = {
         Leicht: document.getElementById("profileButtonsLeicht"),
         Normal: document.getElementById("profileButtonsNormal"),
-        Experte: document.getElementById("profileButtonsExperte")
+        Experte: document.getElementById("profileButtonsSchwer")
       };
 
       Object.entries(mapping).forEach(([difficulty, container]) => {
@@ -1256,7 +1535,7 @@ function selectProfiles(difficulty) {
 
           button.onclick = () => {
             // Ein Profil darf immer nur in einer Schwierigkeit sein
-            ["Leicht", "Normal", "Experte"].forEach(level => {
+            ["Leicht", "Normal", "Schwer"].forEach(level => {
               selectedProfiles[level] = (selectedProfiles[level] || []).filter(n => n !== name);
             });
 
@@ -1276,7 +1555,7 @@ function selectProfiles(difficulty) {
     }
 
     function renderSelectedProfiles() {
-      ["Leicht", "Normal", "Experte"].forEach(difficulty => {
+      ["Leicht", "Normal", "Schwer"].forEach(difficulty => {
         const box = document.getElementById("selected" + difficulty);
         const names = selectedProfiles[difficulty] || [];
 
@@ -1335,7 +1614,7 @@ function selectProfiles(difficulty) {
 
       selectedProfiles.Leicht = selectedProfiles.Leicht.filter(name => name !== selectedName);
       selectedProfiles.Normal = selectedProfiles.Normal.filter(name => name !== selectedName);
-      selectedProfiles.Experte = selectedProfiles.Experte.filter(name => name !== selectedName);
+      selectedProfiles.Schwer = selectedProfiles.Schwer.filter(name => name !== selectedName);
 
       renderSelectedProfiles();
       renderProfileButtons();
