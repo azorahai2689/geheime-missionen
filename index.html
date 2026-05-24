@@ -744,6 +744,29 @@ font-weight:bold;
   font-weight:bold;
 }
 
+
+.menuGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+  margin-top:15px;
+}
+
+.menuGrid .mainButton{
+  margin-top:0;
+}
+
+@media(max-width:700px){
+  .menuGrid{
+    gap:12px;
+  }
+
+  .menuGrid .mainButton{
+    font-size:18px;
+    padding:16px 10px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -806,12 +829,15 @@ font-weight:bold;
     </div>
 
 
-    <button class="mainButton profileButton" onclick="window.createProfile()">👤 Profil erstellen</button>
-    <button class="mainButton profileButton" onclick="showProfiles()">📊 Profile anzeigen</button>
-    <button class="mainButton profileButton" onclick="window.changeProfileAvatar()">🖼️ Profilbild ändern</button>
-    <button class="mainButton deleteButton" onclick="deleteProfile()">🗑️ Profil löschen</button>
-    <button class="mainButton saveButton" onclick="exportProfiles()">📤 Profile sichern</button>
-    <button class="mainButton loadButton" onclick="importProfiles()">📥 Profile wiederherstellen</button>
+    <div class="menuGrid">
+      <button class="mainButton profileButton" onclick="window.createProfile()">👤 Profil erstellen</button>
+      <button class="mainButton profileButton" onclick="showProfiles()">📊 Profile anzeigen</button>
+      <button class="mainButton profileButton" onclick="window.changeProfileAvatar()">🖼️ Profilbild ändern</button>
+      <button class="mainButton deleteButton" onclick="deleteProfile()">🗑️ Profil löschen</button>
+      <button class="mainButton saveButton" onclick="exportProfiles()">📤 Profile sichern</button>
+      <button class="mainButton loadButton" onclick="importProfiles()">📥 Profile wiederherstellen</button>
+    </div>
+
     <button class="mainButton loadButton" onclick="continueRound()">🔄 Runde fortsetzen</button>
 
     <div class="difficultyBox">
@@ -835,10 +861,13 @@ font-weight:bold;
       <div id="selectedSchwer" class="selectedList"></div>
     </div>
 
-    <button class="mainButton" onclick="createGame()">🎮 Spiel starten</button>
-    <button class="mainButton saveButton" onclick="saveGame()">💾 Spielstand speichern</button>
-    <button class="mainButton loadButton" onclick="loadGame()">📂 Spielstand laden</button>
-    <button class="mainButton deleteButton" onclick="deleteGameSave()">🗑️ Spielstand löschen</button>
+    <div class="menuGrid">
+      <button class="mainButton" onclick="createGame()">🎮 Spiel starten</button>
+      <button class="mainButton saveButton" onclick="saveGame()">💾 Spielstand speichern</button>
+      <button class="mainButton loadButton" onclick="loadGame()">📂 Spielstand laden</button>
+      <button class="mainButton deleteButton" onclick="deleteGameSave()">🗑️ Spielstand löschen</button>
+    </div>
+
     <button class="mainButton finishButton" onclick="finishRound()">🏁 Runde beenden & Profile aktualisieren</button>
 
     <input id="importFileInput" type="file" accept="application/json,.json" style="display:none" onchange="handleImportFile(event)">
