@@ -890,11 +890,20 @@ font-weight:bold;
       <div id="selectedSchwer" class="selectedList"></div>
     </div>
 
-    <div class="menuGrid">
-      <button class="mainButton" onclick="createGame()">🎮 Spiel starten</button>
-      <button class="mainButton saveButton" onclick="saveGame()">💾 Spielstand speichern</button>
-      <button class="mainButton loadButton" onclick="loadGame()">📂 Spielstand laden</button>
-      <button class="mainButton deleteButton" onclick="deleteGameSave()">🗑️ Spielstand löschen</button>
+    <button class="mainButton" onclick="createGame()">🎮 Spiel starten</button>
+
+    <div class="menuGrid saveGrid">
+      <button class="mainButton saveButton smallSaveButton" onclick="saveGame()">
+        💾<br>Spielstand<br>speichern
+      </button>
+
+      <button class="mainButton loadButton smallSaveButton" onclick="loadGame()">
+        📂<br>Spielstand<br>laden
+      </button>
+
+      <button class="mainButton deleteButton smallSaveButton" onclick="deleteGameSave()">
+        🗑️<br>Spielstand<br>löschen
+      </button>
     </div>
 
     <button class="mainButton finishButton" onclick="finishRound()">🏁 Runde beenden & Profile aktualisieren</button>
