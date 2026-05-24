@@ -744,6 +744,32 @@ font-weight:bold;
   font-weight:bold;
 }
 
+
+.menuGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+  margin-top:15px;
+}
+
+.menuGrid .mainButton{
+  margin-top:0;
+  font-size:20px;
+  padding:18px 12px;
+}
+
+@media(max-width:700px){
+  .menuGrid{
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+  }
+
+  .menuGrid .mainButton{
+    font-size:18px;
+    padding:16px 10px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -770,7 +796,7 @@ font-weight:bold;
     und du erhältst Punkte ⭐️</p>
 
     <p>Wenn du auffliegst und deine Mission scheitert,<br>
-    werden Punkte abgezogen&nbsp;🔻</p>
+    werden Punkte abgezogen 🔻</p>
   </div>
 
   <div class="ruleCard">
@@ -812,7 +838,7 @@ font-weight:bold;
     <button class="mainButton deleteButton" onclick="deleteProfile()">🗑️ Profil löschen</button>
     <button class="mainButton saveButton" onclick="exportProfiles()">📤 Profile sichern</button>
     <button class="mainButton loadButton" onclick="importProfiles()">📥 Profile wiederherstellen</button>
-    <button class="mainButton loadButton" onclick="continueRound()">🔄 Runde fortsetzen</button>
+    
 
     <div class="difficultyBox">
       <h2>🟢 Leicht<span class="pointsInfo">+10 erfüllt / -5 gescheitert</span></h2>
@@ -836,10 +862,27 @@ font-weight:bold;
     </div>
 
     <button class="mainButton" onclick="createGame()">🎮 Spiel starten</button>
-    <button class="mainButton saveButton" onclick="saveGame()">💾 Spielstand speichern</button>
-    <button class="mainButton loadButton" onclick="loadGame()">📂 Spielstand laden</button>
-    <button class="mainButton deleteButton" onclick="deleteGameSave()">🗑️ Spielstand löschen</button>
-    <button class="mainButton finishButton" onclick="finishRound()">🏁 Runde beenden & Profile aktualisieren</button>
+    <div class="menuGrid">
+      <button class="mainButton saveButton" onclick="saveGame()">
+        💾 Spielstand speichern
+      </button>
+
+      <button class="mainButton loadButton" onclick="loadGame()">
+        📂 Spielstand laden
+      </button>
+
+      <button class="mainButton deleteButton" onclick="deleteGameSave()">
+        🗑️ Spielstand löschen
+      </button>
+
+      <button class="mainButton loadButton" onclick="continueRound()">
+        🔄 Runde fortsetzen
+      </button>
+    </div>
+
+    <button class="mainButton finishButton" onclick="finishRound()">
+      🏁 Runde beenden & Profile aktualisieren
+    </button>
 
     <input id="importFileInput" type="file" accept="application/json,.json" style="display:none" onchange="handleImportFile(event)">
     <div id="avatarModalRoot"></div>
