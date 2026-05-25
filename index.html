@@ -1000,6 +1000,23 @@ body.playerModeActive #playerDeviceShell{
   }
 }
 
+
+/* === Rangliste 4 Werte === */
+.rankStatsCompact{
+  grid-template-columns:repeat(4, 1fr) !important;
+}
+
+@media(max-width:700px){
+  .rankStatsCompact{
+    gap:8px !important;
+  }
+
+  .rankMiniStat{
+    font-size:17px !important;
+    padding:10px 6px !important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -1342,6 +1359,7 @@ body.playerModeActive #playerDeviceShell{
           changeCount: 0,
           changePenalty: 0,
           accusation: 0,
+          accusationCorrect: 0,
           done: 0,
           caught: 0,
           total: 0
@@ -1497,6 +1515,7 @@ body.playerModeActive #playerDeviceShell{
               <div class="rankMiniStat">🎯 ${player.accusation}</div>
               <div class="rankMiniStat">✅ ${player.done}</div>
               <div class="rankMiniStat">❌ ${player.caught}</div>
+              <div class="rankMiniStat">🔄 ${player.changePenalty || 0}</div>
             </div>
           </div>
         `;
@@ -1546,6 +1565,9 @@ body.playerModeActive #playerDeviceShell{
         }
       } else if (type === "accusation") {
         player.accusation += points;
+        if (points > 0) {
+          player.accusationCorrect = (player.accusationCorrect || 0) + 1;
+        }
       }
 
       if ((type === "done" || type === "caught")) {
@@ -1707,7 +1729,7 @@ body.playerModeActive #playerDeviceShell{
     }
 
     function getEmptyProfile(name) {
-      return { name, games: 0, wins: 0, totalPoints: 0, missionsDone: 0, missionsFailed: 0, accusationPoints: 0, bestRound: 0 };
+      return { name, games: 0, wins: 0, totalPoints: 0, missionsDone: 0, missionsFailed: 0, accusationCorrect: 0, bestRound: 0 };
     }
 
     function ensureProfile(name) {
@@ -2017,7 +2039,7 @@ renderProfileButtons();
                   <div class="profileMiniStat">⭐ ${profile.totalPoints}</div>
                   <div class="profileMiniStat">✅ ${profile.missionsDone}</div>
                   <div class="profileMiniStat">❌ ${profile.missionsFailed}</div>
-                  <div class="profileMiniStat">🎯 ${profile.accusationPoints}</div>
+                  <div class="profileMiniStat">🎯 ${profile.accusationCorrect || 0}</div>
                 </div>
               </div>
             `).join("")}
@@ -2043,7 +2065,7 @@ renderProfileButtons();
 
         profile.games += 1;
         profile.totalPoints += player.total;
-        profile.accusationPoints += player.accusation;
+        profile.accusationCorrect = (profile.accusationCorrect || 0) + (player.accusationCorrect || 0);
         if (player.done > 0) profile.missionsDone += 1;
         if (player.caught < 0) profile.missionsFailed += 1;
         if (player.total === maxPoints) profile.wins += 1;
@@ -2388,6 +2410,7 @@ function getPlayerPayload(player){
     changeCount: player.changeCount || 0,
     changePenalty: player.changePenalty || 0,
     accusation: player.accusation || 0,
+    accusationCorrect: player.accusationCorrect || 0,
     done: player.done || 0,
     caught: player.caught || 0,
     total: player.total || 0,
@@ -2671,7 +2694,13 @@ function playerDeviceScore(gameId, playerId, action){
       if(caught !== 0) done = 0;
     }
 
-    if(action === "accPlus") accusation += 5;
+    let accusationCorrect = p.accusationCorrect || 0;
+
+    if(action === "accPlus"){
+      accusation += 5;
+      accusationCorrect += 1;
+    }
+
     if(action === "accMinus") accusation -= 1;
 
     const total = accusation + done + caught + (p.changePenalty || 0);
@@ -2680,6 +2709,7 @@ function playerDeviceScore(gameId, playerId, action){
       done,
       caught,
       accusation,
+      accusationCorrect,
       total,
       updatedAt: Date.now()
     });
