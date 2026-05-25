@@ -19,6 +19,21 @@
     .pointsInfo { display: block; font-size: 15px; color: white; opacity: 0.75; margin-top: 5px; font-weight: normal; }
     button { cursor: pointer; touch-action: manipulation; }
     .mainButton { width: 100%; padding: 18px; background: linear-gradient(90deg, orange, #ff5500); border: none; border-radius: 18px; color: white; font-size: 24px; font-weight: bold; margin-top: 15px; box-shadow: 0 0 20px rgba(255,140,0,0.4); }
+
+.startGameButton{
+  font-size:32px !important;
+  padding:28px 20px !important;
+  min-height:110px;
+  margin-top:20px;
+}
+
+@media(max-width:700px){
+  .startGameButton{
+    font-size:28px !important;
+    min-height:100px;
+    padding:24px 18px !important;
+  }
+}
     .saveButton { background: linear-gradient(90deg, #00c853, #64dd17); }
     .loadButton { background: linear-gradient(90deg, #2962ff, #00b0ff); }
     .deleteButton { background: linear-gradient(90deg, #424242, #9e9e9e); }
@@ -715,118 +730,84 @@ font-weight:bold;
 }
 
 
-/* === QR + Spieleransicht sauber === */
-html, body{
-  overflow-x:hidden !important;
-  max-width:100vw !important;
+.ruleCard{
+  background: linear-gradient(180deg,#151515,#050505);
+  border:2px solid rgba(255,140,0,0.45);
+  border-radius:22px;
+  padding:22px 18px;
+  margin:18px 0;
+  box-shadow:
+    0 0 18px rgba(255,140,0,0.18),
+    inset 0 0 12px rgba(255,140,0,0.08);
 }
 
-*{
-  box-sizing:border-box;
+.ruleCardTitle{
+  font-size:22px;
+  font-weight:900;
+  color:#ffb12a;
+  margin-bottom:14px;
+  text-transform:uppercase;
+  text-shadow:0 0 10px rgba(255,177,42,0.35);
 }
 
-.box{
-  position:relative;
-  max-width:800px !important;
-  width:100% !important;
+.ruleCard p{
+  margin:10px 0;
 }
 
-#playerDeviceShell{
-  display:none;
-}
-
-body.playerModeActive .box > *:not(#playerDeviceShell){
-  display:none !important;
-}
-
-body.playerModeActive #playerDeviceShell{
-  display:block !important;
-}
-
-.qrBox{
-  margin:20px auto 0;
-  padding:14px;
-  border-radius:18px;
-  background:rgba(255,255,255,0.06);
-  border:1px solid rgba(255,255,255,0.12);
-  max-width:260px;
-  text-align:center;
-}
-
-.qrBox img{
-  width:180px;
-  height:180px;
-  border-radius:12px;
-  background:white;
-  padding:8px;
-}
-
-.qrTitle{
+.highlight-red{
+  color:#ff4d4d;
   font-weight:bold;
-  color:#9fe3ff;
-  margin-bottom:10px;
 }
 
-.qrHint{
-  margin-top:8px;
-  font-size:13px;
-  opacity:.8;
+
+.menuGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+  margin-top:15px;
 }
 
-.playerOnlyNotice{
-  background:rgba(0,176,255,0.12);
-  border:1px solid rgba(0,176,255,0.35);
-  border-radius:18px;
-  padding:14px;
-  margin:16px 0;
-  color:#dff6ff;
-  font-weight:bold;
-  text-align:center;
-}
-
-.playerRulesButton{
-  background:linear-gradient(90deg,#8e24aa,#d500f9) !important;
-  margin:12px 0 20px !important;
-}
-
-.rulesModal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.94);
-  z-index:100001;
-  overflow-y:auto;
-  padding:18px;
-}
-
-.rulesModalBox{
-  max-width:760px;
-  margin:0 auto;
-  background:#101010;
-  border:2px solid rgba(255,140,0,0.65);
-  border-radius:24px;
-  padding:22px;
-  box-shadow:0 0 28px rgba(255,140,0,0.35);
-  color:white;
-  line-height:1.55;
-  text-align:center;
-}
-
-.rulesCloseButton{
-  width:100%;
-  margin-top:18px;
-  padding:16px;
-  border:none;
-  border-radius:16px;
-  background:linear-gradient(90deg, orange, #ff5500);
-  color:white;
-  font-size:20px;
-  font-weight:bold;
+.menuGrid .mainButton{
+  margin-top:0;
 }
 
 @media(max-width:700px){
-  .qrBox img{
-    width:160px;
-    height:160px;
+  .menuGrid{
+    gap:12px;
+  }
+
+  .menuGrid .mainButton{
+    font-size:18px;
+    padding:16px 10px;
+  }
+}
+
+
+.saveGrid{
+  grid-template-columns:repeat(3,1fr);
+}
+
+.smallSaveButton{
+  font-size:16px !important;
+  line-height:1.2;
+  padding:16px 8px !important;
+  min-height:120px;
+}
+
+.smallSaveButton br{
+  line-height:1.4;
+}
+
+@media(max-width:700px){
+
+  .saveGrid{
+    gap:10px;
+  }
+
+  .smallSaveButton{
+    font-size:15px !important;
+    min-height:115px;
+    padding:14px 6px !important;
   }
 }
 
@@ -834,7 +815,6 @@ body.playerModeActive #playerDeviceShell{
 </head>
 <body>
   <div class="box">
-    <div id="playerDeviceShell"></div>
     
     <div class="hero-section">
       <div class="hero-top-text">Macht euren Spieleabend verdächtig gut 🎭</div>
@@ -845,28 +825,63 @@ body.playerModeActive #playerDeviceShell{
         <div class="hero-card">?</div>
       </div>
 
-      <div class="hero-description">
-        <p>Jeder Spieler bekommt eine <span class="highlight-orange">geheime Mission</span>.</p>
-        <p>Erfülle deine Mission möglichst unauffällig<br>und du erhältst Punkte ⭐️</p>
-        <p>Wenn du auffliegst und deine Mission scheitert,<br> werden Punkte abgezogen 🔻</p>
-        <p>Jeder Spieler,<br>kann jederzeit einen Verdacht aussprechen 🔍<br>und eine <span class="highlight-orange">geheime Mission</span> aufdecken 🕵🏻‍♂️</p>
-        
-        <div class="rules-box">
-          <div class="rule good">🎯 Richtiger Verdacht <br><span>+5 Punkte</span></div>
-          <div class="rule bad">❌ Falscher Verdacht <br><span>-1 Punkt</span></div>
-        </div>
+      
+<div class="hero-description">
 
-        <p class="winner-text">Wer am Ende die meisten Punkte hat, gewinnt!<br>🏆</p>
-      </div>
+  <div class="ruleCard">
+    <div class="ruleCardTitle">🥷 Missionen</div>
+
+    <p>Jeder Spieler bekommt eine <span class="highlight-orange">geheime Mission</span>.</p>
+
+    <p>Erfülle deine Mission möglichst unauffällig<br>
+    und du erhältst Punkte ⭐️</p>
+
+    <p>Wenn du auffliegst und deine Mission scheitert,<br>
+    werden Punkte abgezogen&nbsp;🔻</p>
+  </div>
+
+  <div class="ruleCard">
+    <div class="ruleCardTitle">🔄 Mission ändern</div>
+
+    <p>Eine Mission kann geändert werden 🔄</p>
+
+    <p>Beim Ändern wechselst du zwischen<br>
+    3 zufälligen Missionen 🎲</p>
+
+    <p>Jede neue Mission kostet<br>
+    <span class="highlight-red">1 Punkt</span></p>
+  </div>
+
+  <div class="ruleCard">
+    <div class="ruleCardTitle">🕵🏻 Verdacht</div>
+
+    <p>Jeder Spieler kann jederzeit einen Verdacht aussprechen 🔍<br>
+    und eine <span class="highlight-orange">geheime Mission</span> aufdecken 🕵🏻‍♂️</p>
+
+    <div class="rules-box">
+      <div class="rule good">🎯 Richtiger Verdacht <br><span>+5 Punkte</span></div>
+      <div class="rule bad">❌ Falscher Verdacht <br><span>-1 Punkt</span></div>
+    </div>
+  </div>
+
+  <p class="winner-text">
+    Wer am Ende die meisten Punkte hat, gewinnt!<br>🏆
+  </p>
+
+</div>
+
     </div>
 
 
-    <button class="mainButton profileButton" onclick="window.createProfile()">👤 Profil erstellen</button>
-    <button class="mainButton profileButton" onclick="showProfiles()">📊 Profile anzeigen</button>
-    <button class="mainButton profileButton" onclick="window.changeProfileAvatar()">🖼️ Profilbild ändern</button>
-    <button class="mainButton deleteButton" onclick="deleteProfile()">🗑️ Profil löschen</button>
-    <button class="mainButton saveButton" onclick="exportProfiles()">📤 Profile sichern</button>
-    <button class="mainButton loadButton" onclick="importProfiles()">📥 Profile wiederherstellen</button>
+    <div class="menuGrid">
+      <button class="mainButton profileButton" onclick="window.createProfile()">👤 Profil erstellen</button>
+      <button class="mainButton profileButton" onclick="showProfiles()">📊 Profile anzeigen</button>
+      <button class="mainButton profileButton" onclick="window.changeProfileAvatar()">🖼️ Profilbild ändern</button>
+      <button class="mainButton deleteButton" onclick="deleteProfile()">🗑️ Profil löschen</button>
+      <button class="mainButton saveButton" onclick="exportProfiles()">📤 Profile sichern</button>
+      <button class="mainButton loadButton" onclick="importProfiles()">📥 Profile wiederherstellen</button>
+    </div>
+
     <button class="mainButton loadButton" onclick="continueRound()">🔄 Runde fortsetzen</button>
 
     <div class="difficultyBox">
@@ -890,10 +905,22 @@ body.playerModeActive #playerDeviceShell{
       <div id="selectedSchwer" class="selectedList"></div>
     </div>
 
-    <button class="mainButton" onclick="createGame()">🎮 Spiel starten</button>
-    <button class="mainButton saveButton" onclick="saveGame()">💾 Spielstand speichern</button>
-    <button class="mainButton loadButton" onclick="loadGame()">📂 Spielstand laden</button>
-    <button class="mainButton deleteButton" onclick="deleteGameSave()">🗑️ Spielstand löschen</button>
+    <button class="mainButton startGameButton" onclick="createGame()">🎮 Spiel starten</button>
+
+    <div class="menuGrid saveGrid">
+      <button class="mainButton saveButton smallSaveButton" onclick="saveGame()">
+        💾<br>Spielstand<br>speichern
+      </button>
+
+      <button class="mainButton loadButton smallSaveButton" onclick="loadGame()">
+        📂<br>Spielstand<br>laden
+      </button>
+
+      <button class="mainButton deleteButton smallSaveButton" onclick="deleteGameSave()">
+        🗑️<br>Spielstand<br>löschen
+      </button>
+    </div>
+
     <button class="mainButton finishButton" onclick="finishRound()">🏁 Runde beenden & Profile aktualisieren</button>
 
     <input id="importFileInput" type="file" accept="application/json,.json" style="display:none" onchange="handleImportFile(event)">
@@ -906,12 +933,7 @@ body.playerModeActive #playerDeviceShell{
     </div>
 
     <div id="legalModalRoot"></div>
-    <div id="rulesModalRoot"></div>
   </div>
-
-
-  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-database-compat.js"></script>
 
   <script>
     const easyMissions = [
@@ -1107,13 +1129,26 @@ body.playerModeActive #playerDeviceShell{
     }
 
     function addPlayers(names, difficulty, missionList) {
-      const shuffledMissions = shuffle(missionList);
-      names.forEach((name, index) => {
+      names.forEach((name) => {
         ensureProfile(name);
+
+        const missionPool = shuffle(missionList).slice(0, 3);
+        const startMission = missionPool[0];
+
         players.push({
-          name, difficulty, missionList,
-          mission: shuffledMissions[index % shuffledMissions.length],
-          accusation: 0, done: 0, caught: 0, total: 0
+          name,
+          difficulty,
+          missionList,
+          missionPool,
+          missionIndex: 0,
+          mission: startMission,
+          originalMission: startMission,
+          changeCount: 0,
+          changePenalty: 0,
+          accusation: 0,
+          done: 0,
+          caught: 0,
+          total: 0
         });
       });
     }
@@ -1144,7 +1179,7 @@ body.playerModeActive #playerDeviceShell{
         </div>
 
         <button class="changeButton" onclick="changeMission(${index})" style="background:linear-gradient(90deg,#8e24aa,#d500f9); margin-top:15px;">
-          🔄 Mission ändern
+          🔄 Mission ändern <span id="rerollCount${index}">(-0)</span>
         </button>
 
         <div class="buttonGrid">
@@ -1160,29 +1195,60 @@ body.playerModeActive #playerDeviceShell{
 
     function changeMission(index) {
       const player = players[index];
-      const usedMissions = players.filter((p, i) => i !== index && p.difficulty === player.difficulty).map(p => p.mission);
-      player.seenMissions = player.seenMissions || [];
 
-      let availableMissions = player.missionList.filter(mission =>
-        !usedMissions.includes(mission) &&
-        mission !== player.mission &&
-        !player.seenMissions.includes(mission)
-      );
+      if (!player.missionPool || player.missionPool.length !== 3) {
+        const fallbackPool = shuffle(player.missionList).filter(m => m !== player.mission).slice(0, 2);
+        player.missionPool = [player.mission, ...fallbackPool];
 
-      if (availableMissions.length === 0) {
-        availableMissions = player.missionList.filter(mission => mission !== player.mission);
+        while (player.missionPool.length < 3) {
+          const extraMission = player.missionList.find(m => !player.missionPool.includes(m));
+          if (!extraMission) break;
+          player.missionPool.push(extraMission);
+        }
       }
 
-      const newMission = availableMissions[Math.floor(Math.random() * availableMissions.length)];
-      player.mission = newMission;
+      if (player.missionIndex === undefined) {
+        player.missionIndex = player.missionPool.indexOf(player.mission);
+        if (player.missionIndex < 0) player.missionIndex = 0;
+      }
+
+      if (player.changeCount === undefined) {
+        player.changeCount = 0;
+      }
+
+      player.changeCount++;
+      player.missionIndex = (player.missionIndex + 1) % player.missionPool.length;
+      player.mission = player.missionPool[player.missionIndex];
+
+      const pointLoss = Math.min(player.changeCount, 3);
+      player.changePenalty = -pointLoss;
+
+      const counter = document.getElementById(`rerollCount${index}`);
+      if (counter) {
+        counter.innerHTML = `(-${pointLoss})`;
+      }
+
+      player.total = player.accusation + player.done + player.caught + (player.changePenalty || 0);
 
       const playerBox = document.getElementById(`playerBox${index}`);
-      playerBox.querySelector(".missionBack").innerHTML = newMission;
+      playerBox.querySelector(".missionBack").innerHTML = player.mission;
       playerBox.querySelector(".missionCard").classList.remove("flipped");
 
       const status = playerBox.querySelector(".statusText");
-      status.innerHTML = "🔄 Neue Mission erstellt!";
+
+      if (player.changeCount === 1) {
+        status.innerHTML = "🔄 Mission 2 von 3 aktiv (-1 Punkt)";
+      } else if (player.changeCount === 2) {
+        status.innerHTML = "🔄 Mission 3 von 3 aktiv (-2 Punkte gesamt)";
+      } else if (player.changeCount === 3) {
+        status.innerHTML = "↩️ Mission 1 von 3 wieder aktiv (-3 Punkte gesamt)";
+      } else {
+        status.innerHTML = `🔄 Mission ${player.missionIndex + 1} von 3 aktiv (kein weiterer Punktverlust)`;
+      }
+
       status.style.color = "orange";
+
+      updateScoreTable();
       autoSaveCurrentRound();
     }
 
@@ -1285,7 +1351,7 @@ body.playerModeActive #playerDeviceShell{
         }
       }
 
-      player.total = player.accusation + player.done + player.caught;
+      player.total = player.accusation + player.done + player.caught + (player.changePenalty || 0);
       updateScoreTable();
 
       const status = button.parentElement.nextElementSibling;
@@ -1341,8 +1407,8 @@ body.playerModeActive #playerDeviceShell{
       }
 
       const input = prompt(
-        "Welchen Spielstand laden?\\" +
-        saveNames.map((name, index) => `${index + 1}. ${name} (${saves[name].date})`).join("\")
+        "Welchen Spielstand laden?\\n\\n" +
+        saveNames.map((name, index) => `${index + 1}. ${name} (${saves[name].date})`).join("\\n")
       );
       if (!input) return;
 
@@ -1366,8 +1432,8 @@ body.playerModeActive #playerDeviceShell{
       }
 
       const input = prompt(
-        "Welchen Spielstand löschen?\\" +
-        saveNames.map((name, index) => `${index + 1}. ${name} (${saves[name].date})`).join("\")
+        "Welchen Spielstand löschen?\\n\\n" +
+        saveNames.map((name, index) => `${index + 1}. ${name} (${saves[name].date})`).join("\\n")
       );
       if (!input) return;
 
@@ -1377,7 +1443,7 @@ body.playerModeActive #playerDeviceShell{
         return;
       }
 
-      if (confirm("Spielstand wirklich löschen?\\" + selectedName)) {
+      if (confirm("Spielstand wirklich löschen?\\n\\n" + selectedName)) {
         delete saves[selectedName];
         saveAllSaves(saves);
         alert("Spielstand gelöscht");
@@ -1392,7 +1458,7 @@ body.playerModeActive #playerDeviceShell{
     }
 
     function restoreGame(gameData) {
-      selectedProfiles = gameData.selectedProfiles || { Leicht: [], Normal: [], Experte: [] };
+      selectedProfiles = gameData.selectedProfiles || { Leicht: [], Normal: [], Schwer: [] };
       renderSelectedProfiles();
 
       players = gameData.players || [];
@@ -1400,7 +1466,11 @@ body.playerModeActive #playerDeviceShell{
       document.getElementById("profileArea").innerHTML = "";
       qrList.innerHTML = "";
 
-      players.forEach((player, index) => createPlayerBox(player, index));
+      players.forEach((player, index) => {
+        createPlayerBox(player, index);
+        const counter = document.getElementById(`rerollCount${index}`);
+        if (counter) counter.innerHTML = `(-${Math.min(player.changeCount || 0, 3)})`;
+      });
       if (players.length > 0) createScoreTable();
     }
 
@@ -1479,7 +1549,7 @@ function selectProfiles(difficulty) {
       const mapping = {
         Leicht: document.getElementById("profileButtonsLeicht"),
         Normal: document.getElementById("profileButtonsNormal"),
-        Experte: document.getElementById("profileButtonsSchwer")
+        Schwer: document.getElementById("profileButtonsSchwer")
       };
 
       Object.entries(mapping).forEach(([difficulty, container]) => {
@@ -1556,8 +1626,8 @@ function selectProfiles(difficulty) {
       }
 
       const input = prompt(
-        "Welches Profil löschen?" +
-        names.map((name, index) => `${index + 1}. ${name}`).join("")
+        "Welches Profil löschen?\n\n" +
+        names.map((name, index) => `${index + 1}. ${name}`).join("\n")
       );
 
       if (!input) return;
@@ -1578,7 +1648,7 @@ function selectProfiles(difficulty) {
         return;
       }
 
-      if (!confirm("Profil wirklich löschen?" + selectedName + "Die Statistik dieses Profils wird dauerhaft gelöscht.")) {
+      if (!confirm("Profil wirklich löschen?\n\n" + selectedName + "\n\nDie Statistik dieses Profils wird dauerhaft gelöscht.")) {
         return;
       }
 
@@ -1635,8 +1705,8 @@ renderProfileButtons();
 
     function importProfiles() {
       alert(
-        "Wähle jetzt deine gespeicherte Backup-Datei aus." +
-        "Falls Android Fotos/Kamera anzeigt:" +
+        "Wähle jetzt deine gespeicherte Backup-Datei aus.\n\n" +
+        "Falls Android Fotos/Kamera anzeigt:\n" +
         "Öffne über den Dateimanager den Ordner Downloads und wähle die .json-Datei."
       );
 
@@ -1661,7 +1731,7 @@ renderProfileButtons();
             return;
           }
 
-          if (!confirm("Backup wirklich wiederherstellen?Aktuelle Profile und Spielstände werden überschrieben.")) {
+          if (!confirm("Backup wirklich wiederherstellen?\n\nAktuelle Profile und Spielstände werden überschrieben.")) {
             return;
           }
 
@@ -1685,7 +1755,7 @@ renderProfileButtons();
           selectedProfiles = {
             Leicht: [],
             Normal: [],
-            Experte: []
+            Schwer: []
           };
 
           renderSelectedProfiles();
@@ -1957,7 +2027,7 @@ renderProfileButtons();
         return;
       }
 
-      const input = prompt("Für welches Profil das Bild ändern?" + names.map((name, index) => `${index + 1}. ${name}`).join(""));
+      const input = prompt("Für welches Profil das Bild ändern?\n\n" + names.map((name, index) => `${index + 1}. ${name}`).join("\n"));
       if (!input) return;
 
       let selectedName = null;
@@ -1999,11 +2069,6 @@ renderProfileButtons();
             </p>
 
             <h3>Datenschutz</h3>
-
-<h3>Online-Runden und Firebase</h3>
-<p>Für Online-Runden wird Firebase Realtime Database von Google verwendet. Dabei werden technische Spieldaten wie Rundencode, Spielername, gewählte Schwierigkeit, aktuelle Mission, Punkte, Status der Mission und Zeitstempel gespeichert, damit mehrere Geräte während einer Runde synchronisiert werden können.</p>
-<p>QR-Codes dienen ausschließlich zum Öffnen der jeweiligen Spielsitzung oder Spieleransicht. Es sollten keine sensiblen personenbezogenen Daten als Spielernamen verwendet werden.</p>
-
             <p>
               Diese Anwendung ist ein privates Hobbyprojekt und dient der Unterhaltung.
             </p>
@@ -2038,343 +2103,18 @@ renderProfileButtons();
 
 </script>
 
+<audio id="bgMusic" autoplay loop>
+  <source src="Geheime Missionen.mp3" type="audio/mpeg">
+</audio>
+
 <script>
-/* === QR + Firebase Multiplayer === */
-const firebaseConfig = {
-  apiKey: "AIzaSyBpBM-mruHEEYC_T41p88vanoe2CVKMzdg",
-  authDomain: "geheime-missionen.firebaseapp.com",
-  databaseURL: "https://geheime-missionen-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "geheime-missionen",
-  storageBucket: "geheime-missionen.firebasestorage.app",
-  messagingSenderId: "1088076099523",
-  appId: "1:1088076099523:web:ecc1e89e054499d4e31776"
-};
-
-let gmFirebaseReady = false;
-let gmDb = null;
-let currentGameId = localStorage.getItem("gmCurrentGameId") || "";
-let isRemoteUpdate = false;
-
-function initFirebaseOnline(){
-  if(gmFirebaseReady) return true;
-  try{
-    if(!firebase.apps.length) firebase.initializeApp(firebaseConfig);
-    gmDb = firebase.database();
-    gmFirebaseReady = true;
-    return true;
-  }catch(err){
-    alert("Firebase konnte nicht gestartet werden: " + err.message);
-    return false;
+document.addEventListener("click", () => {
+  const music = document.getElementById("bgMusic");
+  if (music && music.paused) {
+    music.volume = 0.35;
+    music.play().catch(() => {});
   }
-}
-
-function makeGameId(){
-  return "GM-" + Math.random().toString(36).slice(2,6).toUpperCase() + "-" + Date.now().toString(36).slice(-4).toUpperCase();
-}
-
-function playerKey(name){
-  return String(name).toLowerCase().replace(/[^a-z0-9äöüß]/gi,"_");
-}
-
-function getPlayerUrl(player){
-  const url = new URL(window.location.href);
-  url.searchParams.set("mode","player");
-  url.searchParams.set("game", currentGameId);
-  url.searchParams.set("player", playerKey(player.name));
-  return url.toString();
-}
-
-function qrUrl(link){
-  return "https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=" + encodeURIComponent(link);
-}
-
-function getPlayerPayload(player){
-  return {
-    name: player.name,
-    difficulty: player.difficulty,
-    mission: player.mission,
-    missionPool: player.missionPool || [],
-    missionIndex: player.missionIndex || 0,
-    changeCount: player.changeCount || 0,
-    changePenalty: player.changePenalty || 0,
-    accusation: player.accusation || 0,
-    done: player.done || 0,
-    caught: player.caught || 0,
-    total: player.total || 0,
-    avatar: (typeof getProfileAvatarSrc === "function") ? getProfileAvatarSrc(player.name) : "",
-    color: (typeof getProfileColor === "function") ? getProfileColor(player.name) : "#ff8800",
-    updatedAt: Date.now()
-  };
-}
-
-function publishPlayer(index){
-  if(!gmFirebaseReady || !currentGameId || !players[index] || isRemoteUpdate) return;
-  const p = players[index];
-  gmDb.ref("games/" + currentGameId + "/players/" + playerKey(p.name)).update(getPlayerPayload(p));
-  gmDb.ref("games/" + currentGameId + "/updatedAt").set(Date.now());
-}
-
-function publishAllPlayers(){
-  if(!gmFirebaseReady || !currentGameId) return;
-  const updates = {};
-  players.forEach(p => updates["players/" + playerKey(p.name)] = getPlayerPayload(p));
-  updates["selectedProfiles"] = selectedProfiles;
-  updates["updatedAt"] = Date.now();
-  gmDb.ref("games/" + currentGameId).update(updates);
-}
-
-function applyPayloadToPlayer(index, data){
-  if(!players[index] || !data) return;
-  Object.assign(players[index], data);
-  players[index].total = (players[index].accusation || 0) + (players[index].done || 0) + (players[index].caught || 0) + (players[index].changePenalty || 0);
-}
-
-function listenToOnlineRound(){
-  if(!gmFirebaseReady || !currentGameId) return;
-  gmDb.ref("games/" + currentGameId + "/players").off();
-  gmDb.ref("games/" + currentGameId + "/players").on("value", snap => {
-    const data = snap.val();
-    if(!data || players.length === 0) return;
-
-    isRemoteUpdate = true;
-
-    players.forEach((p, index) => {
-      const remote = data[playerKey(p.name)];
-      if(remote){
-        applyPayloadToPlayer(index, remote);
-        const box = document.getElementById(`playerBox${index}`);
-        if(box){
-          const back = box.querySelector(".missionBack");
-          if(back) back.innerHTML = players[index].mission;
-          const counter = document.getElementById(`rerollCount${index}`);
-          if(counter) counter.innerHTML = `(-${Math.min(players[index].changeCount || 0, 3)})`;
-        }
-      }
-    });
-
-    updateScoreTable();
-    autoSaveCurrentRound();
-    isRemoteUpdate = false;
-  });
-}
-
-function renderQrCodes(){
-  if(!currentGameId || players.length === 0) return;
-
-  players.forEach((player, index) => {
-    const box = document.getElementById(`playerBox${index}`);
-    if(!box || box.querySelector(".qrBox")) return;
-
-    const link = getPlayerUrl(player);
-    const qr = document.createElement("div");
-    qr.className = "qrBox";
-    qr.innerHTML = `
-      <div class="qrTitle">📱 QR-Code für ${player.name}</div>
-      <img src="${qrUrl(link)}" alt="QR Code für ${player.name}">
-      <div class="qrHint">Scannen öffnet nur dieses Profil.</div>
-    `;
-    box.appendChild(qr);
-  });
-}
-
-function startRoundOnlineAfterCreate(){
-  currentGameId = makeGameId();
-  localStorage.setItem("gmCurrentGameId", currentGameId);
-
-  renderQrCodes();
-
-  if(initFirebaseOnline()){
-    gmDb.ref("games/" + currentGameId).update({
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
-      selectedProfiles,
-      status: "running"
-    }).then(() => {
-      publishAllPlayers();
-      listenToOnlineRound();
-    });
-  }
-}
-
-function getRulesHtml(){
-  return `
-    <div class="rulesModal">
-      <div class="rulesModalBox">
-        <h2>📜 Spielregeln</h2>
-
-        <div class="ruleCard">
-          <div class="ruleCardTitle">🥷 Missionen</div>
-          <p>Jeder Spieler bekommt eine <span class="highlight-orange">geheime Mission</span>.</p>
-          <p>Erfülle deine Mission möglichst unauffällig<br>und du erhältst Punkte ⭐️</p>
-          <p>Wenn du auffliegst und deine Mission scheitert,<br>werden Punkte abgezogen&nbsp;🔻</p>
-        </div>
-
-        <div class="ruleCard">
-          <div class="ruleCardTitle">🔄 Mission ändern</div>
-          <p>Eine Mission kann geändert werden 🔄</p>
-          <p>Beim Ändern wechselst du zwischen<br>3 zufälligen Missionen 🎲</p>
-          <p>Jede neue Mission kostet<br><span class="highlight-red">1 Punkt</span></p>
-        </div>
-
-        <div class="ruleCard">
-          <div class="ruleCardTitle">🕵🏻 Verdacht</div>
-          <p>Jeder Spieler kann jederzeit einen Verdacht aussprechen 🔍<br>
-          und eine <span class="highlight-orange">geheime Mission</span> aufdecken 🕵🏻‍♂️</p>
-          <div class="rules-box">
-            <div class="rule good">🎯 Richtiger Verdacht <br><span>+5 Punkte</span></div>
-            <div class="rule bad">❌ Falscher Verdacht <br><span>-1 Punkt</span></div>
-          </div>
-        </div>
-
-        <p class="winner-text">Wer am Ende die meisten Punkte hat, gewinnt!<br>🏆</p>
-        <button class="rulesCloseButton" onclick="closeGameRules()">Schließen</button>
-      </div>
-    </div>
-  `;
-}
-
-function openGameRules(){
-  const root = document.getElementById("rulesModalRoot") || document.body.appendChild(document.createElement("div"));
-  root.id = "rulesModalRoot";
-  root.innerHTML = getRulesHtml();
-}
-
-function closeGameRules(){
-  const root = document.getElementById("rulesModalRoot");
-  if(root) root.innerHTML = "";
-}
-
-function renderPlayerDeviceView(playerId, gameId){
-  document.body.classList.add("playerModeActive");
-
-  const shell = document.getElementById("playerDeviceShell");
-  shell.innerHTML = `
-    <div class="hero-section">
-      <div class="hero-title-top">GEHEIME</div>
-      <div class="hero-title-bottom">MISSION</div>
-      <div class="playerOnlyNotice">📱 Spieleransicht<br>Du siehst nur deine eigene Mission.</div>
-      <button class="mainButton playerRulesButton" onclick="openGameRules()">📜 Spielregeln</button>
-    </div>
-    <div id="playerDeviceRoot"></div>
-    <div id="rulesModalRoot"></div>
-  `;
-
-  if(!initFirebaseOnline()){
-    document.getElementById("playerDeviceRoot").innerHTML = `<div class="playerBox"><h3>Online-Verbindung fehlt</h3></div>`;
-    return;
-  }
-
-  function draw(data){
-    if(!data){
-      document.getElementById("playerDeviceRoot").innerHTML = `<div class="playerBox"><h3>Spieler nicht gefunden</h3><p>Bitte QR-Code neu scannen.</p></div>`;
-      return;
-    }
-
-    document.getElementById("playerDeviceRoot").innerHTML = `
-      <div class="playerBox">
-        <h3 class="playerNameWithAvatar" style="--profile-color:${data.color || "#ff8800"}">
-          ${data.avatar ? `<img class="playerMiniAvatar" src="${data.avatar}" alt="">` : ""}
-          <span>${data.name}</span>
-        </h3>
-        <div class="difficulty">Schwierigkeit: ${data.difficulty}</div>
-
-        <div class="missionCard" onclick="this.classList.toggle('flipped')">
-          <div class="missionInner">
-            <div class="missionFront">
-              <div>GEHEIME</div>
-              <div style="font-size:55px; margin:10px 0;">🥷</div>
-              <div>MISSION</div>
-              <small style="margin-top:15px; opacity:0.7; font-size:14px;">Antippen</small>
-            </div>
-            <div class="missionBack">${data.mission}</div>
-          </div>
-        </div>
-
-        <button class="changeButton" onclick="playerDeviceChangeMission('${gameId}','${playerId}')" style="background:linear-gradient(90deg,#8e24aa,#d500f9); margin-top:15px;">
-          🔄 Mission ändern <span>(-${Math.min(data.changeCount || 0, 3)})</span>
-        </button>
-
-        <div class="buttonGrid">
-          <button onclick="playerDeviceScore('${gameId}','${playerId}','done')" style="background:linear-gradient(90deg,#00c853,#64dd17);">✅ Mission erfüllt</button>
-          <button onclick="playerDeviceScore('${gameId}','${playerId}','caught')" style="background:linear-gradient(90deg,#ff1744,#ff9100);">❌ Mission gescheitert</button>
-          <button onclick="playerDeviceScore('${gameId}','${playerId}','accPlus')" style="background:linear-gradient(90deg,#2962ff,#00b0ff);">🎯 Verdacht korrekt</button>
-          <button onclick="playerDeviceScore('${gameId}','${playerId}','accMinus')" style="background:linear-gradient(90deg,#616161,#9e9e9e);">❌ Verdacht falsch</button>
-        </div>
-
-        <div class="statusText">Punkte aktuell: ${data.total || 0}</div>
-      </div>
-    `;
-  }
-
-  gmDb.ref("games/" + gameId + "/players/" + playerId).on("value", snap => draw(snap.val()));
-}
-
-function playerDeviceChangeMission(gameId, playerId){
-  if(!initFirebaseOnline()) return;
-  const ref = gmDb.ref("games/" + gameId + "/players/" + playerId);
-  ref.once("value").then(snap => {
-    const p = snap.val();
-    if(!p) return;
-    const pool = p.missionPool || [p.mission];
-    let idx = typeof p.missionIndex === "number" ? p.missionIndex : 0;
-    const changeCount = (p.changeCount || 0) + 1;
-    idx = (idx + 1) % pool.length;
-    const changePenalty = -Math.min(changeCount, 3);
-    const total = (p.accusation || 0) + (p.done || 0) + (p.caught || 0) + changePenalty;
-    ref.update({ missionIndex:idx, mission:pool[idx], changeCount, changePenalty, total, updatedAt:Date.now() });
-  });
-}
-
-function playerDeviceScore(gameId, playerId, action){
-  if(!initFirebaseOnline()) return;
-  const ref = gmDb.ref("games/" + gameId + "/players/" + playerId);
-  ref.once("value").then(snap => {
-    const p = snap.val();
-    if(!p) return;
-
-    let done = p.done || 0;
-    let caught = p.caught || 0;
-    let accusation = p.accusation || 0;
-    const donePoints = p.difficulty === "Leicht" ? 10 : (p.difficulty === "Schwer" ? 30 : 20);
-    const caughtPoints = p.difficulty === "Leicht" ? -5 : (p.difficulty === "Schwer" ? -15 : -10);
-
-    if(action === "done"){ done = done !== 0 ? 0 : donePoints; if(done !== 0) caught = 0; }
-    if(action === "caught"){ caught = caught !== 0 ? 0 : caughtPoints; if(caught !== 0) done = 0; }
-    if(action === "accPlus") accusation += 5;
-    if(action === "accMinus") accusation -= 1;
-
-    const total = accusation + done + caught + (p.changePenalty || 0);
-    ref.update({ done, caught, accusation, total, updatedAt:Date.now() });
-  });
-}
-
-/* vorhandene Funktionen nur erweitern */
-const gmOriginalCreateGame = window.createGame;
-window.createGame = function(){
-  gmOriginalCreateGame();
-  if(players && players.length > 0){
-    startRoundOnlineAfterCreate();
-  }
-};
-
-const gmOriginalAddScore = window.addScore;
-window.addScore = function(index, type, points, button){
-  gmOriginalAddScore(index, type, points, button);
-  publishPlayer(index);
-};
-
-const gmOriginalChangeMission = window.changeMission;
-window.changeMission = function(index){
-  gmOriginalChangeMission(index);
-  publishPlayer(index);
-};
-
-document.addEventListener("DOMContentLoaded", () => {
-  const params = new URLSearchParams(window.location.search);
-  if(params.get("mode") === "player" && params.get("game") && params.get("player")){
-    renderPlayerDeviceView(params.get("player"), params.get("game"));
-  }
-});
+}, { once:false });
 </script>
 
 </body>
