@@ -813,7 +813,7 @@ font-weight:bold;
 
 
 /* === Multiplayer / QR / Spieleransicht === */
-.onlinePanel{background:linear-gradient(180deg,#111,#030303);border:2px solid rgba(0,176,255,0.45);border-radius:22px;padding:18px;margin-top:18px;box-shadow:0 0 20px rgba(0,176,255,0.18);text-align:center;}
+.onlinePanel_REMOVED{background:linear-gradient(180deg,#111,#030303);border:2px solid rgba(0,176,255,0.45);border-radius:22px;padding:18px;margin-top:18px;box-shadow:0 0 20px rgba(0,176,255,0.18);text-align:center;}
 .onlinePanel h2{margin-top:0;color:#00b0ff;}
 .onlineStatus{margin-top:10px;font-size:16px;color:rgba(255,255,255,0.8);overflow-wrap:anywhere;}
 .qrBox{margin:18px auto 6px;padding:14px;border-radius:18px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);max-width:260px;}
@@ -872,6 +872,83 @@ font-weight:bold;
   color:white;
   font-size:20px;
   font-weight:bold;
+}
+
+
+/* === Mobile Width Fix === */
+html, body{
+  width:100% !important;
+  max-width:100% !important;
+  overflow-x:hidden !important;
+}
+
+.mainContainer,
+.container,
+.gameContainer,
+.contentContainer{
+  width:100% !important;
+  max-width:100% !important;
+  box-sizing:border-box !important;
+}
+
+@media (max-width: 768px){
+  body{
+    padding-left:0 !important;
+    padding-right:0 !important;
+  }
+
+  .mainContainer,
+  .container,
+  .gameContainer,
+  .contentContainer{
+    padding-left:12px !important;
+    padding-right:12px !important;
+    margin:0 auto !important;
+  }
+
+  .rulesModal{
+    padding:10px !important;
+  }
+
+  .rulesModalBox{
+    width:100% !important;
+    max-width:100% !important;
+    padding:18px !important;
+    border-radius:20px !important;
+  }
+}
+
+
+/* === QR direkt bei Spielerkarte === */
+.qrBox{
+  margin:20px auto 0;
+  padding:14px;
+  border-radius:18px;
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.12);
+  max-width:260px;
+  text-align:center;
+}
+
+.qrBox img{
+  width:180px;
+  height:180px;
+  border-radius:12px;
+  background:white;
+  padding:8px;
+}
+
+.qrBox .qrTitle{
+  font-weight:bold;
+  color:#9fe3ff;
+  margin-bottom:10px;
+}
+
+.qrBox .qrHint{
+  margin-top:8px;
+  font-size:13px;
+  opacity:.8;
+  overflow-wrap:anywhere;
 }
 
 </style>
@@ -946,13 +1023,6 @@ font-weight:bold;
     </div>
 
     <button class="mainButton loadButton" onclick="continueRound()">🔄 Runde fortsetzen</button>
-
-    <div class="onlinePanel" id="onlinePanel">
-      <h2>🌐 Online-Runde</h2>
-      <button class="mainButton loadButton" onclick="startOnlineRound()">🌐 Online-Runde starten</button>
-      <button class="mainButton saveButton" onclick="syncOnlineRound()">🔁 Online-Runde synchronisieren</button>
-      <div class="onlineStatus" id="onlineStatus">Noch keine Online-Runde aktiv.</div>
-    </div>
 
 
     <div class="difficultyBox">
@@ -1703,7 +1773,7 @@ function selectProfiles(difficulty) {
       }
 
       const input = prompt(
-        "Welches Profil löschen?\n\n" +
+        "Welches Profil löschen?" +
         names.map((name, index) => `${index + 1}. ${name}`).join("\n")
       );
 
@@ -1725,7 +1795,7 @@ function selectProfiles(difficulty) {
         return;
       }
 
-      if (!confirm("Profil wirklich löschen?\n\n" + selectedName + "\n\nDie Statistik dieses Profils wird dauerhaft gelöscht.")) {
+      if (!confirm("Profil wirklich löschen?" + selectedName + "Die Statistik dieses Profils wird dauerhaft gelöscht.")) {
         return;
       }
 
@@ -1782,7 +1852,7 @@ renderProfileButtons();
 
     function importProfiles() {
       alert(
-        "Wähle jetzt deine gespeicherte Backup-Datei aus.\n\n" +
+        "Wähle jetzt deine gespeicherte Backup-Datei aus." +
         "Falls Android Fotos/Kamera anzeigt:\n" +
         "Öffne über den Dateimanager den Ordner Downloads und wähle die .json-Datei."
       );
@@ -1808,7 +1878,7 @@ renderProfileButtons();
             return;
           }
 
-          if (!confirm("Backup wirklich wiederherstellen?\n\nAktuelle Profile und Spielstände werden überschrieben.")) {
+          if (!confirm("Backup wirklich wiederherstellen?Aktuelle Profile und Spielstände werden überschrieben.")) {
             return;
           }
 
@@ -2104,7 +2174,7 @@ renderProfileButtons();
         return;
       }
 
-      const input = prompt("Für welches Profil das Bild ändern?\n\n" + names.map((name, index) => `${index + 1}. ${name}`).join("\n"));
+      const input = prompt("Für welches Profil das Bild ändern?" + names.map((name, index) => `${index + 1}. ${name}`).join("\n"));
       if (!input) return;
 
       let selectedName = null;
@@ -2185,8 +2255,8 @@ renderProfileButtons();
     }
 
 </script>
-\n<script>\n/* === Multiplayer Beta mit Firebase Realtime Database ===\n   Wichtig: API-Key und App-ID unten noch vollständig eintragen.\n*/\nconst firebaseConfig = {\n  apiKey: "HIER_API_KEY_EINFUEGEN",\n  authDomain: "geheime-missionen.firebaseapp.com",\n  databaseURL: "https://geheime-missionen-default-rtdb.europe-west1.firebasedatabase.app",\n  projectId: "geheime-missionen",\n  storageBucket: "geheime-missionen.firebasestorage.app",\n  messagingSenderId: "1088076099523",\n  appId: "HIER_APP_ID_EINFUEGEN"\n};\n\nlet gmFirebaseReady=false;\nlet gmDb=null;\nlet currentGameId=localStorage.getItem("gmCurrentGameId")||"";\nlet isRemoteUpdate=false;\n\nfunction firebaseConfigured(){\n  return firebaseConfig.apiKey && !firebaseConfig.apiKey.includes("HIER_") && firebaseConfig.appId && !firebaseConfig.appId.includes("HIER_") && firebaseConfig.databaseURL && firebaseConfig.databaseURL.includes("firebasedatabase.app");\n}\n\nfunction initFirebaseOnline(){\n  if(gmFirebaseReady) return true;\n  if(!firebaseConfigured()){\n    const el=document.getElementById("onlineStatus");\n    if(el) el.innerHTML="⚠️ Firebase-Konfiguration fehlt noch. API-Key und App-ID müssen einmal in der Datei eingetragen werden.";\n    return false;\n  }\n  try{\n    if(!firebase.apps.length) firebase.initializeApp(firebaseConfig);\n    gmDb=firebase.database();\n    gmFirebaseReady=true;\n    return true;\n  }catch(err){\n    const el=document.getElementById("onlineStatus");\n    if(el) el.innerHTML="❌ Firebase konnte nicht gestartet werden: "+err.message;\n    return false;\n  }\n}\n\nfunction makeGameId(){return "GM-"+Math.random().toString(36).slice(2,6).toUpperCase()+"-"+Date.now().toString(36).slice(-4).toUpperCase();}\nfunction playerKey(name){return String(name).toLowerCase().replace(/[^a-z0-9äöüß]/gi,"_");}\nfunction getPlayerUrl(player){const url=new URL(window.location.href);url.searchParams.set("mode","player");url.searchParams.set("game",currentGameId);url.searchParams.set("player",playerKey(player.name));return url.toString();}\nfunction qrUrl(link){return "https://api.qrserver.com/v1/create-qr-code/?size=220x220&data="+encodeURIComponent(link);}\n\nfunction getPlayerPayload(player){\n  return {name:player.name,difficulty:player.difficulty,mission:player.mission,missionPool:player.missionPool||[],missionIndex:player.missionIndex||0,changeCount:player.changeCount||0,changePenalty:player.changePenalty||0,accusation:player.accusation||0,done:player.done||0,caught:player.caught||0,total:player.total||0,avatar:(typeof getProfileAvatarSrc==="function")?getProfileAvatarSrc(player.name):"",color:(typeof getProfileColor==="function")?getProfileColor(player.name):"#ff8800",updatedAt:Date.now()};\n}\nfunction applyPayloadToPlayer(index,data){if(!players[index]||!data)return;Object.assign(players[index],data);players[index].total=(players[index].accusation||0)+(players[index].done||0)+(players[index].caught||0)+(players[index].changePenalty||0);}\nfunction publishPlayer(index){if(!gmFirebaseReady||!currentGameId||!players[index]||isRemoteUpdate)return;const p=players[index];gmDb.ref("games/"+currentGameId+"/players/"+playerKey(p.name)).update(getPlayerPayload(p));gmDb.ref("games/"+currentGameId+"/updatedAt").set(Date.now());}\nfunction publishAllPlayers(){if(!gmFirebaseReady||!currentGameId)return;const updates={};players.forEach(p=>{updates["players/"+playerKey(p.name)]=getPlayerPayload(p);});updates.selectedProfiles=selectedProfiles;updates.updatedAt=Date.now();gmDb.ref("games/"+currentGameId).update(updates);}\n\nfunction listenToOnlineRound(){\n  if(!gmFirebaseReady||!currentGameId)return;\n  gmDb.ref("games/"+currentGameId+"/players").off();\n  gmDb.ref("games/"+currentGameId+"/players").on("value",snap=>{\n    const data=snap.val(); if(!data||players.length===0)return;\n    isRemoteUpdate=true;\n    players.forEach((p,index)=>{\n      const remote=data[playerKey(p.name)];\n      if(remote){\n        applyPayloadToPlayer(index,remote);\n        const playerBox=document.getElementById(`playerBox${index}`);\n        if(playerBox){\n          const back=playerBox.querySelector(".missionBack"); if(back) back.innerHTML=players[index].mission;\n          const counter=document.getElementById(`rerollCount${index}`); if(counter) counter.innerHTML=`(-${Math.min(players[index].changeCount||0,3)})`;\n        }\n      }\n    });\n    updateScoreTable(); autoSaveCurrentRound(); isRemoteUpdate=false;\n  });\n}\n\nfunction renderQrCodes(){\n  if(!currentGameId||players.length===0)return;\n  players.forEach((player,index)=>{\n    const box=document.getElementById(`playerBox${index}`); if(!box||box.querySelector(".qrBox"))return;\n    const link=getPlayerUrl(player);\n    const qr=document.createElement("div"); qr.className="qrBox";\n    qr.innerHTML=`<div class="hostBadge">📱 QR für ${player.name}</div><img src="${qrUrl(link)}" alt="QR Code für ${player.name}"><a class="qrLink" href="${link}" target="_blank">Spieler-Link öffnen</a>`;\n    box.appendChild(qr);\n  });\n}\n\nfunction startOnlineRound(){\n  if(!initFirebaseOnline())return;\n  if(players.length===0) createGame();\n  if(players.length===0)return;\n  currentGameId=makeGameId(); localStorage.setItem("gmCurrentGameId",currentGameId);\n  gmDb.ref("games/"+currentGameId).set({createdAt:Date.now(),updatedAt:Date.now(),selectedProfiles,host:"admin",status:"running"}).then(()=>{publishAllPlayers();listenToOnlineRound();renderQrCodes();const el=document.getElementById("onlineStatus");if(el)el.innerHTML=`✅ Online-Runde aktiv: <b>${currentGameId}</b><br>QR-Codes stehen bei den Spielern.`;}).catch(err=>alert("Online-Runde konnte nicht erstellt werden: "+err.message));\n}\n\nfunction syncOnlineRound(){\n  if(!initFirebaseOnline())return;\n  if(!currentGameId){alert("Es gibt noch keine Online-Runde. Bitte zuerst Online-Runde starten.");return;}\n  if(players.length===0){alert("Es gibt noch keine Spieler in dieser Runde.");return;}\n  publishAllPlayers();listenToOnlineRound();renderQrCodes();const el=document.getElementById("onlineStatus");if(el)el.innerHTML=`🔁 Synchronisiert mit Online-Runde: <b>${currentGameId}</b>`;\n}\n\nfunction renderPlayerDeviceView(playerId,gameId){\n  document.body.innerHTML=`<div class="box"><div class="hero-section"><div class="hero-title-top">GEHEIME</div><div class="hero-title-bottom">MISSION</div><div class="playerOnlyNotice">📱 Spieleransicht<br>Du siehst nur deine eigene Mission.</div>
-        <button class="mainButton playerRulesButton" onclick="openGameRules()">📜 Spielregeln</button></div><div id="playerDeviceRoot"></div></div>`;\n  function draw(data){\n    if(!data){document.getElementById("playerDeviceRoot").innerHTML=`<div class="playerBox"><h3>Spieler nicht gefunden</h3><p>Bitte QR-Code neu scannen.</p></div>`;return;}\n    const root=document.getElementById("playerDeviceRoot");\n    root.innerHTML=`<div class="playerBox"><h3 class="playerNameWithAvatar" style="--profile-color:${data.color||"#ff8800"}">${data.avatar?`<img class="playerMiniAvatar" src="${data.avatar}" alt="">`:""}<span>${data.name}</span></h3><div class="difficulty">Schwierigkeit: ${data.difficulty}</div><div class="missionCard" onclick="this.classList.toggle('flipped')"><div class="missionInner"><div class="missionFront"><div>GEHEIME</div><div style="font-size:55px; margin:10px 0;">🥷</div><div>MISSION</div><small style="margin-top:15px; opacity:0.7; font-size:14px;">Antippen</small></div><div class="missionBack">${data.mission}</div></div></div><button class="changeButton" onclick="playerDeviceChangeMission('${gameId}','${playerId}')" style="background:linear-gradient(90deg,#8e24aa,#d500f9); margin-top:15px;">🔄 Mission ändern <span>(-${Math.min(data.changeCount||0,3)})</span></button><div class="buttonGrid"><button onclick="playerDeviceScore('${gameId}','${playerId}','done')" style="background:linear-gradient(90deg,#00c853,#64dd17);">✅ Mission erfüllt</button><button onclick="playerDeviceScore('${gameId}','${playerId}','caught')" style="background:linear-gradient(90deg,#ff1744,#ff9100);">❌ Mission gescheitert</button><button onclick="playerDeviceScore('${gameId}','${playerId}','accPlus')" style="background:linear-gradient(90deg,#2962ff,#00b0ff);">🎯 Verdacht korrekt</button><button onclick="playerDeviceScore('${gameId}','${playerId}','accMinus')" style="background:linear-gradient(90deg,#616161,#9e9e9e);">❌ Verdacht falsch</button></div><div class="statusText">Punkte aktuell: ${data.total||0}</div></div>`;\n  }\n  if(!initFirebaseOnline()){document.getElementById("playerDeviceRoot").innerHTML=`<div class="playerBox"><h3>Firebase fehlt</h3><p>Firebase-Konfiguration ist noch nicht eingetragen.</p></div>`;return;}\n  gmDb.ref("games/"+gameId+"/players/"+playerId).on("value",snap=>draw(snap.val()));\n}\n\nfunction playerDeviceChangeMission(gameId,playerId){\n  if(!initFirebaseOnline())return;\n  const ref=gmDb.ref("games/"+gameId+"/players/"+playerId);\n  ref.once("value").then(snap=>{const p=snap.val();if(!p)return;const pool=p.missionPool||[p.mission];let idx=typeof p.missionIndex==="number"?p.missionIndex:0;let changeCount=(p.changeCount||0)+1;idx=(idx+1)%pool.length;const changePenalty=-Math.min(changeCount,3);const total=(p.accusation||0)+(p.done||0)+(p.caught||0)+changePenalty;ref.update({missionIndex:idx,mission:pool[idx],changeCount,changePenalty,total,updatedAt:Date.now()});});\n}\n\nfunction playerDeviceScore(gameId,playerId,action){\n  if(!initFirebaseOnline())return;\n  const ref=gmDb.ref("games/"+gameId+"/players/"+playerId);\n  ref.once("value").then(snap=>{\n    const p=snap.val(); if(!p)return;\n    let done=p.done||0,caught=p.caught||0,accusation=p.accusation||0;\n    const donePoints=p.difficulty==="Leicht"?10:(p.difficulty==="Schwer"?30:20);\n    const caughtPoints=p.difficulty==="Leicht"?-5:(p.difficulty==="Schwer"?-15:-10);\n    if(action==="done"){done=done!==0?0:donePoints;if(done!==0)caught=0;}\n    if(action==="caught"){caught=caught!==0?0:caughtPoints;if(caught!==0)done=0;}\n    if(action==="accPlus")accusation+=5;\n    if(action==="accMinus")accusation-=1;\n    const total=accusation+done+caught+(p.changePenalty||0);\n    ref.update({done,caught,accusation,total,updatedAt:Date.now()});\n  });\n}\n\nconst gmOriginalCreateGame=window.createGame;\nwindow.createGame=function(){gmOriginalCreateGame();if(currentGameId&&initFirebaseOnline()){publishAllPlayers();listenToOnlineRound();renderQrCodes();}};\nconst gmOriginalAddScore=window.addScore;\nwindow.addScore=function(index,type,points,button){gmOriginalAddScore(index,type,points,button);publishPlayer(index);};\nconst gmOriginalChangeMission=window.changeMission;\nwindow.changeMission=function(index){gmOriginalChangeMission(index);publishPlayer(index);};\n\ndocument.addEventListener("DOMContentLoaded",()=>{\n  const params=new URLSearchParams(window.location.search);\n  const mode=params.get("mode"),game=params.get("game"),player=params.get("player");\n  if(mode==="player"&&game&&player){renderPlayerDeviceView(player,game);}else{const el=document.getElementById("onlineStatus");if(el&&currentGameId)el.innerHTML=`ℹ️ Letzte Online-Runde: <b>${currentGameId}</b><br>Erst synchronisieren oder neue Online-Runde starten.`;}\n});\n</script>\n
+\n<script>\n/* === Multiplayer Beta mit Firebase Realtime Database ===\n   Wichtig: API-Key und App-ID unten noch vollständig eintragen.\n*/\nconst firebaseConfig = {\n  apiKey: "AIzaSyBpBM-mruHEEYC_T41p88vanoe2CVKMzdg",\n  authDomain: "geheime-missionen.firebaseapp.com",\n  databaseURL: "https://geheime-missionen-default-rtdb.europe-west1.firebasedatabase.app",\n  projectId: "geheime-missionen",\n  storageBucket: "geheime-missionen.firebasestorage.app",\n  messagingSenderId: "1088076099523",\n  appId: "1:1088076099523:web:ecc1e89e054499d4e31776"\n};let gmFirebaseReady=false;\nlet gmDb=null;\nlet currentGameId=localStorage.getItem("gmCurrentGameId")||"";\nlet isRemoteUpdate=false;function firebaseConfigured(){\n  return firebaseConfig.apiKey && !firebaseConfig.apiKey.includes("HIER_") && firebaseConfig.appId && !firebaseConfig.appId.includes("HIER_") && firebaseConfig.databaseURL && firebaseConfig.databaseURL.includes("firebasedatabase.app");\n}function initFirebaseOnline(){\n  if(gmFirebaseReady) return true;\n  if(!firebaseConfigured()){\n    const el=document.getElementById("onlineStatus");\n    if(el) el.innerHTML="⚠️ Firebase-Konfiguration fehlt noch. API-Key und App-ID müssen einmal in der Datei eingetragen werden.";\n    return false;\n  }\n  try{\n    if(!firebase.apps.length) firebase.initializeApp(firebaseConfig);\n    gmDb=firebase.database();\n    gmFirebaseReady=true;\n    return true;\n  }catch(err){\n    const el=document.getElementById("onlineStatus");\n    if(el) el.innerHTML="❌ Firebase konnte nicht gestartet werden: "+err.message;\n    return false;\n  }\n}function makeGameId(){return "GM-"+Math.random().toString(36).slice(2,6).toUpperCase()+"-"+Date.now().toString(36).slice(-4).toUpperCase();}\nfunction playerKey(name){return String(name).toLowerCase().replace(/[^a-z0-9äöüß]/gi,"_");}\nfunction getPlayerUrl(player){const url=new URL(window.location.href);url.searchParams.set("mode","player");url.searchParams.set("game",currentGameId);url.searchParams.set("player",playerKey(player.name));return url.toString();}\nfunction qrUrl(link){return "https://api.qrserver.com/v1/create-qr-code/?size=220x220&data="+encodeURIComponent(link);}function getPlayerPayload(player){\n  return {name:player.name,difficulty:player.difficulty,mission:player.mission,missionPool:player.missionPool||[],missionIndex:player.missionIndex||0,changeCount:player.changeCount||0,changePenalty:player.changePenalty||0,accusation:player.accusation||0,done:player.done||0,caught:player.caught||0,total:player.total||0,avatar:(typeof getProfileAvatarSrc==="function")?getProfileAvatarSrc(player.name):"",color:(typeof getProfileColor==="function")?getProfileColor(player.name):"#ff8800",updatedAt:Date.now()};\n}\nfunction applyPayloadToPlayer(index,data){if(!players[index]||!data)return;Object.assign(players[index],data);players[index].total=(players[index].accusation||0)+(players[index].done||0)+(players[index].caught||0)+(players[index].changePenalty||0);}\nfunction publishPlayer(index){if(!gmFirebaseReady||!currentGameId||!players[index]||isRemoteUpdate)return;const p=players[index];gmDb.ref("games/"+currentGameId+"/players/"+playerKey(p.name)).update(getPlayerPayload(p));gmDb.ref("games/"+currentGameId+"/updatedAt").set(Date.now());}\nfunction publishAllPlayers(){if(!gmFirebaseReady||!currentGameId)return;const updates={};players.forEach(p=>{updates["players/"+playerKey(p.name)]=getPlayerPayload(p);});updates.selectedProfiles=selectedProfiles;updates.updatedAt=Date.now();gmDb.ref("games/"+currentGameId).update(updates);}function listenToOnlineRound(){\n  if(!gmFirebaseReady||!currentGameId)return;\n  gmDb.ref("games/"+currentGameId+"/players").off();\n  gmDb.ref("games/"+currentGameId+"/players").on("value",snap=>{\n    const data=snap.val(); if(!data||players.length===0)return;\n    isRemoteUpdate=true;\n    players.forEach((p,index)=>{\n      const remote=data[playerKey(p.name)];\n      if(remote){\n        applyPayloadToPlayer(index,remote);\n        const playerBox=document.getElementById(`playerBox${index}`);\n        if(playerBox){\n          const back=playerBox.querySelector(".missionBack"); if(back) back.innerHTML=players[index].mission;\n          const counter=document.getElementById(`rerollCount${index}`); if(counter) counter.innerHTML=`(-${Math.min(players[index].changeCount||0,3)})`;\n        }\n      }\n    });\n    updateScoreTable(); autoSaveCurrentRound(); isRemoteUpdate=false;\n  });\n}function renderQrCodes(){\n  if(!currentGameId||players.length===0)return;\n  players.forEach((player,index)=>{\n    const box=document.getElementById(`playerBox${index}`); if(!box||box.querySelector(".qrBox"))return;\n    const link=getPlayerUrl(player);\n    const qr=document.createElement("div"); qr.className="qrBox";\n    qr.innerHTML=`<div class="hostBadge">📱 QR für ${player.name}</div><img src="${qrUrl(link)}" alt="QR Code für ${player.name}"><a class="qrLink" href="${link}" target="_blank">Spieler-Link öffnen</a>`;\n    box.appendChild(qr);\n  });\n}function startOnlineRound(){\n  if(!initFirebaseOnline())return;\n  if(players.length===0) createGame();\n  if(players.length===0)return;\n  currentGameId=makeGameId(); localStorage.setItem("gmCurrentGameId",currentGameId);\n  gmDb.ref("games/"+currentGameId).set({createdAt:Date.now(),updatedAt:Date.now(),selectedProfiles,host:"admin",status:"running"}).then(()=>{publishAllPlayers();listenToOnlineRound();renderQrCodes();const el=document.getElementById("onlineStatus");if(el)el.innerHTML=`✅ Online-Runde aktiv: <b>${currentGameId}</b><br>QR-Codes stehen bei den Spielern.`;}).catch(err=>alert("Online-Runde konnte nicht erstellt werden: "+err.message));\n}function syncOnlineRound(){\n  if(!initFirebaseOnline())return;\n  if(!currentGameId){alert("Es gibt noch keine Online-Runde. Bitte zuerst Online-Runde starten.");return;}\n  if(players.length===0){alert("Es gibt noch keine Spieler in dieser Runde.");return;}\n  publishAllPlayers();listenToOnlineRound();renderQrCodes();const el=document.getElementById("onlineStatus");if(el)el.innerHTML=`🔁 Synchronisiert mit Online-Runde: <b>${currentGameId}</b>`;\n}function renderPlayerDeviceView(playerId,gameId){\n  document.body.innerHTML=`<div class="box"><div class="hero-section"><div class="hero-title-top">GEHEIME</div><div class="hero-title-bottom">MISSION</div><div class="playerOnlyNotice">📱 Spieleransicht<br>Du siehst nur deine eigene Mission.</div>
+        <button class="mainButton playerRulesButton" onclick="openGameRules()">📜 Spielregeln</button></div><div id="playerDeviceRoot"></div></div>`;\n  function draw(data){\n    if(!data){document.getElementById("playerDeviceRoot").innerHTML=`<div class="playerBox"><h3>Spieler nicht gefunden</h3><p>Bitte QR-Code neu scannen.</p></div>`;return;}\n    const root=document.getElementById("playerDeviceRoot");\n    root.innerHTML=`<div class="playerBox"><h3 class="playerNameWithAvatar" style="--profile-color:${data.color||"#ff8800"}">${data.avatar?`<img class="playerMiniAvatar" src="${data.avatar}" alt="">`:""}<span>${data.name}</span></h3><div class="difficulty">Schwierigkeit: ${data.difficulty}</div><div class="missionCard" onclick="this.classList.toggle('flipped')"><div class="missionInner"><div class="missionFront"><div>GEHEIME</div><div style="font-size:55px; margin:10px 0;">🥷</div><div>MISSION</div><small style="margin-top:15px; opacity:0.7; font-size:14px;">Antippen</small></div><div class="missionBack">${data.mission}</div></div></div><button class="changeButton" onclick="playerDeviceChangeMission('${gameId}','${playerId}')" style="background:linear-gradient(90deg,#8e24aa,#d500f9); margin-top:15px;">🔄 Mission ändern <span>(-${Math.min(data.changeCount||0,3)})</span></button><div class="buttonGrid"><button onclick="playerDeviceScore('${gameId}','${playerId}','done')" style="background:linear-gradient(90deg,#00c853,#64dd17);">✅ Mission erfüllt</button><button onclick="playerDeviceScore('${gameId}','${playerId}','caught')" style="background:linear-gradient(90deg,#ff1744,#ff9100);">❌ Mission gescheitert</button><button onclick="playerDeviceScore('${gameId}','${playerId}','accPlus')" style="background:linear-gradient(90deg,#2962ff,#00b0ff);">🎯 Verdacht korrekt</button><button onclick="playerDeviceScore('${gameId}','${playerId}','accMinus')" style="background:linear-gradient(90deg,#616161,#9e9e9e);">❌ Verdacht falsch</button></div><div class="statusText">Punkte aktuell: ${data.total||0}</div></div>`;\n  }\n  if(!initFirebaseOnline()){document.getElementById("playerDeviceRoot").innerHTML=`<div class="playerBox"><h3>Firebase fehlt</h3><p>Firebase-Konfiguration ist noch nicht eingetragen.</p></div>`;return;}\n  gmDb.ref("games/"+gameId+"/players/"+playerId).on("value",snap=>draw(snap.val()));\n}function playerDeviceChangeMission(gameId,playerId){\n  if(!initFirebaseOnline())return;\n  const ref=gmDb.ref("games/"+gameId+"/players/"+playerId);\n  ref.once("value").then(snap=>{const p=snap.val();if(!p)return;const pool=p.missionPool||[p.mission];let idx=typeof p.missionIndex==="number"?p.missionIndex:0;let changeCount=(p.changeCount||0)+1;idx=(idx+1)%pool.length;const changePenalty=-Math.min(changeCount,3);const total=(p.accusation||0)+(p.done||0)+(p.caught||0)+changePenalty;ref.update({missionIndex:idx,mission:pool[idx],changeCount,changePenalty,total,updatedAt:Date.now()});});\n}function playerDeviceScore(gameId,playerId,action){\n  if(!initFirebaseOnline())return;\n  const ref=gmDb.ref("games/"+gameId+"/players/"+playerId);\n  ref.once("value").then(snap=>{\n    const p=snap.val(); if(!p)return;\n    let done=p.done||0,caught=p.caught||0,accusation=p.accusation||0;\n    const donePoints=p.difficulty==="Leicht"?10:(p.difficulty==="Schwer"?30:20);\n    const caughtPoints=p.difficulty==="Leicht"?-5:(p.difficulty==="Schwer"?-15:-10);\n    if(action==="done"){done=done!==0?0:donePoints;if(done!==0)caught=0;}\n    if(action==="caught"){caught=caught!==0?0:caughtPoints;if(caught!==0)done=0;}\n    if(action==="accPlus")accusation+=5;\n    if(action==="accMinus")accusation-=1;\n    const total=accusation+done+caught+(p.changePenalty||0);\n    ref.update({done,caught,accusation,total,updatedAt:Date.now()});\n  });\n}const gmOriginalCreateGame=window.createGame;\nwindow.createGame=function(){gmOriginalCreateGame();if(currentGameId&&initFirebaseOnline()){publishAllPlayers();listenToOnlineRound();renderQrCodes();}};\nconst gmOriginalAddScore=window.addScore;\nwindow.addScore=function(index,type,points,button){gmOriginalAddScore(index,type,points,button);publishPlayer(index);};\nconst gmOriginalChangeMission=window.changeMission;\nwindow.changeMission=function(index){gmOriginalChangeMission(index);publishPlayer(index);};document.addEventListener("DOMContentLoaded",()=>{\n  const params=new URLSearchParams(window.location.search);\n  const mode=params.get("mode"),game=params.get("game"),player=params.get("player");\n  if(mode==="player"&&game&&player){renderPlayerDeviceView(player,game);}else{const el=document.getElementById("onlineStatus");if(el&&currentGameId)el.innerHTML=`ℹ️ Letzte Online-Runde: <b>${currentGameId}</b><br>Erst synchronisieren oder neue Online-Runde starten.`;}\n});\n</script>\n
 
 <script>
 function getRulesHtml(){
@@ -2237,6 +2307,315 @@ function closeGameRules(){
   const root = document.getElementById("rulesModalRoot");
   if(root) root.innerHTML = "";
 }
+</script>
+
+
+<script>
+/* === Multiplayer / QR sauberer Modus ===
+   Online-Block ist entfernt.
+   QR-Codes erscheinen direkt bei jeder Spielerkarte nach "Spiel starten".
+
+   WICHTIG:
+   Für echte Live-Synchronisierung müssen apiKey und appId vollständig eingetragen werden.
+*/
+const firebaseConfig = {
+  apiKey: "AIzaSyBpBM-mruHEEYC_T41p88vanoe2CVKMzdg",
+  authDomain: "geheime-missionen.firebaseapp.com",
+  databaseURL: "https://geheime-missionen-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "geheime-missionen",
+  storageBucket: "geheime-missionen.firebasestorage.app",
+  messagingSenderId: "1088076099523",
+  appId: "1:1088076099523:web:ecc1e89e054499d4e31776"
+};
+
+let gmFirebaseReady = false;
+let gmDb = null;
+let currentGameId = localStorage.getItem("gmCurrentGameId") || "";
+let isRemoteUpdate = false;
+
+function firebaseConfigured(){
+  return firebaseConfig.apiKey && !firebaseConfig.apiKey.includes("HIER_") &&
+         firebaseConfig.appId && !firebaseConfig.appId.includes("HIER_") &&
+         firebaseConfig.databaseURL && firebaseConfig.databaseURL.includes("firebaseio");
+}
+
+function initFirebaseOnline(){
+  if(gmFirebaseReady) return true;
+  if(!firebaseConfigured()){
+    console.warn("Firebase-Konfiguration fehlt noch. QR wird angezeigt, Live-Sync aber nicht aktiv.");
+    return false;
+  }
+  try{
+    if(!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+    gmDb = firebase.database();
+    gmFirebaseReady = true;
+    return true;
+  }catch(err){
+    alert("Firebase konnte nicht gestartet werden: " + err.message);
+    return false;
+  }
+}
+
+function makeGameId(){
+  return "GM-" + Math.random().toString(36).slice(2,6).toUpperCase() + "-" + Date.now().toString(36).slice(-4).toUpperCase();
+}
+
+function playerKey(name){
+  return String(name).toLowerCase().replace(/[^a-z0-9äöüß]/gi,"_");
+}
+
+function getPlayerUrl(player){
+  const url = new URL(window.location.href);
+  url.searchParams.set("mode","player");
+  url.searchParams.set("game", currentGameId);
+  url.searchParams.set("player", playerKey(player.name));
+  return url.toString();
+}
+
+function qrUrl(link){
+  return "https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=" + encodeURIComponent(link);
+}
+
+function getPlayerPayload(player){
+  return {
+    name: player.name,
+    difficulty: player.difficulty,
+    mission: player.mission,
+    missionPool: player.missionPool || [],
+    missionIndex: player.missionIndex || 0,
+    changeCount: player.changeCount || 0,
+    changePenalty: player.changePenalty || 0,
+    accusation: player.accusation || 0,
+    done: player.done || 0,
+    caught: player.caught || 0,
+    total: player.total || 0,
+    avatar: (typeof getProfileAvatarSrc === "function") ? getProfileAvatarSrc(player.name) : "",
+    color: (typeof getProfileColor === "function") ? getProfileColor(player.name) : "#ff8800",
+    updatedAt: Date.now()
+  };
+}
+
+function publishPlayer(index){
+  if(!gmFirebaseReady || !currentGameId || !players[index] || isRemoteUpdate) return;
+  const p = players[index];
+  gmDb.ref("games/" + currentGameId + "/players/" + playerKey(p.name)).update(getPlayerPayload(p));
+  gmDb.ref("games/" + currentGameId + "/updatedAt").set(Date.now());
+}
+
+function publishAllPlayers(){
+  if(!gmFirebaseReady || !currentGameId) return;
+  const updates = {};
+  players.forEach(p => updates["players/" + playerKey(p.name)] = getPlayerPayload(p));
+  updates["selectedProfiles"] = selectedProfiles;
+  updates["updatedAt"] = Date.now();
+  gmDb.ref("games/" + currentGameId).update(updates);
+}
+
+function applyPayloadToPlayer(index, data){
+  if(!players[index] || !data) return;
+  Object.assign(players[index], data);
+  players[index].total = (players[index].accusation || 0) + (players[index].done || 0) + (players[index].caught || 0) + (players[index].changePenalty || 0);
+}
+
+function listenToOnlineRound(){
+  if(!gmFirebaseReady || !currentGameId) return;
+  gmDb.ref("games/" + currentGameId + "/players").off();
+  gmDb.ref("games/" + currentGameId + "/players").on("value", snap => {
+    const data = snap.val();
+    if(!data || players.length === 0) return;
+    isRemoteUpdate = true;
+    players.forEach((p, index) => {
+      const remote = data[playerKey(p.name)];
+      if(remote){
+        applyPayloadToPlayer(index, remote);
+        const box = document.getElementById(`playerBox${index}`);
+        if(box){
+          const back = box.querySelector(".missionBack");
+          if(back) back.innerHTML = players[index].mission;
+          const counter = document.getElementById(`rerollCount${index}`);
+          if(counter) counter.innerHTML = `(-${Math.min(players[index].changeCount || 0, 3)})`;
+        }
+      }
+    });
+    updateScoreTable();
+    autoSaveCurrentRound();
+    isRemoteUpdate = false;
+  });
+}
+
+function renderQrCodes(){
+  if(!currentGameId || players.length === 0) return;
+  players.forEach((player, index) => {
+    const box = document.getElementById(`playerBox${index}`);
+    if(!box || box.querySelector(".qrBox")) return;
+
+    const link = getPlayerUrl(player);
+    const qr = document.createElement("div");
+    qr.className = "qrBox";
+    qr.innerHTML = `
+      <div class="qrTitle">📱 QR-Code für ${player.name}</div>
+      <img src="${qrUrl(link)}" alt="QR Code für ${player.name}">
+      <div class="qrHint">Scannen öffnet nur dieses Profil.</div>
+    `;
+    box.appendChild(qr);
+  });
+}
+
+function startRoundOnlineIfPossible(){
+  if(!currentGameId){
+    currentGameId = makeGameId();
+    localStorage.setItem("gmCurrentGameId", currentGameId);
+  }
+
+  renderQrCodes();
+
+  if(initFirebaseOnline()){
+    gmDb.ref("games/" + currentGameId).update({
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
+      selectedProfiles,
+      status: "running"
+    }).then(() => {
+      publishAllPlayers();
+      listenToOnlineRound();
+    });
+  }
+}
+
+function renderPlayerDeviceView(playerId, gameId){
+  document.body.innerHTML = `
+    <div class="box">
+      <div class="hero-section">
+        <div class="hero-title-top">GEHEIME</div>
+        <div class="hero-title-bottom">MISSION</div>
+        <div class="playerOnlyNotice">📱 Spieleransicht<br>Du siehst nur deine eigene Mission.</div>
+        <button class="mainButton playerRulesButton" onclick="openGameRules()">📜 Spielregeln</button>
+      </div>
+      <div id="playerDeviceRoot"></div>
+      <div id="rulesModalRoot"></div>
+    </div>
+  `;
+
+  if(!initFirebaseOnline()){
+    document.getElementById("playerDeviceRoot").innerHTML = `
+      <div class="playerBox">
+        <h3>Online-Verbindung fehlt</h3>
+        <p>Firebase-Konfiguration ist noch nicht vollständig eingetragen.</p>
+      </div>`;
+    return;
+  }
+
+  function draw(data){
+    if(!data){
+      document.getElementById("playerDeviceRoot").innerHTML = `<div class="playerBox"><h3>Spieler nicht gefunden</h3><p>Bitte QR-Code neu scannen.</p></div>`;
+      return;
+    }
+
+    document.getElementById("playerDeviceRoot").innerHTML = `
+      <div class="playerBox">
+        <h3 class="playerNameWithAvatar" style="--profile-color:${data.color || "#ff8800"}">
+          ${data.avatar ? `<img class="playerMiniAvatar" src="${data.avatar}" alt="">` : ""}
+          <span>${data.name}</span>
+        </h3>
+        <div class="difficulty">Schwierigkeit: ${data.difficulty}</div>
+
+        <div class="missionCard" onclick="this.classList.toggle('flipped')">
+          <div class="missionInner">
+            <div class="missionFront">
+              <div>GEHEIME</div>
+              <div style="font-size:55px; margin:10px 0;">🥷</div>
+              <div>MISSION</div>
+              <small style="margin-top:15px; opacity:0.7; font-size:14px;">Antippen</small>
+            </div>
+            <div class="missionBack">${data.mission}</div>
+          </div>
+        </div>
+
+        <button class="changeButton" onclick="playerDeviceChangeMission('${gameId}','${playerId}')" style="background:linear-gradient(90deg,#8e24aa,#d500f9); margin-top:15px;">
+          🔄 Mission ändern <span>(-${Math.min(data.changeCount || 0, 3)})</span>
+        </button>
+
+        <div class="buttonGrid">
+          <button onclick="playerDeviceScore('${gameId}','${playerId}','done')" style="background:linear-gradient(90deg,#00c853,#64dd17);">✅ Mission erfüllt</button>
+          <button onclick="playerDeviceScore('${gameId}','${playerId}','caught')" style="background:linear-gradient(90deg,#ff1744,#ff9100);">❌ Mission gescheitert</button>
+          <button onclick="playerDeviceScore('${gameId}','${playerId}','accPlus')" style="background:linear-gradient(90deg,#2962ff,#00b0ff);">🎯 Verdacht korrekt</button>
+          <button onclick="playerDeviceScore('${gameId}','${playerId}','accMinus')" style="background:linear-gradient(90deg,#616161,#9e9e9e);">❌ Verdacht falsch</button>
+        </div>
+
+        <div class="statusText">Punkte aktuell: ${data.total || 0}</div>
+      </div>
+    `;
+  }
+
+  gmDb.ref("games/" + gameId + "/players/" + playerId).on("value", snap => draw(snap.val()));
+}
+
+function playerDeviceChangeMission(gameId, playerId){
+  if(!initFirebaseOnline()) return;
+  const ref = gmDb.ref("games/" + gameId + "/players/" + playerId);
+  ref.once("value").then(snap => {
+    const p = snap.val();
+    if(!p) return;
+    const pool = p.missionPool || [p.mission];
+    let idx = typeof p.missionIndex === "number" ? p.missionIndex : 0;
+    const changeCount = (p.changeCount || 0) + 1;
+    idx = (idx + 1) % pool.length;
+    const changePenalty = -Math.min(changeCount, 3);
+    const total = (p.accusation || 0) + (p.done || 0) + (p.caught || 0) + changePenalty;
+    ref.update({ missionIndex:idx, mission:pool[idx], changeCount, changePenalty, total, updatedAt:Date.now() });
+  });
+}
+
+function playerDeviceScore(gameId, playerId, action){
+  if(!initFirebaseOnline()) return;
+  const ref = gmDb.ref("games/" + gameId + "/players/" + playerId);
+  ref.once("value").then(snap => {
+    const p = snap.val();
+    if(!p) return;
+
+    let done = p.done || 0;
+    let caught = p.caught || 0;
+    let accusation = p.accusation || 0;
+    const donePoints = p.difficulty === "Leicht" ? 10 : (p.difficulty === "Schwer" ? 30 : 20);
+    const caughtPoints = p.difficulty === "Leicht" ? -5 : (p.difficulty === "Schwer" ? -15 : -10);
+
+    if(action === "done"){ done = done !== 0 ? 0 : donePoints; if(done !== 0) caught = 0; }
+    if(action === "caught"){ caught = caught !== 0 ? 0 : caughtPoints; if(caught !== 0) done = 0; }
+    if(action === "accPlus") accusation += 5;
+    if(action === "accMinus") accusation -= 1;
+
+    const total = accusation + done + caught + (p.changePenalty || 0);
+    ref.update({ done, caught, accusation, total, updatedAt:Date.now() });
+  });
+}
+
+/* vorhandene App erweitern */
+const gmOriginalCreateGame = window.createGame;
+window.createGame = function(){
+  currentGameId = makeGameId();
+  localStorage.setItem("gmCurrentGameId", currentGameId);
+  gmOriginalCreateGame();
+  startRoundOnlineIfPossible();
+};
+
+const gmOriginalAddScore = window.addScore;
+window.addScore = function(index, type, points, button){
+  gmOriginalAddScore(index, type, points, button);
+  publishPlayer(index);
+};
+
+const gmOriginalChangeMission = window.changeMission;
+window.changeMission = function(index){
+  gmOriginalChangeMission(index);
+  publishPlayer(index);
+};
+
+document.addEventListener("DOMContentLoaded", () => {
+  const params = new URLSearchParams(window.location.search);
+  if(params.get("mode") === "player" && params.get("game") && params.get("player")){
+    renderPlayerDeviceView(params.get("player"), params.get("game"));
+  }
+});
 </script>
 
 </body>
