@@ -951,10 +951,87 @@ html, body{
   overflow-wrap:anywhere;
 }
 
+
+/* === Spieleransicht Fix === */
+body.playerModeActive .box > *:not(#playerDeviceShell){
+  display:none !important;
+}
+
+#playerDeviceShell{
+  display:none;
+}
+
+body.playerModeActive #playerDeviceShell{
+  display:block !important;
+}
+
+.playerDeviceTop{
+  text-align:center;
+  padding:10px 0 20px;
+}
+
+.playerRulesButton{
+  background:linear-gradient(90deg,#8e24aa,#d500f9) !important;
+  margin:12px 0 20px !important;
+}
+
+
+/* === Rechtliches === */
+.legalButtons{
+  display:flex;
+  gap:12px;
+  justify-content:center;
+  flex-wrap:wrap;
+  margin:25px 0 10px;
+}
+
+.legalBtn{
+  background:#111;
+  border:2px solid #ff8800;
+  color:#fff;
+  padding:10px 18px;
+  border-radius:14px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.legalModal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.92);
+  z-index:99999;
+  overflow:auto;
+  padding:20px;
+}
+
+.legalContent{
+  max-width:900px;
+  margin:30px auto;
+  background:#111;
+  border:2px solid #ff8800;
+  border-radius:24px;
+  padding:25px;
+  color:#fff;
+  line-height:1.6;
+}
+
+.legalClose{
+  position:sticky;
+  top:10px;
+  float:right;
+  background:#ff8800;
+  border:none;
+  padding:10px 16px;
+  border-radius:12px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
 </style>
 </head>
 <body>
   <div class="box">
+    <div id="playerDeviceShell"></div>
     
     <div class="hero-section">
       <div class="hero-top-text">Macht euren Spieleabend verdächtig gut 🎭</div>
@@ -2616,6 +2693,177 @@ document.addEventListener("DOMContentLoaded", () => {
     renderPlayerDeviceView(params.get("player"), params.get("game"));
   }
 });
+</script>
+
+
+<script>
+/* === Spieleransicht Override Fix === */
+function renderPlayerDeviceView(playerId, gameId){
+  document.body.classList.add("playerModeActive");
+
+  const shell = document.getElementById("playerDeviceShell") || document.querySelector(".box");
+  shell.innerHTML = `
+    <div class="playerDeviceTop">
+      <div class="hero-title-top">GEHEIME</div>
+      <div class="hero-title-bottom">MISSION</div>
+      <div class="playerOnlyNotice">📱 Spieleransicht<br>Du siehst nur deine eigene Mission.</div>
+      <button class="mainButton playerRulesButton" onclick="openGameRules()">📜 Spielregeln</button>
+    </div>
+    <div id="playerDeviceRoot"></div>
+    <div id="rulesModalRoot"></div>
+  `;
+
+  if(!initFirebaseOnline()){
+    document.getElementById("playerDeviceRoot").innerHTML = `
+      <div class="playerBox">
+        <h3>Online-Verbindung fehlt</h3>
+        <p>Firebase-Konfiguration ist noch nicht vollständig eingetragen.</p>
+      </div>`;
+    return;
+  }
+
+  function draw(data){
+    if(!data){
+      document.getElementById("playerDeviceRoot").innerHTML = `
+        <div class="playerBox">
+          <h3>Spieler nicht gefunden</h3>
+          <p>Bitte QR-Code neu scannen.</p>
+        </div>`;
+      return;
+    }
+
+    document.getElementById("playerDeviceRoot").innerHTML = `
+      <div class="playerBox">
+        <h3 class="playerNameWithAvatar" style="--profile-color:${data.color || "#ff8800"}">
+          ${data.avatar ? `<img class="playerMiniAvatar" src="${data.avatar}" alt="">` : ""}
+          <span>${data.name}</span>
+        </h3>
+
+        <div class="difficulty">Schwierigkeit: ${data.difficulty}</div>
+
+        <div class="missionCard" onclick="this.classList.toggle('flipped')">
+          <div class="missionInner">
+            <div class="missionFront">
+              <div>GEHEIME</div>
+              <div style="font-size:55px; margin:10px 0;">🥷</div>
+              <div>MISSION</div>
+              <small style="margin-top:15px; opacity:0.7; font-size:14px;">Antippen</small>
+            </div>
+            <div class="missionBack">${data.mission}</div>
+          </div>
+        </div>
+
+        <button class="changeButton" onclick="playerDeviceChangeMission('${gameId}','${playerId}')" style="background:linear-gradient(90deg,#8e24aa,#d500f9); margin-top:15px;">
+          🔄 Mission ändern <span>(-${Math.min(data.changeCount || 0, 3)})</span>
+        </button>
+
+        <div class="buttonGrid">
+          <button onclick="playerDeviceScore('${gameId}','${playerId}','done')" style="background:linear-gradient(90deg,#00c853,#64dd17);">✅ Mission erfüllt</button>
+          <button onclick="playerDeviceScore('${gameId}','${playerId}','caught')" style="background:linear-gradient(90deg,#ff1744,#ff9100);">❌ Mission gescheitert</button>
+          <button onclick="playerDeviceScore('${gameId}','${playerId}','accPlus')" style="background:linear-gradient(90deg,#2962ff,#00b0ff);">🎯 Verdacht korrekt</button>
+          <button onclick="playerDeviceScore('${gameId}','${playerId}','accMinus')" style="background:linear-gradient(90deg,#616161,#9e9e9e);">❌ Verdacht falsch</button>
+        </div>
+
+        <div class="statusText">Punkte aktuell: ${data.total || 0}</div>
+      </div>
+    `;
+  }
+
+  gmDb.ref("games/" + gameId + "/players/" + playerId).on("value", snap => draw(snap.val()));
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const params = new URLSearchParams(window.location.search);
+  const mode = params.get("mode");
+  const game = params.get("game");
+  const player = params.get("player");
+
+  if(mode === "player" && game && player){
+    renderPlayerDeviceView(player, game);
+  }
+});
+</script>
+
+
+<div class="legalButtons">
+  <button class="legalBtn" onclick="openImpressum()">📄 Impressum</button>
+  <button class="legalBtn" onclick="openDatenschutz()">🔒 Datenschutz</button>
+</div>
+
+
+<script>
+function closeLegal(){
+  const modal=document.getElementById("legalModal");
+  if(modal) modal.remove();
+}
+
+function openImpressum(){
+  closeLegal();
+  const div=document.createElement("div");
+  div.id="legalModal";
+  div.className="legalModal";
+  div.innerHTML=`
+    <div class="legalContent">
+      <button class="legalClose" onclick="closeLegal()">Schließen</button>
+      <h1>📄 Impressum</h1>
+
+      <p><strong>Geheime Missionen</strong><br>
+      Privates Hobbyprojekt / Partyspiel-WebApp</p>
+
+      <p><strong>Verantwortlich:</strong><br>
+      Eric Hase</p>
+
+      <p><strong>Kontakt:</strong><br>
+      Bitte über die jeweilige Veröffentlichungsplattform oder Projektseite.</p>
+
+      <p>Dieses Projekt dient ausschließlich der privaten Unterhaltung und dem gemeinsamen Spielen mit Freunden.</p>
+
+      <p>QR-Codes dienen ausschließlich zum Öffnen spielbezogener Sitzungen und Spielerprofile.</p>
+    </div>
+  `;
+  document.body.appendChild(div);
+}
+
+function openDatenschutz(){
+  closeLegal();
+  const div=document.createElement("div");
+  div.id="legalModal";
+  div.className="legalModal";
+  div.innerHTML=`
+    <div class="legalContent">
+      <button class="legalClose" onclick="closeLegal()">Schließen</button>
+
+      <h1>🔒 Datenschutzerklärung</h1>
+
+      <p>Diese WebApp speichert ausschließlich spielbezogene Daten.</p>
+
+      <h2>Gespeicherte Daten</h2>
+      <ul>
+        <li>Spielernamen</li>
+        <li>Avatare/Bilder</li>
+        <li>Punktestände</li>
+        <li>Missionen</li>
+        <li>Spielstände</li>
+      </ul>
+
+      <h2>Firebase</h2>
+      <p>Zur Online-Synchronisation wird Firebase Realtime Database von Google verwendet.</p>
+
+      <h2>Lokale Speicherung</h2>
+      <p>Einige Daten können lokal im Browser gespeichert werden, damit Spielstände erhalten bleiben.</p>
+
+      <h2>Keine Registrierung</h2>
+      <p>Für die Nutzung ist keine Registrierung notwendig.</p>
+
+      <h2>Keine sensiblen Daten</h2>
+      <p>Es werden keine absichtlich sensiblen personenbezogenen Daten gespeichert.</p>
+
+      <h2>QR-Codes</h2>
+      <p>QR-Codes öffnen ausschließlich die jeweilige Spielsitzung oder Spieleransicht.</p>
+    </div>
+  `;
+  document.body.appendChild(div);
+}
 </script>
 
 </body>
