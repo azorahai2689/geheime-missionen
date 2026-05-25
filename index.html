@@ -2102,5 +2102,20 @@ renderProfileButtons();
     }
 
 </script>
+
+<audio id="bgMusic" autoplay loop>
+  <source src="Geheime Missionen.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+document.addEventListener("click", () => {
+  const music = document.getElementById("bgMusic");
+  if (music && music.paused) {
+    music.volume = 0.35;
+    music.play().catch(() => {});
+  }
+}, { once:false });
+</script>
+
 </body>
 </html>
