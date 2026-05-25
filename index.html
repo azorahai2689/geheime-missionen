@@ -767,6 +767,35 @@ font-weight:bold;
   }
 }
 
+
+.saveGrid{
+  grid-template-columns:repeat(3,1fr);
+}
+
+.smallSaveButton{
+  font-size:16px !important;
+  line-height:1.2;
+  padding:16px 8px !important;
+  min-height:120px;
+}
+
+.smallSaveButton br{
+  line-height:1.4;
+}
+
+@media(max-width:700px){
+
+  .saveGrid{
+    gap:10px;
+  }
+
+  .smallSaveButton{
+    font-size:15px !important;
+    min-height:115px;
+    padding:14px 6px !important;
+  }
+}
+
 </style>
 </head>
 <body>
