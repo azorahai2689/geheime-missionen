@@ -1992,6 +1992,137 @@ font-weight:bold;
   margin-bottom:22px !important;
 }
 
+
+/* === V18 Fix: Runde Aktionsbuttons + QR zurück === */
+
+/* keine kantigen Browser-Buttons */
+.gmActionGridFixed{
+  all:unset !important;
+}
+
+/* Aktionsbereich sauber neu */
+.playerActionGrid,
+.actionGrid,
+.playerButtons,
+.missionActions,
+.playerBox .buttonGrid,
+.playerDeviceView .buttonGrid{
+  display:grid !important;
+  grid-template-columns:1fr 1fr !important;
+  gap:14px !important;
+  width:100% !important;
+  max-width:520px !important;
+  margin:18px auto 0 !important;
+}
+
+/* Mission ändern bleibt alleine */
+.changeButton,
+.playerActionGrid .changeButton,
+.actionGrid .changeButton,
+.missionActions .changeButton{
+  grid-column:1 / -1 !important;
+  width:72% !important;
+  max-width:390px !important;
+  margin:0 auto 8px !important;
+  border-radius:18px !important;
+  background:linear-gradient(180deg,#79008d,#390044) !important;
+  box-shadow:0 0 18px rgba(165,0,190,.45) !important;
+  border:0 !important;
+}
+
+/* Alle Aktionsbuttons wieder weich/rund */
+.playerActionGrid button,
+.actionGrid button,
+.playerButtons button,
+.missionActions button,
+.playerBox button,
+.playerDeviceView button{
+  border-radius:18px !important;
+  border:0 !important;
+  min-height:68px !important;
+  padding:12px 10px !important;
+  font-size:21px !important;
+  font-weight:900 !important;
+  line-height:1.12 !important;
+  color:white !important;
+  box-shadow:0 0 16px rgba(0,0,0,.45) !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  text-align:center !important;
+}
+
+/* Farben wieder wie vorher */
+.playerActionGrid button:nth-child(2),
+.actionGrid button:nth-child(2),
+.missionActions button:nth-child(2){
+  background:linear-gradient(180deg,#0d6812,#063807) !important;
+}
+
+.playerActionGrid button:nth-child(3),
+.actionGrid button:nth-child(3),
+.missionActions button:nth-child(3){
+  background:linear-gradient(180deg,#8d0707,#3e0202) !important;
+}
+
+.playerActionGrid button:nth-child(4),
+.actionGrid button:nth-child(4),
+.missionActions button:nth-child(4){
+  background:linear-gradient(180deg,#06318f,#03184a) !important;
+}
+
+.playerActionGrid button:nth-child(5),
+.actionGrid button:nth-child(5),
+.missionActions button:nth-child(5){
+  background:linear-gradient(180deg,#101010,#030303) !important;
+}
+
+/* QR-Code wieder sichtbar und prominent */
+.qrBox{
+  display:block !important;
+  visibility:visible !important;
+  opacity:1 !important;
+  pointer-events:auto !important;
+  filter:none !important;
+  margin:24px auto 0 !important;
+  padding:16px !important;
+  max-width:420px !important;
+  border-radius:20px !important;
+  border:1px solid rgba(255,255,255,.12) !important;
+  background:rgba(0,0,0,.35) !important;
+  text-align:center !important;
+}
+
+.qrBox canvas,
+.qrBox img{
+  display:block !important;
+  visibility:visible !important;
+  opacity:1 !important;
+  width:260px !important;
+  height:260px !important;
+  max-width:82vw !important;
+  max-height:82vw !important;
+  margin:10px auto !important;
+  background:white !important;
+  border-radius:12px !important;
+  padding:8px !important;
+}
+
+/* QR in gesperrten Host-Profilen bleibt sichtbar */
+.playerBox.hostLockedByPlayer .qrBox{
+  opacity:1 !important;
+  filter:none !important;
+  pointer-events:auto !important;
+}
+
+/* Spielerkarte: Rangliste erst nach QR */
+.rankingBox,
+.leaderboard,
+#ranking,
+#leaderboard{
+  clear:both !important;
+}
+
 </style>
 
 <link rel="stylesheet"
@@ -3304,36 +3435,57 @@ renderProfileButtons();
 
 </script>
 
+
 <script>
 (function(){
-  function normalizeActionButtons(){
-    document.querySelectorAll(".playerBox, .playerDeviceView, .singlePlayerView").forEach(box=>{
-      const change = Array.from(box.querySelectorAll("button")).find(b=>/Mission ändern/.test(b.textContent||""));
-      const fulfilled = Array.from(box.querySelectorAll("button")).find(b=>/Mission erfüllt/.test(b.textContent||""));
-      const failed = Array.from(box.querySelectorAll("button")).find(b=>/Mission gescheitert/.test(b.textContent||""));
-      const correct = Array.from(box.querySelectorAll("button")).find(b=>/Verdacht korrekt/.test(b.textContent||""));
-      const wrong = Array.from(box.querySelectorAll("button")).find(b=>/Verdacht falsch/.test(b.textContent||""));
+  function makeQrWithApi(container, url){
+    if(!container || container.dataset.qrFixed === "1") return;
+    container.dataset.qrFixed = "1";
 
-      if(!change || !fulfilled || !failed || !correct || !wrong) return;
+    let img = container.querySelector("img.gmQrFixed");
+    if(!img){
+      img = document.createElement("img");
+      img.className = "gmQrFixed";
+      img.alt = "QR-Code";
+      container.appendChild(img);
+    }
+    img.src = "https://api.qrserver.com/v1/create-qr-code/?size=260x260&margin=10&data=" + encodeURIComponent(url);
+  }
 
-      let grid = box.querySelector(".gmActionGridFixed");
-      if(!grid){
-        grid = document.createElement("div");
-        grid.className = "playerActionGrid gmActionGridFixed";
-        change.parentNode.insertBefore(grid, change);
+  function ensureQrCodes(){
+    if(typeof players === "undefined" || !Array.isArray(players)) return;
+
+    document.querySelectorAll(".playerBox").forEach((box)=>{
+      const id = box.id || "";
+      const m = id.match(/playerBox(\d+)/);
+      if(!m) return;
+      const index = Number(m[1]);
+      const player = players[index];
+      if(!player) return;
+
+      let qr = box.querySelector(".qrBox");
+      if(!qr){
+        qr = document.createElement("div");
+        qr.className = "qrBox";
+        qr.innerHTML = `<h3>📱 QR-Code für ${player.name || "Spieler"}</h3><p>Scannen öffnet nur dieses Profil.</p>`;
+        box.appendChild(qr);
       }
 
-      [change, fulfilled, failed, correct, wrong].forEach(btn=>{
-        if(btn.parentNode !== grid) grid.appendChild(btn);
-      });
-
-      change.classList.add("changeButton");
+      let url = "";
+      try{
+        if(typeof getPlayerUrl === "function") url = getPlayerUrl(player);
+      }catch(e){}
+      if(!url){
+        const gameId = localStorage.getItem("gmCurrentGameId") || localStorage.getItem("gmGameId") || "";
+        url = location.origin + location.pathname + "?player=" + encodeURIComponent(player.id || index) + (gameId ? "&game=" + encodeURIComponent(gameId) : "");
+      }
+      makeQrWithApi(qr, url);
     });
   }
 
-  document.addEventListener("DOMContentLoaded", normalizeActionButtons);
-  const obs = new MutationObserver(()=>normalizeActionButtons());
-  obs.observe(document.documentElement,{childList:true,subtree:true});
+  document.addEventListener("DOMContentLoaded", ensureQrCodes);
+  window.addEventListener("load", ensureQrCodes);
+  setInterval(ensureQrCodes, 1500);
 })();
 </script>
 
