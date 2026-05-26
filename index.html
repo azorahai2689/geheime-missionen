@@ -1118,6 +1118,19 @@ body.playerModeActive #playerDeviceShell{
   text-shadow:0 0 8px color-mix(in srgb, var(--c) 70%, transparent);
 }
 
+.gmVerdachtTitle{
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:10px !important;
+}
+
+.gmVerdachtTitle span{
+  display:flex;
+  align-items:center;
+}
+
+
 .gmRulesScreen .gmRuleBody{
   grid-column:2;
   margin:0;
@@ -1600,7 +1613,11 @@ body.playerModeActive #playerDeviceShell{
 
   <div class="gmRuleCard gmSuspect">
     <div class="gmRuleIcon">🕵🏻‍♂️</div>
-    <div class="gmRuleTitle">VERDACHT</div>
+    <div class="gmRuleTitle gmVerdachtTitle">
+  <span>🕵🏻‍♂️</span>
+  <span>VERDACHT</span>
+  <span>🕵🏼‍♀️</span>
+</div>
     <div class="gmRuleBody">
       <div class="gmRuleLine">Jeder Spieler kann jederzeit einen Verdacht aussprechen 🔍<br>und eine geheime Mission aufdecken 🕵🏻‍♂️</div>
       <div class="gmScoreLine gmGood"><span class="gmScoreIcon">🎯</span><span>Richtiger Verdacht</span><span class="gmScoreValue">+5 Punkte</span></div>
