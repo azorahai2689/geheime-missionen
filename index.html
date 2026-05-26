@@ -1877,8 +1877,33 @@ font-weight:bold;
   border-radius:14px !important;
 }
 
+
+/* === V16 echte Icons === */
+.ruleIcon i,
+.qrStepIcon i,
+.playerCloseBig i{
+  color:inherit !important;
+  text-shadow:0 0 10px currentColor !important;
+}
+
+.ruleCard.qrRule .ruleIcon{
+  color:#d133ff !important;
+}
+
+.qrStepIcon{
+  color:#d133ff !important;
+}
+
+.playerCloseBig i{
+  margin-right:8px !important;
+}
+
 </style>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
+
 <body>
   <div class="box">
     
@@ -1914,7 +1939,7 @@ font-weight:bold;
     <div class="ruleContent">
       <div class="ruleLine">Eine Mission kann geändert werden 🔄</div>
       <div class="ruleLine">Beim Ändern wechselst du zwischen<br>3 zufälligen Missionen 🎲</div>
-      <div class="ruleLine">Jede neue Mission kostet<br><span class="highlight-red">1 Punkt</span></div>
+      <div class="ruleLine">Jede neue Mission kostet <span class="highlight-red">1 Punkt</span></div>
     </div>
   </div>
 
@@ -1929,19 +1954,19 @@ font-weight:bold;
   </div>
 
   <div class="ruleCard qrRule">
-    <div class="ruleIcon">▦</div>
+    <div class="ruleIcon"><i class="fa-solid fa-qrcode"></i></div>
     <div class="ruleCardTitle">QR-FUNKTION</div>
     <div class="ruleContent">
       <div class="qrStep">
-        <span class="qrStepIcon">📱</span>
+        <span class="qrStepIcon"><i class="fa-solid fa-mobile-screen-button"></i></span>
         <span class="qrStepText"><strong>QR-Code scannen</strong><span>Jeder Spieler scannt seinen QR-Code.</span></span>
       </div>
       <div class="qrStep">
-        <span class="qrStepIcon">🔒</span>
+        <span class="qrStepIcon"><i class="fa-solid fa-lock"></i></span>
         <span class="qrStepText"><strong>Profil übernehmen</strong><span>Nur der Spieler steuert sein Profil.</span><span class="purple">Der Host kann nicht schummeln.</span></span>
       </div>
       <div class="qrStep">
-        <span class="qrStepIcon">↪</span>
+        <span class="qrStepIcon"><i class="fa-solid fa-right-from-bracket"></i></span>
         <span class="qrStepText"><strong>Schließen</strong><span>Der Spieler klickt unten auf „Schließen“, danach steuert wieder der Host.</span></span>
       </div>
     </div>
