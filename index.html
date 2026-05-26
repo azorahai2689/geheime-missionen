@@ -1025,6 +1025,39 @@ body.playerModeActive #playerDeviceShell{
   border:2px solid rgba(255,255,255,0.15) !important;
 }
 
+
+/* === Spieler übernimmt Profil === */
+.playerLockedNotice{
+  margin:16px auto 0;
+  padding:12px 14px;
+  border-radius:16px;
+  background:rgba(0,176,255,0.12);
+  border:1px solid rgba(0,176,255,0.35);
+  color:#9fe3ff;
+  font-weight:bold;
+  text-align:center;
+}
+
+.playerBox.hostLockedByPlayer .missionCard,
+.playerBox.hostLockedByPlayer .missionBack,
+.playerBox.hostLockedByPlayer .changeButton,
+.playerBox.hostLockedByPlayer .playerActionGrid{
+  opacity:0.38 !important;
+  pointer-events:none !important;
+  filter:grayscale(0.35);
+}
+
+.playerBox.hostLockedByPlayer .missionBack{
+  filter:blur(12px) grayscale(1) !important;
+  user-select:none !important;
+}
+
+.playerBox.hostLockedByPlayer .qrBox{
+  opacity:1 !important;
+  pointer-events:auto !important;
+  filter:none !important;
+}
+
 </style>
 </head>
 <body>
@@ -2422,6 +2455,7 @@ function getPlayerPayload(player){
     done: player.done || 0,
     caught: player.caught || 0,
     total: player.total || 0,
+    controlledByPlayer: player.controlledByPlayer || false,
     avatar: (typeof getProfileAvatarSrc === "function") ? getProfileAvatarSrc(player.name) : "",
     color: (typeof getProfileColor === "function") ? getProfileColor(player.name) : "#ff8800",
     updatedAt: Date.now()
@@ -2476,6 +2510,22 @@ function listenToOnlineRound(){
 
           const card = box.querySelector(".missionCard");
           if(card) card.classList.remove("flipped");
+
+          if(players[index].controlledByPlayer){
+            box.classList.add("hostLockedByPlayer");
+            if(!box.querySelector(".playerLockedNotice")){
+              const notice = document.createElement("div");
+              notice.className = "playerLockedNotice";
+              notice.innerHTML = "🔒 Spieler steuert dieses Profil";
+              const qrBox = box.querySelector(".qrBox");
+              if(qrBox) box.insertBefore(notice, qrBox);
+              else box.appendChild(notice);
+            }
+          }else{
+            box.classList.remove("hostLockedByPlayer");
+            const notice = box.querySelector(".playerLockedNotice");
+            if(notice) notice.remove();
+          }
         }
       }
     });
@@ -2492,7 +2542,16 @@ function renderQrCodes(){
 
   players.forEach((player, index) => {
     const box = document.getElementById(`playerBox${index}`);
-    if(!box || box.querySelector(".qrBox")) return;
+    if(!box) return;
+
+    if(player.controlledByPlayer && !box.querySelector(".playerLockedNotice")){
+      const notice = document.createElement("div");
+      notice.className = "playerLockedNotice";
+      notice.innerHTML = "🔒 Spieler steuert dieses Profil";
+      box.appendChild(notice);
+    }
+
+    if(box.querySelector(".qrBox")) return;
 
     const link = getPlayerUrl(player);
     const qr = document.createElement("div");
@@ -2579,6 +2638,13 @@ function renderPlayerDeviceView(playerId, gameId){
     gameId,
     playerId
   }));
+
+  if(initFirebaseOnline()){
+    gmDb.ref("games/" + gameId + "/players/" + playerId).update({
+      controlledByPlayer: true,
+      controlledAt: Date.now()
+    });
+  }
 
   document.body.classList.add("playerModeActive");
 
@@ -2745,12 +2811,22 @@ window.createGame = function(){
 
 const gmOriginalAddScore = window.addScore;
 window.addScore = function(index, type, points, button){
+  if(players[index] && players[index].controlledByPlayer){
+    alert("Dieses Profil wird gerade vom Spielergerät gesteuert.");
+    return;
+  }
+
   gmOriginalAddScore(index, type, points, button);
   publishPlayer(index);
 };
 
 const gmOriginalChangeMission = window.changeMission;
 window.changeMission = function(index){
+  if(players[index] && players[index].controlledByPlayer){
+    alert("Dieses Profil wird gerade vom Spielergerät gesteuert.");
+    return;
+  }
+
   gmOriginalChangeMission(index);
   publishPlayer(index);
 };
@@ -2771,8 +2847,25 @@ if(typeof gmOriginalRestoreGame === "function"){
 
 
 function closePlayerView(){
-  localStorage.removeItem("gmPlayerMode");
+  let stored = null;
 
+  try{
+    stored = JSON.parse(localStorage.getItem("gmPlayerMode") || "null");
+  }catch(e){}
+
+  if(stored && stored.gameId && stored.playerId && initFirebaseOnline()){
+    gmDb.ref("games/" + stored.gameId + "/players/" + stored.playerId).update({
+      controlledByPlayer: false,
+      controlledAt: null
+    }).finally(() => {
+      localStorage.removeItem("gmPlayerMode");
+      const cleanUrl = window.location.origin + window.location.pathname;
+      window.location.href = cleanUrl;
+    });
+    return;
+  }
+
+  localStorage.removeItem("gmPlayerMode");
   const cleanUrl = window.location.origin + window.location.pathname;
   window.location.href = cleanUrl;
 }
