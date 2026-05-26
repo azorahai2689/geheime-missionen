@@ -1050,6 +1050,833 @@ font-weight:bold;
   }
 }
 
+
+/* === V13: Spielregeln exakt kompakt wie Referenz === */
+.hero-description{
+  max-width:720px !important;
+  margin:0 auto !important;
+}
+
+.ruleCard{
+  display:grid !important;
+  grid-template-columns:76px 1fr !important;
+  gap:14px !important;
+  align-items:start !important;
+  text-align:left !important;
+  padding:16px 18px !important;
+  margin:14px 0 !important;
+  border-radius:18px !important;
+  border:2px solid var(--rule-color,#ff8800) !important;
+  background:
+    radial-gradient(circle at center, rgba(255,255,255,.05), transparent 52%),
+    linear-gradient(180deg,#101010,#030303) !important;
+  box-shadow:
+    0 0 14px color-mix(in srgb, var(--rule-color,#ff8800) 55%, transparent),
+    inset 0 0 18px rgba(255,255,255,.025) !important;
+}
+
+.ruleIcon{
+  grid-column:1 !important;
+  grid-row:1 / span 2 !important;
+  width:58px !important;
+  min-width:58px !important;
+  height:58px !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  font-size:42px !important;
+  line-height:1 !important;
+}
+
+.ruleCardTitle{
+  grid-column:2 !important;
+  justify-content:flex-start !important;
+  text-align:left !important;
+  margin:0 0 6px !important;
+  color:var(--rule-color,#ff8800) !important;
+  font-size:28px !important;
+  font-weight:900 !important;
+  line-height:1 !important;
+  text-transform:uppercase !important;
+}
+
+.ruleContent{
+  grid-column:2 !important;
+}
+
+.ruleContent p,
+.ruleLine{
+  font-size:17px !important;
+  line-height:1.24 !important;
+  text-align:left !important;
+  margin:0 !important;
+  color:#f4f4f4 !important;
+}
+
+.ruleLine{
+  padding:8px 0 !important;
+  border-top:1px solid rgba(255,255,255,.18) !important;
+}
+
+.ruleLine:first-child{
+  border-top:none !important;
+  padding-top:0 !important;
+}
+
+.rulePointsRow{
+  display:grid !important;
+  grid-template-columns:36px 1fr auto !important;
+  align-items:center !important;
+  gap:10px !important;
+  padding:8px 0 !important;
+  border-top:1px solid rgba(255,255,255,.18) !important;
+  font-size:18px !important;
+  line-height:1.15 !important;
+  font-weight:700 !important;
+}
+
+.rulePointsRow .value{
+  font-weight:900 !important;
+  white-space:nowrap !important;
+}
+
+.rulePointsRow.good .value{ color:#53d22f !important; }
+.rulePointsRow.bad .value{ color:#ff6b7a !important; }
+
+.ruleCard.qrRule .ruleIcon{
+  font-size:48px !important;
+  color:#d747ff !important;
+}
+
+.qrStep{
+  display:grid !important;
+  grid-template-columns:52px 1fr !important;
+  align-items:center !important;
+  gap:12px !important;
+  padding:8px 0 !important;
+  border-top:1px solid rgba(255,255,255,.18) !important;
+  border-bottom:none !important;
+  background:transparent !important;
+  border-radius:0 !important;
+}
+
+.qrStepIcon{
+  width:38px !important;
+  height:38px !important;
+  border-radius:50% !important;
+  border:2px solid #d747ff !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  color:#d747ff !important;
+  font-size:21px !important;
+  box-shadow:0 0 10px rgba(211,71,255,.7) !important;
+}
+
+.qrStepText strong{
+  display:block !important;
+  color:#fff !important;
+  font-size:18px !important;
+  line-height:1.1 !important;
+}
+
+.qrStepText span{
+  display:block !important;
+  color:rgba(255,255,255,.78) !important;
+  font-size:14px !important;
+  line-height:1.15 !important;
+  margin-top:2px !important;
+}
+
+.qrStepText .purple{
+  color:#d747ff !important;
+  font-weight:800 !important;
+}
+
+.qrRuleHint{
+  display:none !important;
+}
+
+.winner-text{
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:14px !important;
+  font-size:22px !important;
+  line-height:1.18 !important;
+  margin:18px 0 16px !important;
+  font-weight:900 !important;
+}
+
+.winner-text:before,
+.winner-text:after{
+  content:"🏆";
+  font-size:30px;
+}
+
+.rulesModalBox{
+  max-width:620px !important;
+  padding:18px !important;
+  border-radius:22px !important;
+  text-align:left !important;
+}
+
+.rulesModalBox h2{
+  text-align:center !important;
+  color:white !important;
+  font-size:26px !important;
+  margin:0 0 16px !important;
+}
+
+.playerInfoCard{
+  border:2px solid #b833ff !important;
+  border-radius:18px !important;
+  padding:16px !important;
+  margin:14px 0 !important;
+  background:linear-gradient(180deg,rgba(90,0,140,.22),rgba(20,0,35,.35)) !important;
+  box-shadow:0 0 14px rgba(184,51,255,.5) !important;
+  display:grid !important;
+  grid-template-columns:44px 1fr !important;
+  gap:12px !important;
+  align-items:center !important;
+}
+
+.playerInfoCard .infoIcon{
+  font-size:30px !important;
+  color:white !important;
+  opacity:.9 !important;
+}
+
+.playerInfoCard p{
+  margin:0 !important;
+  font-size:16px !important;
+  line-height:1.25 !important;
+  color:#eee !important;
+}
+
+.playerInfoCard strong{
+  color:#d747ff !important;
+}
+
+.playerCloseBig{
+  width:100% !important;
+  border:none !important;
+  border-radius:18px !important;
+  padding:22px 18px !important;
+  margin-top:14px !important;
+  background:linear-gradient(180deg,#7d14b8,#4b0870) !important;
+  color:white !important;
+  font-size:22px !important;
+  font-weight:900 !important;
+  box-shadow:0 0 16px rgba(184,51,255,.55) !important;
+}
+
+.playerCloseBig small{
+  display:block !important;
+  margin-top:6px !important;
+  font-size:14px !important;
+  font-weight:500 !important;
+  color:rgba(255,255,255,.72) !important;
+}
+
+@media(max-width:700px){
+  .ruleCard{
+    grid-template-columns:58px 1fr !important;
+    gap:10px !important;
+    padding:14px 14px !important;
+    margin:12px 0 !important;
+  }
+
+  .ruleIcon{
+    width:46px !important;
+    min-width:46px !important;
+    height:46px !important;
+    font-size:34px !important;
+  }
+
+  .ruleCardTitle{
+    font-size:23px !important;
+  }
+
+  .ruleContent p,
+  .ruleLine{
+    font-size:14.5px !important;
+    line-height:1.22 !important;
+  }
+
+  .rulePointsRow{
+    grid-template-columns:32px 1fr auto !important;
+    gap:8px !important;
+    font-size:15px !important;
+  }
+
+  .qrStep{
+    grid-template-columns:42px 1fr !important;
+    gap:10px !important;
+  }
+
+  .qrStepIcon{
+    width:34px !important;
+    height:34px !important;
+    font-size:18px !important;
+  }
+
+  .qrStepText strong{
+    font-size:16px !important;
+  }
+
+  .qrStepText span{
+    font-size:12.5px !important;
+  }
+
+  .winner-text{
+    font-size:19px !important;
+    gap:8px !important;
+  }
+
+  .winner-text:before,
+  .winner-text:after{
+    font-size:26px !important;
+  }
+
+  .rulesModalBox{
+    padding:14px !important;
+  }
+}
+
+
+/* === V14: Referenz-Look Spielregeln exakt kompakt === */
+.hero-description{
+  max-width:640px !important;
+  margin:0 auto !important;
+}
+
+.ruleCard{
+  position:relative !important;
+  display:grid !important;
+  grid-template-columns:62px 1fr !important;
+  column-gap:12px !important;
+  row-gap:0 !important;
+  align-items:start !important;
+  padding:12px 16px !important;
+  margin:12px 0 !important;
+  border-radius:16px !important;
+  border:2px solid var(--rule-color,#ff9800) !important;
+  background:
+    radial-gradient(circle at center, rgba(255,255,255,.045), transparent 58%),
+    linear-gradient(180deg,#101010 0%,#030303 100%) !important;
+  box-shadow:
+    0 0 13px color-mix(in srgb, var(--rule-color,#ff9800) 58%, transparent),
+    inset 0 0 16px rgba(255,255,255,.025) !important;
+  text-align:left !important;
+}
+
+.ruleIcon{
+  grid-column:1 !important;
+  grid-row:1 / span 2 !important;
+  width:48px !important;
+  height:48px !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  font-size:38px !important;
+  line-height:1 !important;
+  margin-top:0 !important;
+}
+
+.ruleCardTitle{
+  grid-column:2 !important;
+  margin:0 0 4px 0 !important;
+  padding:0 !important;
+  display:block !important;
+  color:var(--rule-color,#ff9800) !important;
+  text-align:left !important;
+  font-size:25px !important;
+  line-height:1 !important;
+  font-weight:900 !important;
+  text-transform:uppercase !important;
+  text-shadow:0 0 8px color-mix(in srgb, var(--rule-color,#ff9800) 60%, transparent) !important;
+}
+
+.ruleContent{
+  grid-column:2 !important;
+  padding:0 !important;
+  margin:0 !important;
+}
+
+.ruleLine{
+  margin:0 !important;
+  padding:7px 0 !important;
+  border-top:1px solid rgba(255,255,255,.20) !important;
+  color:#f2f2f2 !important;
+  text-align:left !important;
+  font-size:14px !important;
+  line-height:1.18 !important;
+  font-weight:500 !important;
+}
+
+.ruleLine:first-child{
+  border-top:none !important;
+  padding-top:0 !important;
+}
+
+.rulePointsRow{
+  display:grid !important;
+  grid-template-columns:34px 1fr auto !important;
+  align-items:center !important;
+  gap:8px !important;
+  margin:0 !important;
+  padding:7px 0 !important;
+  border-top:1px solid rgba(255,255,255,.20) !important;
+  color:#fff !important;
+  font-size:15px !important;
+  line-height:1.12 !important;
+  font-weight:500 !important;
+}
+
+.rulePointsRow > span:first-child{
+  font-size:21px !important;
+  text-align:center !important;
+}
+
+.rulePointsRow .value{
+  font-size:15px !important;
+  font-weight:900 !important;
+  white-space:nowrap !important;
+}
+
+.rulePointsRow.good .value{ color:#5be23a !important; }
+.rulePointsRow.bad .value{ color:#ff5d72 !important; }
+
+.ruleCard.missionRule{ --rule-color:#ff9800 !important; }
+.ruleCard.changeRule{ --rule-color:#19a8ff !important; }
+.ruleCard.suspectRule{ --rule-color:#4ee02c !important; }
+.ruleCard.qrRule{ --rule-color:#d133ff !important; }
+
+.ruleCard.qrRule{
+  grid-template-columns:62px 1fr !important;
+}
+
+.ruleCard.qrRule .ruleIcon{
+  font-size:44px !important;
+  color:#d133ff !important;
+  text-shadow:0 0 10px rgba(209,51,255,.75) !important;
+}
+
+.qrStep{
+  display:grid !important;
+  grid-template-columns:42px 1fr !important;
+  gap:9px !important;
+  align-items:center !important;
+  margin:0 !important;
+  padding:7px 0 !important;
+  border-top:1px solid rgba(255,255,255,.20) !important;
+  background:transparent !important;
+  border-radius:0 !important;
+}
+
+.qrStep:first-child{
+  border-top:none !important;
+  padding-top:0 !important;
+}
+
+.qrStepIcon{
+  width:34px !important;
+  height:34px !important;
+  min-width:34px !important;
+  border-radius:50% !important;
+  border:2px solid #d133ff !important;
+  color:#d133ff !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  font-size:17px !important;
+  box-shadow:0 0 9px rgba(209,51,255,.72) !important;
+}
+
+.qrStepText strong{
+  display:block !important;
+  color:#fff !important;
+  font-size:15px !important;
+  line-height:1.08 !important;
+  font-weight:900 !important;
+  margin:0 !important;
+}
+
+.qrStepText span{
+  display:block !important;
+  color:rgba(255,255,255,.78) !important;
+  font-size:11.5px !important;
+  line-height:1.12 !important;
+  margin:2px 0 0 !important;
+}
+
+.qrStepText .purple{
+  color:#d133ff !important;
+  font-weight:900 !important;
+}
+
+.qrRuleHint{ display:none !important; }
+
+.winner-text{
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:14px !important;
+  margin:12px 0 12px !important;
+  font-size:19px !important;
+  line-height:1.14 !important;
+  font-weight:900 !important;
+  text-align:center !important;
+}
+
+.winner-text:before,
+.winner-text:after{
+  content:"🏆";
+  font-size:27px;
+  line-height:1;
+}
+
+.rulesModalBox{
+  max-width:480px !important;
+  width:min(92vw,480px) !important;
+  padding:14px 16px !important;
+  border-radius:18px !important;
+  border:1px solid rgba(255,152,0,.45) !important;
+  background:#050505 !important;
+  text-align:left !important;
+}
+
+.rulesModalBox h2{
+  text-align:center !important;
+  color:#fff !important;
+  font-size:23px !important;
+  line-height:1 !important;
+  margin:0 0 12px !important;
+  font-weight:800 !important;
+}
+
+.rulesCloseButton{
+  margin-top:10px !important;
+}
+
+.playerInfoCard{
+  display:grid !important;
+  grid-template-columns:38px 1fr !important;
+  gap:10px !important;
+  align-items:center !important;
+  margin:12px 0 !important;
+  padding:12px 14px !important;
+  border-radius:14px !important;
+  border:2px solid #9f26ff !important;
+  background:linear-gradient(180deg,rgba(95,0,130,.25),rgba(35,0,55,.40)) !important;
+  box-shadow:0 0 12px rgba(159,38,255,.55) !important;
+}
+
+.playerInfoCard .infoIcon{
+  font-size:27px !important;
+  color:white !important;
+  opacity:.92 !important;
+}
+
+.playerInfoCard p{
+  margin:0 !important;
+  color:#eee !important;
+  font-size:14px !important;
+  line-height:1.22 !important;
+}
+
+.playerInfoCard strong{
+  color:#d133ff !important;
+}
+
+.playerCloseBig{
+  width:100% !important;
+  margin-top:12px !important;
+  border:none !important;
+  border-radius:14px !important;
+  padding:18px 14px !important;
+  background:linear-gradient(180deg,#7410aa,#4d0875) !important;
+  color:white !important;
+  font-size:20px !important;
+  font-weight:900 !important;
+  box-shadow:0 0 13px rgba(159,38,255,.58) !important;
+}
+
+.playerCloseBig small{
+  display:block !important;
+  margin-top:5px !important;
+  color:rgba(255,255,255,.72) !important;
+  font-size:12px !important;
+  font-weight:500 !important;
+}
+
+.menuGrid{
+  margin-top:10px !important;
+}
+
+
+/* === V15: Spielregeln Pixel-näher an Referenz === */
+.rulesModalBox,
+.hero-description{
+  max-width:500px !important;
+}
+
+.hero-description{
+  margin:0 auto !important;
+}
+
+.ruleCard{
+  display:grid !important;
+  grid-template-columns:58px 1fr !important;
+  gap:10px !important;
+  align-items:start !important;
+  padding:12px 14px !important;
+  margin:10px 0 !important;
+  border-radius:15px !important;
+  border:2px solid var(--rule-color,#ff9800) !important;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255,255,255,.035), transparent 60%),
+    linear-gradient(180deg,#0b0b0b,#020202) !important;
+  box-shadow:
+    0 0 10px color-mix(in srgb, var(--rule-color,#ff9800) 55%, transparent),
+    inset 0 0 12px rgba(255,255,255,.018) !important;
+  text-align:left !important;
+}
+
+.ruleCard.missionRule{ --rule-color:#ff9800 !important; }
+.ruleCard.changeRule{ --rule-color:#169cff !important; }
+.ruleCard.suspectRule{ --rule-color:#46d82d !important; }
+.ruleCard.qrRule{ --rule-color:#c82cff !important; }
+
+.ruleIcon{
+  grid-column:1 !important;
+  grid-row:1 / span 2 !important;
+  width:48px !important;
+  height:48px !important;
+  font-size:38px !important;
+  line-height:1 !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+}
+
+.ruleCardTitle{
+  grid-column:2 !important;
+  margin:0 0 3px !important;
+  padding:0 !important;
+  font-size:24px !important;
+  line-height:1 !important;
+  font-weight:900 !important;
+  color:var(--rule-color,#ff9800) !important;
+  text-align:left !important;
+  justify-content:flex-start !important;
+  text-transform:uppercase !important;
+  text-shadow:0 0 7px color-mix(in srgb, var(--rule-color,#ff9800) 55%, transparent) !important;
+}
+
+.ruleContent{
+  grid-column:2 !important;
+  padding:0 !important;
+  margin:0 !important;
+}
+
+.ruleLine{
+  padding:6px 0 !important;
+  margin:0 !important;
+  border-top:1px solid rgba(255,255,255,.18) !important;
+  font-size:13.2px !important;
+  line-height:1.16 !important;
+  font-weight:500 !important;
+  color:#f1f1f1 !important;
+  text-align:left !important;
+}
+
+.ruleLine:first-child{
+  border-top:none !important;
+  padding-top:0 !important;
+}
+
+.rulePointsRow{
+  display:grid !important;
+  grid-template-columns:30px 1fr auto !important;
+  align-items:center !important;
+  gap:7px !important;
+  padding:6px 0 !important;
+  margin:0 !important;
+  border-top:1px solid rgba(255,255,255,.18) !important;
+  font-size:14px !important;
+  line-height:1.05 !important;
+  color:#fff !important;
+}
+
+.rulePointsRow > span:first-child{
+  font-size:20px !important;
+  text-align:center !important;
+}
+
+.rulePointsRow .value{
+  font-size:14px !important;
+  font-weight:900 !important;
+  white-space:nowrap !important;
+}
+
+.rulePointsRow.good .value{ color:#55df30 !important; }
+.rulePointsRow.bad .value{ color:#ff5b6d !important; }
+
+.qrStep{
+  display:grid !important;
+  grid-template-columns:38px 1fr !important;
+  gap:8px !important;
+  align-items:center !important;
+  padding:6px 0 !important;
+  margin:0 !important;
+  border-top:1px solid rgba(255,255,255,.18) !important;
+  background:transparent !important;
+  border-radius:0 !important;
+}
+
+.qrStep:first-child{
+  border-top:none !important;
+  padding-top:0 !important;
+}
+
+.qrStepIcon{
+  width:31px !important;
+  height:31px !important;
+  border-radius:50% !important;
+  border:2px solid #c82cff !important;
+  color:#c82cff !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  font-size:16px !important;
+  box-shadow:0 0 8px rgba(200,44,255,.68) !important;
+}
+
+.qrStepText strong{
+  display:block !important;
+  font-size:14px !important;
+  line-height:1.05 !important;
+  font-weight:900 !important;
+  color:#fff !important;
+  margin:0 !important;
+}
+
+.qrStepText span{
+  display:block !important;
+  font-size:10.8px !important;
+  line-height:1.1 !important;
+  color:rgba(255,255,255,.75) !important;
+  margin-top:1px !important;
+}
+
+.qrStepText .purple{
+  color:#c82cff !important;
+  font-weight:900 !important;
+}
+
+.qrRuleHint{
+  display:none !important;
+}
+
+.winner-text{
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:12px !important;
+  margin:10px 0 10px !important;
+  font-size:17px !important;
+  line-height:1.15 !important;
+  font-weight:900 !important;
+  text-align:center !important;
+}
+
+.winner-text:before,
+.winner-text:after{
+  content:"🏆";
+  font-size:25px !important;
+  line-height:1 !important;
+}
+
+.rulesModalBox{
+  width:min(92vw,500px) !important;
+  max-width:500px !important;
+  padding:13px 15px !important;
+  border-radius:17px !important;
+  background:#050505 !important;
+  border:1px solid rgba(255,152,0,.42) !important;
+}
+
+.rulesModalBox h2{
+  color:#fff !important;
+  text-align:center !important;
+  margin:0 0 11px !important;
+  font-size:22px !important;
+  line-height:1 !important;
+  font-weight:800 !important;
+}
+
+.playerInfoCard{
+  display:grid !important;
+  grid-template-columns:36px 1fr !important;
+  gap:10px !important;
+  align-items:center !important;
+  margin:10px 0 !important;
+  padding:11px 13px !important;
+  border-radius:14px !important;
+  border:2px solid #a128ff !important;
+  background:linear-gradient(180deg,rgba(90,0,130,.28),rgba(35,0,55,.42)) !important;
+  box-shadow:0 0 10px rgba(161,40,255,.52) !important;
+}
+
+.playerInfoCard .infoIcon{
+  font-size:26px !important;
+  color:#fff !important;
+}
+
+.playerInfoCard p{
+  font-size:13.2px !important;
+  line-height:1.18 !important;
+  color:#eee !important;
+  margin:0 !important;
+}
+
+.playerInfoCard strong{
+  color:#c82cff !important;
+}
+
+.playerCloseBig{
+  width:100% !important;
+  margin-top:10px !important;
+  padding:17px 12px !important;
+  border-radius:14px !important;
+  border:0 !important;
+  background:linear-gradient(180deg,#7512aa,#4d0873) !important;
+  color:white !important;
+  font-size:19px !important;
+  font-weight:900 !important;
+  box-shadow:0 0 12px rgba(161,40,255,.55) !important;
+}
+
+.playerCloseBig small{
+  display:block !important;
+  margin-top:5px !important;
+  font-size:11.5px !important;
+  color:rgba(255,255,255,.70) !important;
+  font-weight:500 !important;
+}
+
+.menuGrid{
+  margin-top:8px !important;
+}
+
+/* Host-Startseite etwas dichter wie Screenshot */
+.hero-description + .menuGrid .mainButton,
+.menuGrid .mainButton{
+  border-radius:14px !important;
+}
+
 </style>
 </head>
 <body>
@@ -1066,68 +1893,61 @@ font-weight:bold;
 
       
 
+
+
+
 <div class="hero-description">
 
   <div class="ruleCard missionRule">
-    <div class="ruleCardTitle">🥷 MISSIONEN</div>
-    <p>Jeder Spieler bekommt eine <span class="highlight-orange">geheime Mission</span>.</p>
-    <div class="ruleDivider"></div>
-    <p>Erfülle deine Mission möglichst unauffällig<br>
-    und du erhältst Punkte ⭐️</p>
-    <div class="ruleDivider"></div>
-    <p>Wenn du auffliegst und deine Mission scheitert,<br>
-    werden Punkte abgezogen&nbsp;🔻</p>
+    <div class="ruleIcon">🥷</div>
+    <div class="ruleCardTitle">MISSIONEN</div>
+    <div class="ruleContent">
+      <div class="ruleLine">Jeder Spieler bekommt<br>eine <span class="highlight-orange">geheime Mission</span>.</div>
+      <div class="ruleLine">Erfülle deine Mission möglichst<br>unauffällig und du erhältst Punkte ⭐</div>
+      <div class="ruleLine">Wenn du auffliegst und deine Mission scheitert,<br>werden Punkte abgezogen 🔻</div>
+    </div>
   </div>
 
   <div class="ruleCard changeRule">
-    <div class="ruleCardTitle">🔄 MISSION ÄNDERN</div>
-    <p>Eine Mission kann geändert werden 🔄</p>
-    <div class="ruleDivider"></div>
-    <p>Beim Ändern wechselst du zwischen<br>
-    3 zufälligen Missionen 🎲</p>
-    <div class="ruleDivider"></div>
-    <p>Jede neue Mission kostet<br>
-    <span class="highlight-red">1 Punkt</span></p>
+    <div class="ruleIcon">🔄</div>
+    <div class="ruleCardTitle">MISSION ÄNDERN</div>
+    <div class="ruleContent">
+      <div class="ruleLine">Eine Mission kann geändert werden 🔄</div>
+      <div class="ruleLine">Beim Ändern wechselst du zwischen<br>3 zufälligen Missionen 🎲</div>
+      <div class="ruleLine">Jede neue Mission kostet <span class="highlight-red">1 Punkt</span></div>
+    </div>
   </div>
 
   <div class="ruleCard suspectRule">
-    <div class="ruleCardTitle">🕵🏻 VERDACHT</div>
-    <p>Jeder Spieler kann jederzeit einen Verdacht aussprechen 🔍<br>
-    und eine <span class="highlight-orange">geheime Mission</span> aufdecken 🕵🏻‍♂️</p>
-    <div class="ruleDivider"></div>
-    <div class="rules-box">
-      <div class="rule good">🎯 Richtiger Verdacht <br><span>+5 Punkte</span></div>
-      <div class="rule bad">❌ Falscher Verdacht <br><span>-1 Punkt</span></div>
+    <div class="ruleIcon">🕵🏻‍♂️</div>
+    <div class="ruleCardTitle">VERDACHT</div>
+    <div class="ruleContent">
+      <div class="ruleLine">Jeder Spieler kann jederzeit einen Verdacht aussprechen 🔍<br>und eine geheime Mission aufdecken 🕵🏻‍♂️</div>
+      <div class="rulePointsRow good"><span>🎯</span><span>Richtiger Verdacht</span><span class="value">+5 Punkte</span></div>
+      <div class="rulePointsRow bad"><span>❌</span><span>Falscher Verdacht</span><span class="value">-1 Punkt</span></div>
     </div>
   </div>
 
   <div class="ruleCard qrRule">
-    <div class="ruleCardTitle">📱 QR-FUNKTION</div>
-    <p>Jeder Spieler scannt seinen persönlichen QR-Code,<br>
-    übernimmt damit sein eigenes Profil und steuert seine Ansicht selbst.</p>
-
-    <div class="qrRuleSteps">
+    <div class="ruleIcon">▦</div>
+    <div class="ruleCardTitle">QR-FUNKTION</div>
+    <div class="ruleContent">
       <div class="qrStep">
-        <span class="qrStepIcon">▦</span>
-        <strong>QR-Code scannen</strong><br><span>Jeder Spieler scannt seinen QR-Code.</span>
-      </div>
-      <div class="qrStep">
-        <span class="qrStepIcon">👤</span>
-        <strong>Profil übernehmen</strong><br><span>Nur der Spieler steuert sein Profil.</span>
+        <span class="qrStepIcon">📱</span>
+        <span class="qrStepText"><strong>QR-Code scannen</strong><span>Jeder Spieler scannt seinen QR-Code.</span></span>
       </div>
       <div class="qrStep">
         <span class="qrStepIcon">🔒</span>
-        <strong>Host gesperrt</strong><br><span>Der Host kann dort nicht schummeln.</span>
+        <span class="qrStepText"><strong>Profil übernehmen</strong><span>Nur der Spieler steuert sein Profil.</span><span class="purple">Der Host kann nicht schummeln.</span></span>
+      </div>
+      <div class="qrStep">
+        <span class="qrStepIcon">↪</span>
+        <span class="qrStepText"><strong>Schließen</strong><span>Der Spieler klickt unten auf „Schließen“, danach steuert wieder der Host.</span></span>
       </div>
     </div>
-
-    <p class="qrRuleHint">Solange ein Spieler sein Profil übernommen hat,<br>
-    ist es für den Host gesperrt. Über <strong>„Schließen“</strong> wird es wieder freigegeben.</p>
   </div>
 
-  <p class="winner-text">
-    Wer am Ende die meisten Punkte hat, gewinnt!<br>🏆
-  </p>
+  <p class="winner-text">Wer am Ende die meisten<br>Punkte hat, gewinnt!</p>
 
 </div>
 
