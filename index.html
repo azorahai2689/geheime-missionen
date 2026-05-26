@@ -1898,6 +1898,100 @@ font-weight:bold;
   margin-right:8px !important;
 }
 
+
+/* === V17 Fix: QR sichtbar + Aktionsbuttons 1 + 2x2 === */
+.iconFallback{
+  display:none;
+}
+
+.ruleIcon i:not(.fa-solid) + .iconFallback,
+.qrStepIcon i:not(.fa-solid) + .iconFallback{
+  display:inline;
+}
+
+.playerActionGrid,
+.actionGrid,
+.playerButtons,
+.missionActions{
+  display:grid !important;
+  grid-template-columns:1fr 1fr !important;
+  gap:12px !important;
+  width:100% !important;
+  max-width:520px !important;
+  margin:16px auto 0 !important;
+}
+
+.playerActionGrid .changeButton,
+.actionGrid .changeButton,
+.missionActions .changeButton{
+  grid-column:1 / -1 !important;
+  width:70% !important;
+  margin:0 auto !important;
+}
+
+.changeButton{
+  width:70% !important;
+  max-width:380px !important;
+  margin:18px auto 14px !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+}
+
+.playerActionGrid .mainButton,
+.actionGrid .mainButton,
+.playerButtons .mainButton,
+.missionActions .mainButton{
+  width:100% !important;
+  margin:0 !important;
+  min-height:74px !important;
+  padding:14px 8px !important;
+  font-size:22px !important;
+  line-height:1.12 !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+}
+
+/* Falls die Buttons nicht in einem Grid liegen, trotzdem nebeneinander zwingen */
+.playerBox .buttonRow,
+.playerDeviceView .buttonRow{
+  display:grid !important;
+  grid-template-columns:1fr 1fr !important;
+  gap:12px !important;
+  width:100% !important;
+}
+
+/* QR-Box darf nie durch Host-Sperre oder Icon-CSS verschwinden */
+.qrBox,
+.playerQrBox,
+.qrCodeBox{
+  display:block !important;
+  visibility:visible !important;
+  opacity:1 !important;
+  pointer-events:auto !important;
+  filter:none !important;
+}
+
+.qrBox canvas,
+.qrBox img,
+.playerQrBox canvas,
+.playerQrBox img,
+.qrCodeBox canvas,
+.qrCodeBox img{
+  display:block !important;
+  visibility:visible !important;
+  opacity:1 !important;
+  max-width:100% !important;
+  margin:0 auto !important;
+}
+
+/* Spielerkarte: QR kommt vor Rangliste, nicht verdrängen */
+.playerBox .qrBox{
+  margin-top:22px !important;
+  margin-bottom:22px !important;
+}
+
 </style>
 
 <link rel="stylesheet"
@@ -1954,19 +2048,19 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
   </div>
 
   <div class="ruleCard qrRule">
-    <div class="ruleIcon"><i class="fa-solid fa-qrcode"></i></div>
+    <div class="ruleIcon"><i class="fa-solid fa-qrcode"></i><span class="iconFallback">▦</span></div>
     <div class="ruleCardTitle">QR-FUNKTION</div>
     <div class="ruleContent">
       <div class="qrStep">
-        <span class="qrStepIcon"><i class="fa-solid fa-mobile-screen-button"></i></span>
+        <span class="qrStepIcon"><i class="fa-solid fa-mobile-screen-button"></i><span class="iconFallback">📱</span></span>
         <span class="qrStepText"><strong>QR-Code scannen</strong><span>Jeder Spieler scannt seinen QR-Code.</span></span>
       </div>
       <div class="qrStep">
-        <span class="qrStepIcon"><i class="fa-solid fa-lock"></i></span>
+        <span class="qrStepIcon"><i class="fa-solid fa-lock"></i><span class="iconFallback">🔒</span></span>
         <span class="qrStepText"><strong>Profil übernehmen</strong><span>Nur der Spieler steuert sein Profil.</span><span class="purple">Der Host kann nicht schummeln.</span></span>
       </div>
       <div class="qrStep">
-        <span class="qrStepIcon"><i class="fa-solid fa-right-from-bracket"></i></span>
+        <span class="qrStepIcon"><i class="fa-solid fa-right-from-bracket"></i><span class="iconFallback">↪</span></span>
         <span class="qrStepText"><strong>Schließen</strong><span>Der Spieler klickt unten auf „Schließen“, danach steuert wieder der Host.</span></span>
       </div>
     </div>
@@ -3209,5 +3303,39 @@ renderProfileButtons();
     }
 
 </script>
+
+<script>
+(function(){
+  function normalizeActionButtons(){
+    document.querySelectorAll(".playerBox, .playerDeviceView, .singlePlayerView").forEach(box=>{
+      const change = Array.from(box.querySelectorAll("button")).find(b=>/Mission ändern/.test(b.textContent||""));
+      const fulfilled = Array.from(box.querySelectorAll("button")).find(b=>/Mission erfüllt/.test(b.textContent||""));
+      const failed = Array.from(box.querySelectorAll("button")).find(b=>/Mission gescheitert/.test(b.textContent||""));
+      const correct = Array.from(box.querySelectorAll("button")).find(b=>/Verdacht korrekt/.test(b.textContent||""));
+      const wrong = Array.from(box.querySelectorAll("button")).find(b=>/Verdacht falsch/.test(b.textContent||""));
+
+      if(!change || !fulfilled || !failed || !correct || !wrong) return;
+
+      let grid = box.querySelector(".gmActionGridFixed");
+      if(!grid){
+        grid = document.createElement("div");
+        grid.className = "playerActionGrid gmActionGridFixed";
+        change.parentNode.insertBefore(grid, change);
+      }
+
+      [change, fulfilled, failed, correct, wrong].forEach(btn=>{
+        if(btn.parentNode !== grid) grid.appendChild(btn);
+      });
+
+      change.classList.add("changeButton");
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", normalizeActionButtons);
+  const obs = new MutationObserver(()=>normalizeActionButtons());
+  obs.observe(document.documentElement,{childList:true,subtree:true});
+})();
+</script>
+
 </body>
 </html>
