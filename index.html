@@ -1512,10 +1512,10 @@ body.playerModeActive #playerDeviceShell{
             </div>
             <div class="rankDifficulty">${player.difficulty}</div>
             <div class="rankStatsCompact">
+              <div class="rankMiniStat">🔄 ${player.changePenalty || 0}</div>
               <div class="rankMiniStat">🎯 ${player.accusation}</div>
               <div class="rankMiniStat">✅ ${player.done}</div>
               <div class="rankMiniStat">❌ ${player.caught}</div>
-              <div class="rankMiniStat">🔄 ${player.changePenalty || 0}</div>
             </div>
           </div>
         `;
