@@ -158,7 +158,7 @@ font-weight:bold;
 .profileLogo{
   text-align:center !important;
   font-weight:900 !important;
-  font-size:38px !important;
+  font-size:64px !important;
   line-height:0.95 !important;
   color:#fff !important;
   text-shadow:0 0 12px rgba(255,255,255,0.45) !important;
@@ -228,7 +228,7 @@ font-weight:bold;
 .avatarAgeTitle{
   text-align:center !important;
   color:#ff7a1a !important;
-  font-size:42px !important;
+  font-size:72px !important;
   font-weight:900 !important;
   margin:42px 0 22px !important;
   text-transform:none !important;
@@ -392,7 +392,7 @@ font-weight:bold;
   }
 
   .profileCreateTitle{
-    font-size:42px !important;
+    font-size:72px !important;
   }
 
   .stepRow{
@@ -1118,6 +1118,9 @@ body.playerModeActive #playerDeviceShell{
   text-shadow:0 0 8px color-mix(in srgb, var(--c) 70%, transparent);
 }
 
+
+
+
 .gmRulesScreen .gmRuleBody{
   grid-column:2;
   margin:0;
@@ -1559,6 +1562,117 @@ body.playerModeActive #playerDeviceShell{
   }
 }
 
+
+/* === Fix Verdacht Kopfzeile: nur 1 Mann links, Text mittig, 1 Frau rechts === */
+.gmRuleCard.verdacht .gmVerdachtTitle,
+.gmRuleCard.suspect .gmVerdachtTitle,
+.gmRuleCard[data-rule="verdacht"] .gmVerdachtTitle{
+  grid-column: 1 / -1 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 18px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  margin: 0 0 14px 0 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+}
+
+.gmVerdachtTitle .detText{
+  display: inline-flex !important;
+  align-items: center !important;
+  color: inherit !important;
+  font-size: inherit !important;
+  line-height: 1 !important;
+}
+
+
+
+.gmRuleCard.verdacht .gmRuleBody,
+.gmRuleCard.suspect .gmRuleBody,
+.gmRuleCard[data-rule="verdacht"] .gmRuleBody{
+  grid-column: 1 / -1 !important;
+}
+
+@media(max-width:700px){
+  
+  .gmRuleCard.verdacht .gmVerdachtTitle,
+  .gmRuleCard.suspect .gmVerdachtTitle,
+  .gmRuleCard[data-rule="verdacht"] .gmVerdachtTitle{
+    gap: 12px !important;
+  }
+}
+
+
+/* === FINAL FIX: Verdacht Kopfzeile exakt: 🕵🏻‍♂️ VERDACHT 🕵🏼‍♀️ === */
+.gmRulesScreen .gmRuleCard.gmSuspect .gmVerdachtTitle{
+  grid-column: 1 / -1 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 14px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 0 10px 0 !important;
+  padding: 0 !important;
+  white-space: nowrap !important;
+  overflow: visible !important;
+}
+
+.gmRulesScreen .gmRuleCard.gmSuspect .gmVerdachtTitle .detText{
+  display: inline-flex !important;
+  align-items: center !important;
+  font-size: inherit !important;
+  line-height: 1 !important;
+  color: inherit !important;
+}
+
+.gmRulesScreen .gmRuleCard.gmSuspect 
+
+.gmRulesScreen .gmRuleCard.gmSuspect .gmRuleBody{
+  grid-column: 2 !important;
+}
+
+@media(max-width:700px){
+  .gmRulesScreen .gmRuleCard.gmSuspect .gmVerdachtTitle{
+    gap: 10px !important;
+  }
+  .gmRulesScreen .gmRuleCard.gmSuspect 
+}
+
+
+/* === FINAL OVERRIDE: Detektiv-Emojis optisch so groß wie 🥷 und 🔄 === */
+.gmRulesScreen .gmRuleCard.gmSuspect 
+
+@media(max-width:700px){
+  .gmRulesScreen .gmRuleCard.gmSuspect 
+}
+
+
+/* === FINAL DETEKTIV FIX === */
+.gmVerdachtTitle{
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    gap:18px !important;
+}
+
+.gmVerdachtTitle .detText{
+    display:inline-flex !important;
+    align-items:center !important;
+}
+
+.gmVerdachtTitle .detIcon{
+    display:inline-flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    font-size:35px !important;
+    line-height:1 !important;
+    transform:none !important;
+}
+
 </style>
 </head>
 <body>
@@ -1599,8 +1713,13 @@ body.playerModeActive #playerDeviceShell{
   </div>
 
   <div class="gmRuleCard gmSuspect">
-    <div class="gmRuleIcon">🕵🏻‍♂️</div>
-    <div class="gmRuleTitle">VERDACHT</div>
+    
+<div class="gmRuleTitle gmVerdachtTitle">
+    <span class="detIcon">🕵🏻‍♂️</span>
+    <span class="detText">VERDACHT</span>
+    <span class="detIcon">🕵🏼‍♀️</span>
+</div>
+
     <div class="gmRuleBody">
       <div class="gmRuleLine">Jeder Spieler kann jederzeit einen Verdacht aussprechen 🔍<br>und eine geheime Mission aufdecken 🕵🏻‍♂️</div>
       <div class="gmScoreLine gmGood"><span class="gmScoreIcon">🎯</span><span>Richtiger Verdacht</span><span class="gmScoreValue">+5 Punkte</span></div>
