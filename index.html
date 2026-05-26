@@ -1017,6 +1017,14 @@ body.playerModeActive #playerDeviceShell{
   }
 }
 
+
+/* === Spieleransicht schließen === */
+.closePlayerViewButton{
+  margin-top:28px !important;
+  background:linear-gradient(90deg,#444,#111) !important;
+  border:2px solid rgba(255,255,255,0.15) !important;
+}
+
 </style>
 </head>
 <body>
@@ -2566,6 +2574,12 @@ function closeGameRules(){
 }
 
 function renderPlayerDeviceView(playerId, gameId){
+
+  localStorage.setItem("gmPlayerMode", JSON.stringify({
+    gameId,
+    playerId
+  }));
+
   document.body.classList.add("playerModeActive");
 
   const shell = document.getElementById("playerDeviceShell");
@@ -2634,6 +2648,10 @@ function renderPlayerDeviceView(playerId, gameId){
         </div>
 
         <div class="statusText">Punkte aktuell: ${data.total || 0}</div>
+
+        <button class="mainButton closePlayerViewButton" onclick="closePlayerView()">
+          🚪 Spieleransicht schließen
+        </button>
       </div>
     `;
   }
@@ -2751,12 +2769,35 @@ if(typeof gmOriginalRestoreGame === "function"){
   };
 }
 
+
+function closePlayerView(){
+  localStorage.removeItem("gmPlayerMode");
+
+  const cleanUrl = window.location.origin + window.location.pathname;
+  window.location.href = cleanUrl;
+}
+
+
 document.addEventListener("DOMContentLoaded", () => {
+
   const params = new URLSearchParams(window.location.search);
 
+  // Direkt über QR geöffnet
   if(params.get("mode") === "player" && params.get("game") && params.get("player")){
     renderPlayerDeviceView(params.get("player"), params.get("game"));
+    return;
   }
+
+  // Spieleransicht nach versehentlichem Schließen wiederherstellen
+  try{
+    const stored = JSON.parse(localStorage.getItem("gmPlayerMode") || "null");
+
+    if(stored && stored.gameId && stored.playerId){
+      renderPlayerDeviceView(stored.playerId, stored.gameId);
+      return;
+    }
+  }catch(e){}
+
 });
 </script>
 
