@@ -1614,6 +1614,57 @@ body.playerModeActive #playerDeviceShell{
   }
 }
 
+
+/* === FINAL FIX: Verdacht Kopfzeile exakt: 🕵🏻‍♂️ VERDACHT 🕵🏼‍♀️ === */
+.gmRulesScreen .gmRuleCard.gmSuspect .gmVerdachtTitle{
+  grid-column: 1 / -1 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 14px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 0 10px 0 !important;
+  padding: 0 !important;
+  white-space: nowrap !important;
+  overflow: visible !important;
+}
+
+.gmRulesScreen .gmRuleCard.gmSuspect .gmVerdachtTitle .detText{
+  display: inline-flex !important;
+  align-items: center !important;
+  font-size: inherit !important;
+  line-height: 1 !important;
+  color: inherit !important;
+}
+
+.gmRulesScreen .gmRuleCard.gmSuspect .gmVerdachtTitle .detIcon{
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 35px !important;
+  line-height: 1 !important;
+  width: 48px !important;
+  height: 48px !important;
+  flex: 0 0 48px !important;
+}
+
+.gmRulesScreen .gmRuleCard.gmSuspect .gmRuleBody{
+  grid-column: 2 !important;
+}
+
+@media(max-width:700px){
+  .gmRulesScreen .gmRuleCard.gmSuspect .gmVerdachtTitle{
+    gap: 10px !important;
+  }
+  .gmRulesScreen .gmRuleCard.gmSuspect .gmVerdachtTitle .detIcon{
+    font-size: 33px !important;
+    width: 44px !important;
+    height: 44px !important;
+    flex-basis: 44px !important;
+  }
+}
+
 </style>
 </head>
 <body>
