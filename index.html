@@ -1673,6 +1673,33 @@ body.playerModeActive #playerDeviceShell{
     transform:none !important;
 }
 
+
+/* === FIX: Spieler-Regelansicht - Schließen ist Erklärung, kein Button === */
+.gmRulesScreen .gmPlayerClose{
+  width:100% !important;
+  margin-top:12px !important;
+  padding:12px 14px !important;
+  border:2px solid #c82cff !important;
+  border-radius:16px !important;
+  background:linear-gradient(180deg,rgba(90,0,130,.25),rgba(35,0,55,.42)) !important;
+  color:#fff !important;
+  font-size:16px !important;
+  line-height:1.2 !important;
+  font-weight:700 !important;
+  box-shadow:0 0 12px rgba(200,44,255,.55) !important;
+  text-align:center !important;
+  cursor:default !important;
+  pointer-events:none !important;
+}
+
+.gmRulesScreen .gmPlayerClose small{
+  display:block !important;
+  margin-top:4px !important;
+  color:rgba(255,255,255,.72) !important;
+  font-size:12px !important;
+  font-weight:500 !important;
+}
+
 </style>
 </head>
 <body>
