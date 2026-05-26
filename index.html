@@ -1058,6 +1058,95 @@ body.playerModeActive #playerDeviceShell{
   filter:none !important;
 }
 
+
+.customQrSymbol{
+  position:relative;
+  width:78px;
+  height:78px;
+  margin-right:14px;
+  flex:0 0 auto;
+}
+
+.customQrSymbol .corner{
+  position:absolute;
+  width:24px;
+  height:24px;
+  border:5px solid #c23cff;
+  border-radius:10px;
+  box-shadow:0 0 14px rgba(194,60,255,0.85);
+}
+
+.customQrSymbol .tl{top:0;left:0;border-right:none;border-bottom:none;}
+.customQrSymbol .tr{top:0;right:0;border-left:none;border-bottom:none;}
+.customQrSymbol .bl{bottom:0;left:0;border-right:none;border-top:none;}
+.customQrSymbol .br{bottom:0;right:0;border-left:none;border-top:none;}
+
+.customQrSymbol .qrCore{
+  position:absolute;
+  inset:17px;
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  grid-template-rows:repeat(5,1fr);
+  gap:2px;
+}
+
+.customQrSymbol .qrCore span{
+  background:#fff;
+  border-radius:2px;
+}
+
+.qrRuleHeader{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+.qrRuleHeader .ruleCardTitle{
+  margin:0 !important;
+}
+
+.playerActionGrid{
+  max-width:520px !important;
+}
+
+.playerActionGrid button{
+  border-radius:28px !important;
+  min-height:132px !important;
+  font-size:20px !important;
+  box-shadow:
+    0 0 24px rgba(0,0,0,0.45),
+    inset 0 0 12px rgba(255,255,255,0.08) !important;
+}
+
+.qrBox{
+  max-width:360px !important;
+  border-radius:30px !important;
+  background:linear-gradient(180deg,#080808,#020202) !important;
+  border:2px solid rgba(255,140,0,0.15) !important;
+  box-shadow:0 0 24px rgba(0,0,0,0.45) !important;
+}
+
+.qrBox img{
+  width:260px !important;
+  height:260px !important;
+  object-fit:contain !important;
+  margin:auto !important;
+  display:block !important;
+}
+
+@media(max-width:700px){
+  .playerActionGrid button{
+    min-height:118px !important;
+    font-size:18px !important;
+    border-radius:24px !important;
+  }
+
+  .qrBox img{
+    width:240px !important;
+    height:240px !important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -1111,6 +1200,38 @@ body.playerModeActive #playerDeviceShell{
       <div class="rule bad">❌ Falscher Verdacht <br><span>-1 Punkt</span></div>
     </div>
   </div>
+
+  
+  <div class="ruleCard">
+    <div class="qrRuleHeader">
+      <div class="customQrSymbol">
+        <div class="corner tl"></div>
+        <div class="corner tr"></div>
+        <div class="corner bl"></div>
+        <div class="corner br"></div>
+        <div class="qrCore">
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span style="opacity:0"></span><span></span><span style="opacity:0"></span><span></span>
+          <span></span><span></span><span style="opacity:0"></span><span></span><span></span>
+          <span></span><span style="opacity:0"></span><span></span><span></span><span style="opacity:0"></span>
+          <span></span><span></span><span></span><span style="opacity:0"></span><span></span>
+        </div>
+      </div>
+      <div class="ruleCardTitle">QR-FUNKTION</div>
+    </div>
+
+    <p>📱 QR-Code scannen<br>
+    Jeder Spieler scannt seinen QR-Code.</p>
+
+    <p>🔒 Profil übernehmen<br>
+    Nur der Spieler steuert sein Profil.<br>
+    <span style="color:#c23cff;font-weight:bold;">Der Host kann nicht schummeln.</span></p>
+
+    <p>↪️ Schließen<br>
+    Der Spieler klickt unten auf „Schließen“,
+    danach steuert wieder der Host.</p>
+  </div>
+
 
   <p class="winner-text">
     Wer am Ende die meisten Punkte hat, gewinnt!<br>🏆
