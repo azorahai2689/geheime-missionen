@@ -1588,14 +1588,7 @@ body.playerModeActive #playerDeviceShell{
   line-height: 1 !important;
 }
 
-.gmVerdachtTitle .detIcon{
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  font-size:72px !important;
-  line-height: 1 !important;
-  flex: 0 0 auto !important;
-}
+
 
 .gmRuleCard.verdacht .gmRuleBody,
 .gmRuleCard.suspect .gmRuleBody,
@@ -1604,9 +1597,7 @@ body.playerModeActive #playerDeviceShell{
 }
 
 @media(max-width:700px){
-  .gmVerdachtTitle .detIcon{
-    font-size:64px !important;
-  }
+  
   .gmRuleCard.verdacht .gmVerdachtTitle,
   .gmRuleCard.suspect .gmVerdachtTitle,
   .gmRuleCard[data-rule="verdacht"] .gmVerdachtTitle{
@@ -1638,16 +1629,7 @@ body.playerModeActive #playerDeviceShell{
   color: inherit !important;
 }
 
-.gmRulesScreen .gmRuleCard.gmSuspect .gmVerdachtTitle .detIcon{
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  font-size:48px !important;
-  line-height: 1 !important;
-  width: 48px !important;
-  height: 48px !important;
-  flex: 0 0 48px !important;
-}
+.gmRulesScreen .gmRuleCard.gmSuspect 
 
 .gmRulesScreen .gmRuleCard.gmSuspect .gmRuleBody{
   grid-column: 2 !important;
@@ -1657,31 +1639,38 @@ body.playerModeActive #playerDeviceShell{
   .gmRulesScreen .gmRuleCard.gmSuspect .gmVerdachtTitle{
     gap: 10px !important;
   }
-  .gmRulesScreen .gmRuleCard.gmSuspect .gmVerdachtTitle .detIcon{
-    font-size:44px !important;
-    width: 44px !important;
-    height: 44px !important;
-    flex-basis: 44px !important;
-  }
+  .gmRulesScreen .gmRuleCard.gmSuspect 
 }
 
 
 /* === FINAL OVERRIDE: Detektiv-Emojis optisch so groß wie 🥷 und 🔄 === */
-.gmRulesScreen .gmRuleCard.gmSuspect .gmVerdachtTitle .detIcon{
-  font-size:64px !important;
-  width:64px !important;
-  height:64px !important;
-  flex:0 0 64px !important;
-  line-height:1 !important;
-}
+.gmRulesScreen .gmRuleCard.gmSuspect 
 
 @media(max-width:700px){
-  .gmRulesScreen .gmRuleCard.gmSuspect .gmVerdachtTitle .detIcon{
-    font-size:60px !important;
-    width:60px !important;
-    height:60px !important;
-    flex:0 0 60px !important;
-  }
+  .gmRulesScreen .gmRuleCard.gmSuspect 
+}
+
+
+/* === FINAL DETEKTIV FIX === */
+.gmVerdachtTitle{
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    gap:18px !important;
+}
+
+.gmVerdachtTitle .detText{
+    display:inline-flex !important;
+    align-items:center !important;
+}
+
+.gmVerdachtTitle .detIcon{
+    display:inline-flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    font-size:72px !important;
+    line-height:1 !important;
+    transform:scale(1.25) !important;
 }
 
 </style>
@@ -1724,11 +1713,13 @@ body.playerModeActive #playerDeviceShell{
   </div>
 
   <div class="gmRuleCard gmSuspect">
-    <div class="gmRuleTitle gmVerdachtTitle">
-  <span>🕵🏻‍♂️</span>
-  <span>VERDACHT</span>
-  <span>🕵🏼‍♀️</span>
+    
+<div class="gmRuleTitle gmVerdachtTitle">
+    <span class="detIcon">🕵🏻‍♂️</span>
+    <span class="detText">VERDACHT</span>
+    <span class="detIcon">🕵🏼‍♀️</span>
 </div>
+
     <div class="gmRuleBody">
       <div class="gmRuleLine">Jeder Spieler kann jederzeit einen Verdacht aussprechen 🔍<br>und eine geheime Mission aufdecken 🕵🏻‍♂️</div>
       <div class="gmScoreLine gmGood"><span class="gmScoreIcon">🎯</span><span>Richtiger Verdacht</span><span class="gmScoreValue">+5 Punkte</span></div>
