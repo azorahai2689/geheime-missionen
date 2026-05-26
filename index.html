@@ -1059,106 +1059,139 @@ body.playerModeActive #playerDeviceShell{
 }
 
 
-/* === NUR SPIELREGEL-POPUP: Host + Spieler Ansicht === */
-.gmRulesExact{
+/* === SPIELREGEL-ANSICHTEN EXACT: nur Regelbereiche + Regel-Popup === */
+.gmRulesScreen{
   width:100%;
   max-width:560px;
   margin:0 auto;
   text-align:left;
 }
 
-.gmRulesExact .gmCard{
+.gmRulesScreen .gmRuleCard{
   --c:#ff9800;
   display:grid;
-  grid-template-columns:56px 1fr;
+  grid-template-columns:58px 1fr;
   gap:10px;
   align-items:start;
-  background:linear-gradient(180deg,#090909,#020202);
+  background:
+    radial-gradient(circle at center, rgba(255,255,255,.035), transparent 62%),
+    linear-gradient(180deg,#090909,#020202);
   border:2px solid var(--c);
   border-radius:16px;
   padding:12px 14px;
   margin:12px 0;
-  box-shadow:0 0 12px color-mix(in srgb, var(--c) 55%, transparent), inset 0 0 10px rgba(255,255,255,.025);
-  color:white;
-  text-align:left;
+  color:#fff;
+  box-shadow:
+    0 0 13px color-mix(in srgb, var(--c) 58%, transparent),
+    inset 0 0 12px rgba(255,255,255,.025);
+  box-sizing:border-box;
 }
 
-.gmRulesExact .gmMission{--c:#ff9800;}
-.gmRulesExact .gmChange{--c:#169cff;}
-.gmRulesExact .gmSuspect{--c:#45d62e;}
-.gmRulesExact .gmQr{--c:#c82cff;}
+.gmRulesScreen .gmMission{--c:#ff9800;}
+.gmRulesScreen .gmChange{--c:#169cff;}
+.gmRulesScreen .gmSuspect{--c:#45d62e;}
+.gmRulesScreen .gmQr{--c:#c82cff;}
 
-.gmRulesExact .gmIcon{
+.gmRulesScreen .gmRuleIcon{
   grid-column:1;
   grid-row:1 / span 2;
-  width:46px;
-  height:46px;
+  width:48px;
+  height:48px;
   display:flex;
   align-items:flex-start;
   justify-content:center;
-  font-size:34px;
+  font-size:35px;
   line-height:1;
 }
 
-.gmRulesExact .gmTitle{
+.gmRulesScreen .gmRuleTitle{
   grid-column:2;
-  margin:0 0 4px;
+  margin:0 0 5px 0;
+  padding:0;
   color:var(--c);
   font-size:24px;
   line-height:1;
   font-weight:900;
   text-transform:uppercase;
+  letter-spacing:.2px;
+  text-align:left;
   text-shadow:0 0 8px color-mix(in srgb, var(--c) 70%, transparent);
 }
 
-.gmRulesExact .gmBody{grid-column:2;}
+.gmRulesScreen .gmRuleBody{
+  grid-column:2;
+  margin:0;
+  padding:0;
+}
 
-.gmRulesExact .gmLine{
-  padding:6px 0;
+.gmRulesScreen .gmRuleLine{
+  margin:0;
+  padding:7px 0;
   border-top:1px solid rgba(255,255,255,.18);
+  color:#f1f1f1;
   font-size:13.2px;
   line-height:1.16;
-  color:#f2f2f2;
+  font-weight:500;
+  text-align:left;
 }
-.gmRulesExact .gmLine:first-child{border-top:none;padding-top:0;}
 
-.gmRulesExact .orange{color:#d78935;font-weight:900;}
-.gmRulesExact .red{color:#ff6070;font-weight:900;}
-.gmRulesExact .purple{color:#d747ff;font-weight:900;}
+.gmRulesScreen .gmRuleLine:first-child{
+  border-top:none;
+  padding-top:0;
+}
 
-.gmRulesExact .gmScore{
+.gmRulesScreen .gmOrange{color:#d78935;font-weight:900;}
+.gmRulesScreen .gmRed{color:#ff6070;font-weight:900;}
+.gmRulesScreen .gmPurple{color:#d747ff;font-weight:900;}
+
+.gmRulesScreen .gmScoreLine{
   display:grid;
   grid-template-columns:32px 1fr auto;
   gap:8px;
   align-items:center;
+  margin:0;
   padding:7px 0;
   border-top:1px solid rgba(255,255,255,.18);
-  font-size:13.5px;
+  font-size:13.2px;
   line-height:1.1;
+  color:white;
+  text-align:left;
 }
-.gmRulesExact .gmScore .sIcon{font-size:21px;text-align:center;}
-.gmRulesExact .gmScore .sValue{font-weight:900;white-space:nowrap;}
-.gmRulesExact .good .sValue{color:#55df30;}
-.gmRulesExact .bad .sValue{color:#ff6070;}
 
-.gmRulesExact .qrScanIcon{
+.gmRulesScreen .gmScoreIcon{
+  font-size:21px;
+  text-align:center;
+}
+
+.gmRulesScreen .gmScoreValue{
+  font-weight:900;
+  white-space:nowrap;
+}
+
+.gmRulesScreen .gmGood .gmScoreValue{color:#55df30;}
+.gmRulesScreen .gmBad .gmScoreValue{color:#ff6070;}
+
+.gmRulesScreen .gmQrIcon{
   position:relative;
-  width:46px;
-  height:46px;
+  width:48px;
+  height:48px;
   filter:drop-shadow(0 0 8px rgba(200,44,255,.9));
 }
-.gmRulesExact .qrScanIcon .corner{
+
+.gmRulesScreen .gmQrIcon .corner{
   position:absolute;
-  width:15px;
-  height:15px;
+  width:16px;
+  height:16px;
   border:4px solid #c82cff;
   border-radius:6px;
 }
-.gmRulesExact .qrScanIcon .tl{top:0;left:0;border-right:none;border-bottom:none;}
-.gmRulesExact .qrScanIcon .tr{top:0;right:0;border-left:none;border-bottom:none;}
-.gmRulesExact .qrScanIcon .bl{bottom:0;left:0;border-right:none;border-top:none;}
-.gmRulesExact .qrScanIcon .br{bottom:0;right:0;border-left:none;border-top:none;}
-.gmRulesExact .qrScanIcon .core{
+
+.gmRulesScreen .gmQrIcon .tl{top:0;left:0;border-right:none;border-bottom:none;}
+.gmRulesScreen .gmQrIcon .tr{top:0;right:0;border-left:none;border-bottom:none;}
+.gmRulesScreen .gmQrIcon .bl{bottom:0;left:0;border-right:none;border-top:none;}
+.gmRulesScreen .gmQrIcon .br{bottom:0;right:0;border-left:none;border-top:none;}
+
+.gmRulesScreen .gmQrIcon .core{
   position:absolute;
   inset:12px;
   display:grid;
@@ -1166,76 +1199,89 @@ body.playerModeActive #playerDeviceShell{
   grid-template-rows:repeat(5,1fr);
   gap:1.5px;
 }
-.gmRulesExact .qrScanIcon .core i{
+
+.gmRulesScreen .gmQrIcon .core i{
   display:block;
-  background:white;
+  background:#fff;
   border-radius:1px;
 }
-.gmRulesExact .qrScanIcon .core i:nth-child(3),
-.gmRulesExact .qrScanIcon .core i:nth-child(7),
-.gmRulesExact .qrScanIcon .core i:nth-child(9),
-.gmRulesExact .qrScanIcon .core i:nth-child(13),
-.gmRulesExact .qrScanIcon .core i:nth-child(16),
-.gmRulesExact .qrScanIcon .core i:nth-child(20),
-.gmRulesExact .qrScanIcon .core i:nth-child(24){opacity:0;}
 
-.gmRulesExact .gmStep{
+.gmRulesScreen .gmQrIcon .core i:nth-child(3),
+.gmRulesScreen .gmQrIcon .core i:nth-child(7),
+.gmRulesScreen .gmQrIcon .core i:nth-child(9),
+.gmRulesScreen .gmQrIcon .core i:nth-child(13),
+.gmRulesScreen .gmQrIcon .core i:nth-child(16),
+.gmRulesScreen .gmQrIcon .core i:nth-child(20),
+.gmRulesScreen .gmQrIcon .core i:nth-child(24){
+  opacity:0;
+}
+
+.gmRulesScreen .gmQrStep{
   display:grid;
   grid-template-columns:34px 1fr;
   gap:9px;
   align-items:center;
+  margin:0;
   padding:7px 0;
   border-top:1px solid rgba(255,255,255,.18);
 }
-.gmRulesExact .gmStep:first-child{border-top:none;padding-top:0;}
 
-.gmRulesExact .gmCircleIcon{
+.gmRulesScreen .gmQrStep:first-child{
+  border-top:none;
+  padding-top:0;
+}
+
+.gmRulesScreen .gmCircleIcon{
   width:31px;
   height:31px;
   border:2px solid #c82cff;
   border-radius:50%;
+  color:#d747ff;
   display:flex;
   align-items:center;
   justify-content:center;
-  color:#d747ff;
   font-size:16px;
-  box-shadow:0 0 8px rgba(200,44,255,.75);
   line-height:1;
+  box-shadow:0 0 8px rgba(200,44,255,.75);
 }
-.gmRulesExact .gmStepText strong{
+
+.gmRulesScreen .gmQrStep strong{
   display:block;
+  color:#fff;
   font-size:14px;
   line-height:1.08;
-  color:white;
   font-weight:900;
+  margin:0;
 }
-.gmRulesExact .gmStepText span{
+
+.gmRulesScreen .gmQrStep span{
   display:block;
+  color:rgba(255,255,255,.76);
   font-size:11px;
   line-height:1.12;
-  color:rgba(255,255,255,.75);
   margin-top:2px;
 }
 
-.gmRulesExact .gmWinner{
+.gmRulesScreen .gmWinner{
   display:flex;
   align-items:center;
   justify-content:center;
   gap:12px;
-  margin:10px 0;
-  color:white;
+  margin:10px 0 12px;
+  color:#fff;
+  text-align:center;
   font-size:17px;
   line-height:1.15;
   font-weight:900;
-  text-align:center;
 }
-.gmRulesExact .gmWinner::before,
-.gmRulesExact .gmWinner::after{
+
+.gmRulesScreen .gmWinner:before,
+.gmRulesScreen .gmWinner:after{
   content:"🏆";
   font-size:25px;
 }
 
-.gmRulesExact .gmPlayerInfo{
+.gmRulesScreen .gmPlayerInfo{
   display:grid;
   grid-template-columns:36px 1fr;
   gap:10px;
@@ -1246,12 +1292,14 @@ body.playerModeActive #playerDeviceShell{
   border-radius:16px;
   background:linear-gradient(180deg,rgba(90,0,130,.25),rgba(35,0,55,.42));
   box-shadow:0 0 12px rgba(200,44,255,.55);
-  color:white;
+  color:#fff;
   font-size:14px;
   line-height:1.2;
   text-align:left;
+  box-sizing:border-box;
 }
-.gmRulesExact .gmInfoIcon{
+
+.gmRulesScreen .gmInfoCircle{
   width:28px;
   height:28px;
   border:2px solid rgba(255,255,255,.85);
@@ -1262,19 +1310,20 @@ body.playerModeActive #playerDeviceShell{
   font-weight:900;
 }
 
-.gmRulesExact .gmPlayerClose{
+.gmRulesScreen .gmPlayerClose{
   width:100%;
   margin-top:12px;
   padding:17px 14px;
   border:0;
   border-radius:16px;
   background:linear-gradient(180deg,#7512aa,#4d0873);
-  color:white;
+  color:#fff;
   font-size:20px;
   font-weight:900;
   box-shadow:0 0 14px rgba(200,44,255,.55);
 }
-.gmRulesExact .gmPlayerClose small{
+
+.gmRulesScreen .gmPlayerClose small{
   display:block;
   margin-top:5px;
   color:rgba(255,255,255,.72);
@@ -1282,12 +1331,75 @@ body.playerModeActive #playerDeviceShell{
   font-weight:500;
 }
 
+/* Popup-Rahmen nur für Spielregeln */
+.rulesModalBox.gmRulesModalBox{
+  max-width:520px !important;
+  margin:0 auto !important;
+  background:#050505 !important;
+  border:2px solid rgba(255,140,0,.65) !important;
+  border-radius:22px !important;
+  padding:18px !important;
+  box-shadow:0 0 28px rgba(255,140,0,.35) !important;
+  color:white !important;
+  line-height:1.2 !important;
+  text-align:left !important;
+}
+
+.gmRulesModalHeader{
+  position:relative;
+  text-align:center;
+  color:#fff;
+  font-size:24px;
+  line-height:1;
+  font-weight:900;
+  margin:0 0 14px;
+  padding:0 42px;
+}
+
+.gmRulesModalX{
+  position:absolute;
+  right:0;
+  top:-7px;
+  width:38px;
+  height:38px;
+  border:none;
+  background:transparent;
+  color:#fff;
+  font-size:34px;
+  line-height:34px;
+  box-shadow:none;
+  padding:0;
+}
+
 @media(max-width:700px){
-  .gmRulesExact{max-width:540px;}
-  .gmRulesExact .gmCard{grid-template-columns:52px 1fr;gap:9px;padding:12px 14px;margin:12px 0;}
-  .gmRulesExact .gmIcon{width:44px;height:44px;font-size:33px;}
-  .gmRulesExact .gmTitle{font-size:22px;}
-  .gmRulesExact .gmLine{font-size:13px;}
+  .rulesModalBox.gmRulesModalBox{
+    padding:16px !important;
+  }
+
+  .gmRulesScreen{
+    max-width:540px;
+  }
+
+  .gmRulesScreen .gmRuleCard{
+    grid-template-columns:52px 1fr;
+    gap:9px;
+    padding:12px 14px;
+    margin:12px 0;
+  }
+
+  .gmRulesScreen .gmRuleIcon{
+    width:44px;
+    height:44px;
+    font-size:33px;
+  }
+
+  .gmRulesScreen .gmRuleTitle{
+    font-size:22px;
+  }
+
+  .gmRulesScreen .gmRuleLine{
+    font-size:13px;
+  }
 }
 
 </style>
@@ -1308,45 +1420,52 @@ body.playerModeActive #playerDeviceShell{
       
 <div class="hero-description">
 
-  <div class="ruleCard">
-    <div class="ruleCardTitle">🥷 Missionen</div>
-
-    <p>Jeder Spieler bekommt eine <span class="highlight-orange">geheime Mission</span>.</p>
-
-    <p>Erfülle deine Mission möglichst unauffällig<br>
-    und du erhältst Punkte ⭐️</p>
-
-    <p>Wenn du auffliegst und deine Mission scheitert,<br>
-    werden Punkte abgezogen&nbsp;🔻</p>
-  </div>
-
-  <div class="ruleCard">
-    <div class="ruleCardTitle">🔄 Mission ändern</div>
-
-    <p>Eine Mission kann geändert werden 🔄</p>
-
-    <p>Beim Ändern wechselst du zwischen<br>
-    3 zufälligen Missionen 🎲</p>
-
-    <p>Jede neue Mission kostet<br>
-    <span class="highlight-red">1 Punkt</span></p>
-  </div>
-
-  <div class="ruleCard">
-    <div class="ruleCardTitle">🕵🏻 Verdacht</div>
-
-    <p>Jeder Spieler kann jederzeit einen Verdacht aussprechen 🔍<br>
-    und eine <span class="highlight-orange">geheime Mission</span> aufdecken 🕵🏻‍♂️</p>
-
-    <div class="rules-box">
-      <div class="rule good">🎯 Richtiger Verdacht <br><span>+5 Punkte</span></div>
-      <div class="rule bad">❌ Falscher Verdacht <br><span>-1 Punkt</span></div>
+<div class="gmRulesScreen">
+  <div class="gmRuleCard gmMission">
+    <div class="gmRuleIcon">🥷</div>
+    <div class="gmRuleTitle">MISSIONEN</div>
+    <div class="gmRuleBody">
+      <div class="gmRuleLine">Jeder Spieler bekommt<br>eine <span class="gmOrange">geheime Mission</span>.</div>
+      <div class="gmRuleLine">Erfülle deine Mission möglichst<br>unauffällig und du erhältst Punkte ⭐</div>
+      <div class="gmRuleLine">Wenn du auffliegst und deine Mission scheitert,<br>werden Punkte abgezogen 🔻</div>
     </div>
   </div>
 
-  <p class="winner-text">
-    Wer am Ende die meisten Punkte hat, gewinnt!<br>🏆
-  </p>
+  <div class="gmRuleCard gmChange">
+    <div class="gmRuleIcon">🔄</div>
+    <div class="gmRuleTitle">MISSION ÄNDERN</div>
+    <div class="gmRuleBody">
+      <div class="gmRuleLine">Eine Mission kann geändert werden 🔄</div>
+      <div class="gmRuleLine">Beim Ändern wechselst du zwischen<br>3 zufälligen Missionen 🎲</div>
+      <div class="gmRuleLine">Jede neue Mission kostet <span class="gmRed">1 Punkt</span></div>
+    </div>
+  </div>
+
+  <div class="gmRuleCard gmSuspect">
+    <div class="gmRuleIcon">🕵🏻‍♂️</div>
+    <div class="gmRuleTitle">VERDACHT</div>
+    <div class="gmRuleBody">
+      <div class="gmRuleLine">Jeder Spieler kann jederzeit einen Verdacht aussprechen 🔍<br>und eine geheime Mission aufdecken 🕵🏻‍♂️</div>
+      <div class="gmScoreLine gmGood"><span class="gmScoreIcon">🎯</span><span>Richtiger Verdacht</span><span class="gmScoreValue">+5 Punkte</span></div>
+      <div class="gmScoreLine gmBad"><span class="gmScoreIcon">❌</span><span>Falscher Verdacht</span><span class="gmScoreValue">-1 Punkt</span></div>
+    </div>
+  </div>
+
+  <div class="gmRuleCard gmQr">
+    <div class="gmRuleIcon"><div class="gmQrIcon">
+  <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+  <span class="core"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+</div></div>
+    <div class="gmRuleTitle">QR-FUNKTION</div>
+    <div class="gmRuleBody">
+      <div class="gmQrStep"><div class="gmCircleIcon">▯</div><div><strong>QR-Code scannen</strong><span>Jeder Spieler scannt seinen QR-Code.</span></div></div>
+      <div class="gmQrStep"><div class="gmCircleIcon">🔒</div><div><strong>Profil übernehmen</strong><span>Nur der Spieler steuert sein Profil.</span><span class="gmPurple">Der Host kann nicht schummeln.</span></div></div>
+      <div class="gmQrStep"><div class="gmCircleIcon">↪</div><div><strong>Schließen</strong><span>Der Spieler klickt unten auf „Schließen“, danach steuert wieder der Host.</span></div></div>
+    </div>
+  </div>
+
+  <div class="gmWinner">Wer am Ende die meisten<br>Punkte hat, gewinnt!</div>
+</div>
 
 </div>
 
@@ -2816,100 +2935,106 @@ function startRoundOnlineAfterCreate(){
   }
 }
 
-function getRulesHtml(mode = "host") {
-      const isPlayer = mode === "player";
-      return `
-        <div class="rulesModal">
-          <div class="rulesModalBox">
-            <h2>Spielregeln</h2>
-            ${isPlayer ? `
-<div class="gmRulesExact">
-  <div class="gmCard gmMission">
-    <div class="gmIcon">🥷</div>
-    <div class="gmTitle">MISSIONEN</div>
-    <div class="gmBody">
-      <div class="gmLine">Jeder Spieler bekommt<br>eine <span class="orange">geheime Mission</span>.</div>
-      <div class="gmLine">Erfülle deine Mission möglichst<br>unauffällig und du erhältst Punkte ⭐</div>
-      <div class="gmLine">Wenn du auffliegst und deine Mission scheitert,<br>werden Punkte abgezogen 🔻</div>
+function getRulesHtml(mode = "host"){
+  const isPlayer = mode === "player";
+  return `
+    <div class="rulesModal">
+      <div class="rulesModalBox gmRulesModalBox">
+        <div class="gmRulesModalHeader">
+          Spielregeln
+          <button class="gmRulesModalX" onclick="closeGameRules()">×</button>
+        </div>
+        ${isPlayer ? `
+<div class="gmRulesScreen">
+  <div class="gmRuleCard gmMission">
+    <div class="gmRuleIcon">🥷</div>
+    <div class="gmRuleTitle">MISSIONEN</div>
+    <div class="gmRuleBody">
+      <div class="gmRuleLine">Jeder Spieler bekommt<br>eine <span class="gmOrange">geheime Mission</span>.</div>
+      <div class="gmRuleLine">Erfülle deine Mission möglichst<br>unauffällig und du erhältst Punkte ⭐</div>
+      <div class="gmRuleLine">Wenn du auffliegst und deine Mission scheitert,<br>werden Punkte abgezogen 🔻</div>
     </div>
   </div>
-  <div class="gmCard gmChange">
-    <div class="gmIcon">🔄</div>
-    <div class="gmTitle">MISSION ÄNDERN</div>
-    <div class="gmBody">
-      <div class="gmLine">Eine Mission kann geändert werden 🔄</div>
-      <div class="gmLine">Beim Ändern wechselst du zwischen<br>3 zufälligen Missionen 🎲</div>
-      <div class="gmLine">Jede neue Mission kostet <span class="red">1 Punkt</span></div>
-    </div>
-  </div>
-  <div class="gmCard gmSuspect">
-    <div class="gmIcon">🕵🏻‍♂️</div>
-    <div class="gmTitle">VERDACHT</div>
-    <div class="gmBody">
-      <div class="gmLine">Jeder Spieler kann jederzeit einen Verdacht aussprechen 🔍<br>und eine geheime Mission aufdecken 🕵🏻‍♂️</div>
-      <div class="gmScore good"><span class="sIcon">🎯</span><span>Richtiger Verdacht</span><span class="sValue">+5 Punkte</span></div>
-      <div class="gmScore bad"><span class="sIcon">❌</span><span>Falscher Verdacht</span><span class="sValue">-1 Punkt</span></div>
-    </div>
-  </div>
-  
-  <div class="gmPlayerInfo">
-    <div class="gmInfoIcon">i</div>
-    <div>Du steuerst dein Profil selbst.<br><span class="purple">Der Host kann nicht schummeln.</span></div>
-  </div>
-  <button class="gmPlayerClose" onclick="closeGameRules(); closePlayerView();">↪ Schließen<small>Danach übernimmt wieder der Host.</small></button>
 
+  <div class="gmRuleCard gmChange">
+    <div class="gmRuleIcon">🔄</div>
+    <div class="gmRuleTitle">MISSION ÄNDERN</div>
+    <div class="gmRuleBody">
+      <div class="gmRuleLine">Eine Mission kann geändert werden 🔄</div>
+      <div class="gmRuleLine">Beim Ändern wechselst du zwischen<br>3 zufälligen Missionen 🎲</div>
+      <div class="gmRuleLine">Jede neue Mission kostet <span class="gmRed">1 Punkt</span></div>
+    </div>
+  </div>
+
+  <div class="gmRuleCard gmSuspect">
+    <div class="gmRuleIcon">🕵🏻‍♂️</div>
+    <div class="gmRuleTitle">VERDACHT</div>
+    <div class="gmRuleBody">
+      <div class="gmRuleLine">Jeder Spieler kann jederzeit einen Verdacht aussprechen 🔍<br>und eine geheime Mission aufdecken 🕵🏻‍♂️</div>
+      <div class="gmScoreLine gmGood"><span class="gmScoreIcon">🎯</span><span>Richtiger Verdacht</span><span class="gmScoreValue">+5 Punkte</span></div>
+      <div class="gmScoreLine gmBad"><span class="gmScoreIcon">❌</span><span>Falscher Verdacht</span><span class="gmScoreValue">-1 Punkt</span></div>
+    </div>
+  </div>
+
+  <div class="gmPlayerInfo">
+    <div class="gmInfoCircle">i</div>
+    <div>Du steuerst dein Profil selbst.<br><span class="gmPurple">Der Host kann nicht schummeln.</span></div>
+  </div>
+
+  <button class="gmPlayerClose" onclick="closeGameRules(); closePlayerView();">↪ Schließen<small>Danach übernimmt wieder der Host.</small></button>
 </div>
 ` : `
-<div class="gmRulesExact">
-  <div class="gmCard gmMission">
-    <div class="gmIcon">🥷</div>
-    <div class="gmTitle">MISSIONEN</div>
-    <div class="gmBody">
-      <div class="gmLine">Jeder Spieler bekommt<br>eine <span class="orange">geheime Mission</span>.</div>
-      <div class="gmLine">Erfülle deine Mission möglichst<br>unauffällig und du erhältst Punkte ⭐</div>
-      <div class="gmLine">Wenn du auffliegst und deine Mission scheitert,<br>werden Punkte abgezogen 🔻</div>
+<div class="gmRulesScreen">
+  <div class="gmRuleCard gmMission">
+    <div class="gmRuleIcon">🥷</div>
+    <div class="gmRuleTitle">MISSIONEN</div>
+    <div class="gmRuleBody">
+      <div class="gmRuleLine">Jeder Spieler bekommt<br>eine <span class="gmOrange">geheime Mission</span>.</div>
+      <div class="gmRuleLine">Erfülle deine Mission möglichst<br>unauffällig und du erhältst Punkte ⭐</div>
+      <div class="gmRuleLine">Wenn du auffliegst und deine Mission scheitert,<br>werden Punkte abgezogen 🔻</div>
     </div>
   </div>
-  <div class="gmCard gmChange">
-    <div class="gmIcon">🔄</div>
-    <div class="gmTitle">MISSION ÄNDERN</div>
-    <div class="gmBody">
-      <div class="gmLine">Eine Mission kann geändert werden 🔄</div>
-      <div class="gmLine">Beim Ändern wechselst du zwischen<br>3 zufälligen Missionen 🎲</div>
-      <div class="gmLine">Jede neue Mission kostet <span class="red">1 Punkt</span></div>
+
+  <div class="gmRuleCard gmChange">
+    <div class="gmRuleIcon">🔄</div>
+    <div class="gmRuleTitle">MISSION ÄNDERN</div>
+    <div class="gmRuleBody">
+      <div class="gmRuleLine">Eine Mission kann geändert werden 🔄</div>
+      <div class="gmRuleLine">Beim Ändern wechselst du zwischen<br>3 zufälligen Missionen 🎲</div>
+      <div class="gmRuleLine">Jede neue Mission kostet <span class="gmRed">1 Punkt</span></div>
     </div>
   </div>
-  <div class="gmCard gmSuspect">
-    <div class="gmIcon">🕵🏻‍♂️</div>
-    <div class="gmTitle">VERDACHT</div>
-    <div class="gmBody">
-      <div class="gmLine">Jeder Spieler kann jederzeit einen Verdacht aussprechen 🔍<br>und eine geheime Mission aufdecken 🕵🏻‍♂️</div>
-      <div class="gmScore good"><span class="sIcon">🎯</span><span>Richtiger Verdacht</span><span class="sValue">+5 Punkte</span></div>
-      <div class="gmScore bad"><span class="sIcon">❌</span><span>Falscher Verdacht</span><span class="sValue">-1 Punkt</span></div>
+
+  <div class="gmRuleCard gmSuspect">
+    <div class="gmRuleIcon">🕵🏻‍♂️</div>
+    <div class="gmRuleTitle">VERDACHT</div>
+    <div class="gmRuleBody">
+      <div class="gmRuleLine">Jeder Spieler kann jederzeit einen Verdacht aussprechen 🔍<br>und eine geheime Mission aufdecken 🕵🏻‍♂️</div>
+      <div class="gmScoreLine gmGood"><span class="gmScoreIcon">🎯</span><span>Richtiger Verdacht</span><span class="gmScoreValue">+5 Punkte</span></div>
+      <div class="gmScoreLine gmBad"><span class="gmScoreIcon">❌</span><span>Falscher Verdacht</span><span class="gmScoreValue">-1 Punkt</span></div>
     </div>
   </div>
-  
-  <div class="gmCard gmQr">
-    <div class="gmIcon"><div class="qrScanIcon">
+
+  <div class="gmRuleCard gmQr">
+    <div class="gmRuleIcon"><div class="gmQrIcon">
   <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
   <span class="core"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
 </div></div>
-    <div class="gmTitle">QR-FUNKTION</div>
-    <div class="gmBody">
-      <div class="gmStep"><div class="gmCircleIcon">▯</div><div class="gmStepText"><strong>QR-Code scannen</strong><span>Jeder Spieler scannt seinen QR-Code.</span></div></div>
-      <div class="gmStep"><div class="gmCircleIcon">🔒</div><div class="gmStepText"><strong>Profil übernehmen</strong><span>Nur der Spieler steuert sein Profil.</span><span class="purple">Der Host kann nicht schummeln.</span></div></div>
-      <div class="gmStep"><div class="gmCircleIcon">↪</div><div class="gmStepText"><strong>Schließen</strong><span>Der Spieler klickt unten auf „Schließen“, danach steuert wieder der Host.</span></div></div>
+    <div class="gmRuleTitle">QR-FUNKTION</div>
+    <div class="gmRuleBody">
+      <div class="gmQrStep"><div class="gmCircleIcon">▯</div><div><strong>QR-Code scannen</strong><span>Jeder Spieler scannt seinen QR-Code.</span></div></div>
+      <div class="gmQrStep"><div class="gmCircleIcon">🔒</div><div><strong>Profil übernehmen</strong><span>Nur der Spieler steuert sein Profil.</span><span class="gmPurple">Der Host kann nicht schummeln.</span></div></div>
+      <div class="gmQrStep"><div class="gmCircleIcon">↪</div><div><strong>Schließen</strong><span>Der Spieler klickt unten auf „Schließen“, danach steuert wieder der Host.</span></div></div>
     </div>
   </div>
-  <div class="gmWinner">Wer am Ende die meisten<br>Punkte hat, gewinnt!</div>
 
+  <div class="gmWinner">Wer am Ende die meisten<br>Punkte hat, gewinnt!</div>
 </div>
 `}
-            <button class="rulesCloseButton" onclick="closeGameRules()">Schließen</button>
-          </div>
-        </div>
-      `;
-    }
+      </div>
+    </div>
+  `;
+}
 
 function openGameRules(mode = "host") {
   const root = document.getElementById("rulesModalRoot") || document.body.appendChild(document.createElement("div"));
