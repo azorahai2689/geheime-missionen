@@ -1118,23 +1118,7 @@ body.playerModeActive #playerDeviceShell{
   text-shadow:0 0 8px color-mix(in srgb, var(--c) 70%, transparent);
 }
 
-.gmVerdachtTitle{
-  display:flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-  gap:10px !important;
-}
 
-.gmVerdachtTitle span{
-  display:flex;
-  align-items:center;
-}
-
-.gmVerdachtTitle span:first-child,
-.gmVerdachtTitle span:last-child{
-  font-size:56px !important;
-  line-height:1;
-}
 
 
 .gmRulesScreen .gmRuleBody{
@@ -1578,6 +1562,58 @@ body.playerModeActive #playerDeviceShell{
   }
 }
 
+
+/* === Fix Verdacht Kopfzeile: nur 1 Mann links, Text mittig, 1 Frau rechts === */
+.gmRuleCard.verdacht .gmVerdachtTitle,
+.gmRuleCard.suspect .gmVerdachtTitle,
+.gmRuleCard[data-rule="verdacht"] .gmVerdachtTitle{
+  grid-column: 1 / -1 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 18px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  margin: 0 0 14px 0 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+}
+
+.gmVerdachtTitle .detText{
+  display: inline-flex !important;
+  align-items: center !important;
+  color: inherit !important;
+  font-size: inherit !important;
+  line-height: 1 !important;
+}
+
+.gmVerdachtTitle .detIcon{
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 42px !important;
+  line-height: 1 !important;
+  flex: 0 0 auto !important;
+}
+
+.gmRuleCard.verdacht .gmRuleBody,
+.gmRuleCard.suspect .gmRuleBody,
+.gmRuleCard[data-rule="verdacht"] .gmRuleBody{
+  grid-column: 1 / -1 !important;
+}
+
+@media(max-width:700px){
+  .gmVerdachtTitle .detIcon{
+    font-size: 38px !important;
+  }
+  .gmRuleCard.verdacht .gmVerdachtTitle,
+  .gmRuleCard.suspect .gmVerdachtTitle,
+  .gmRuleCard[data-rule="verdacht"] .gmVerdachtTitle{
+    gap: 12px !important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -1618,7 +1654,6 @@ body.playerModeActive #playerDeviceShell{
   </div>
 
   <div class="gmRuleCard gmSuspect">
-    <div class="gmRuleIcon">🕵🏻‍♂️</div>
     <div class="gmRuleTitle gmVerdachtTitle">
   <span>🕵🏻‍♂️</span>
   <span>VERDACHT</span>
