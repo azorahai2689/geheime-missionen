@@ -905,6 +905,151 @@ font-weight:bold;
   }
 }
 
+
+/* === V12: Regelkarten wie Neon-Infokarten === */
+.ruleCard{
+  border-color:var(--rule-color,#ff8800) !important;
+  box-shadow:
+    0 0 16px color-mix(in srgb, var(--rule-color,#ff8800) 45%, transparent),
+    inset 0 0 18px color-mix(in srgb, var(--rule-color,#ff8800) 8%, transparent) !important;
+  padding:18px 16px !important;
+  margin:18px 0 !important;
+  text-align:left !important;
+}
+
+.ruleCardTitle{
+  justify-content:flex-start !important;
+  text-align:left !important;
+  font-size:26px !important;
+  line-height:1.05 !important;
+  margin-bottom:10px !important;
+}
+
+.ruleCard p{
+  font-size:18px !important;
+  line-height:1.35 !important;
+  text-align:left !important;
+  margin:8px 0 !important;
+}
+
+.ruleDivider{
+  margin:10px 0 !important;
+  background:linear-gradient(90deg,rgba(255,255,255,0.18),rgba(255,255,255,0.06),transparent) !important;
+}
+
+.rule.good,
+.rule.bad{
+  display:grid !important;
+  grid-template-columns:auto 1fr auto !important;
+  align-items:center !important;
+  gap:10px !important;
+  font-size:20px !important;
+  text-align:left !important;
+  margin:10px 0 !important;
+}
+
+.rule.good span,
+.rule.bad span{
+  font-size:19px !important;
+  white-space:nowrap !important;
+}
+
+.suspectRule .rules-box{
+  margin:10px 0 0 !important;
+}
+
+.qrRule{
+  border-color:#c337ff !important;
+}
+
+.qrRule p{
+  text-align:left !important;
+}
+
+.qrRuleSteps{
+  display:block !important;
+  margin:14px 0 !important;
+}
+
+.qrStep{
+  display:grid !important;
+  grid-template-columns:48px 1fr !important;
+  align-items:center !important;
+  gap:12px !important;
+  background:transparent !important;
+  padding:9px 0 !important;
+  border-bottom:1px solid rgba(255,255,255,0.10) !important;
+  border-radius:0 !important;
+  color:white !important;
+  font-size:17px !important;
+  line-height:1.25 !important;
+}
+
+.qrStep:last-child{
+  border-bottom:none !important;
+}
+
+.qrStepIcon{
+  width:42px !important;
+  height:42px !important;
+  border:2px solid #c337ff !important;
+  border-radius:50% !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  font-size:23px !important;
+  margin:0 !important;
+  color:#d46bff !important;
+  box-shadow:0 0 12px rgba(195,55,255,0.55) !important;
+}
+
+.qrRuleHint{
+  text-align:left !important;
+  font-size:16px !important;
+  line-height:1.35 !important;
+  margin-top:10px !important;
+}
+
+@media(max-width:700px){
+  .ruleCard{
+    padding:17px 15px !important;
+    margin:16px 0 !important;
+  }
+
+  .ruleCardTitle{
+    font-size:23px !important;
+  }
+
+  .ruleCard p{
+    font-size:17px !important;
+    line-height:1.32 !important;
+  }
+
+  .rule.good,
+  .rule.bad{
+    grid-template-columns:auto 1fr !important;
+    gap:8px !important;
+    font-size:18px !important;
+  }
+
+  .rule.good span,
+  .rule.bad span{
+    grid-column:2 !important;
+    font-size:18px !important;
+  }
+
+  .qrStep{
+    grid-template-columns:44px 1fr !important;
+    font-size:16px !important;
+  }
+
+  .qrStepIcon{
+    width:38px !important;
+    height:38px !important;
+    font-size:21px !important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -964,15 +1109,15 @@ font-weight:bold;
     <div class="qrRuleSteps">
       <div class="qrStep">
         <span class="qrStepIcon">▦</span>
-        1. QR-Code<br>scannen
+        <strong>QR-Code scannen</strong><br><span>Jeder Spieler scannt seinen QR-Code.</span>
       </div>
       <div class="qrStep">
         <span class="qrStepIcon">👤</span>
-        2. Profil<br>übernehmen
+        <strong>Profil übernehmen</strong><br><span>Nur der Spieler steuert sein Profil.</span>
       </div>
       <div class="qrStep">
         <span class="qrStepIcon">🔒</span>
-        3. Host<br>gesperrt
+        <strong>Host gesperrt</strong><br><span>Der Host kann dort nicht schummeln.</span>
       </div>
     </div>
 
